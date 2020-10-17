@@ -49,6 +49,8 @@ controller.ready(() => {
     // load traditional developer-created local custom feature modules
     controller.loadModules(__dirname + '/features');
 
+    
+
     /* catch-all that uses the CMS to trigger dialogs */
     if (controller.plugins.cms) {
         controller.on('message,direct_message', async (bot, message) => {
@@ -65,6 +67,15 @@ controller.ready(() => {
 });
 
 
+/*
+SAMPLE MESSAGE OBJECT
 
+{
+    type: "message",
+    text: "text",
+    picture_path: "",
+    link_path: ""
+}
+*/
 
 

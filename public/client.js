@@ -263,6 +263,7 @@ var Botkit = {
             thread: thread
         });
     },
+    // This function is for integration into other apps.
     identifyUser: function (user) {
 
         user.timezone_offset = new Date().getTimezoneOffset();

@@ -6,6 +6,7 @@
     "preserveConstEnums": true,
     "outFile": "../../built/local/tsc.js",
     "sourceMap": true,
+    "strict": true,
     "jsx": "react"
   }
 }

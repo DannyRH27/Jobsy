@@ -15,7 +15,7 @@ const App = ({ options, socket }: Props) => {
       console.log("connecting");
       let connectEvent = "hello";
 
-      socket.addEventListener("open", (event) => {
+      socket.addEventListener("open", (event: any) => {
         console.log("connected to socket");
         socket.send(
           JSON.stringify({
@@ -27,7 +27,7 @@ const App = ({ options, socket }: Props) => {
         );
       });
 
-      socket.addEventListener("message", (event) => {
+      socket.addEventListener("message", (event: any) => {
         let message = JSON.parse(event.data);
         console.log(message);
       });
@@ -38,7 +38,7 @@ const App = ({ options, socket }: Props) => {
     connect();
   }, []);
 
-  return <div>test</div>;
+  return <div>{options.useSockets}</div>;
 };
 
 export default App;

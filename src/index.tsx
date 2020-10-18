@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-
-const socket = new WebSocket("ws://localhost:3000");
+import ReactBotkit from "./App";
 
 const options = {
+  wsUrl:
+    (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host,
   reconnectTimeout: 3000,
   maxReconnect: 5,
   enableHistory: false,
@@ -13,5 +13,5 @@ const options = {
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
-  ReactDOM.render(<App options={options} socket={socket} />, root);
+  ReactDOM.render(<ReactBotkit options={options} />, root);
 });

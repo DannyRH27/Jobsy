@@ -24,8 +24,20 @@
   },
   "work": [
     {
-      "company": "Company",
-      "position": "President",
+      "company": "AECOM",
+      "position": "Project Manager",
+      "website": "http://company.com",
+      "startDate": "2013-01-01",
+      "endDate": "2014-01-01",
+      "summary": "Description...",
+      "picture": "",
+      "highlights": [
+        "Started the company"
+      ]
+    },
+    {
+      "company": "Center Code",
+      "position": "Project Manager",
       "website": "http://company.com",
       "startDate": "2013-01-01",
       "endDate": "2014-01-01",

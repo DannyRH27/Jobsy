@@ -41,21 +41,27 @@ const QuickReplies = styled.div`
   flex-wrap: wrap;
   gap: 8px;
 
-  & > button {
-    opacity: 0.4;
-    padding: 4px 8px;
-    font-size: 14px;
-    background-color: ${colors.persianGreen};
-    border-color: transparent;
-    transition: opacity 0.3s;
-    color: white;
-    border-radius: 4px;
-  }
+`;
 
-  & > button:hover {
-    opacity: 1;
+const Button = styled.button`
+  opacity: 0.8;
+  padding: 4px 8px;
+  font-size: 14px;
+  background-color: ${colors.persianGreen};
+  border-color: transparent;
+  transition: opacity 0.3s;
+  color: white;
+  border-radius: 4px;
+  
+  &:hover {
+    opacity: 1;  
   }
 `;
+
+const VisitedButton = styled(Button)`
+  background-color: ${colors.sandyBrown};
+  opacity: 0.4;
+`
 
 const ProfilePhoto = styled.img`
   object-fit: cover;
@@ -89,11 +95,17 @@ const MessageRow = ({ message, sendEvent }: Props) => {
           <Incoming>{message.text}</Incoming>
           {message.quick_replies && !userReplied && (
             <QuickReplies>
-              {message.quick_replies.map((option, index) => (
-                <button key={index} onClick={() => sendReply(option.payload)}>
-                  {option.title}
-                </button>
-              ))}
+              {message.quick_replies.map((option, index) => {
+                return option.visited ? (
+                  <VisitedButton key={index} onClick={() => sendReply(option.payload)}>
+                    {option.title}
+                  </VisitedButton>
+                ) : (
+                  <Button key={index} onClick={() => sendReply(option.payload)}>
+                    {option.title}
+                  </Button>
+                );
+              })}
             </QuickReplies>
           )}
         </FlexColumn>

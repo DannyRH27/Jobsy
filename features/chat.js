@@ -64,15 +64,31 @@ module.exports = function (controller) {
   ];
 
   for (let i=0;i<Object.keys(resume).length-1;i++){
-    controller.hears(categories[i][0], "message, direct_message", async(bot, message) => {
-      const quick_replies = resumeScan(resume[categories[i][0]], categories[i][1])
+    const [catName, title] = categories[i]
+
+    // make responses for each category name
+    controller.hears(catName, "message, direct_message", async(bot, message) => {
+      const quick_replies = resumeScan(resume[catName], title)
       // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
       console.log(quick_replies)
+      // if (quick_replies === false), make an "unavailable" response here
       await bot.reply(message, {
-        text: "TEST",
+        text: catName,
         quick_replies
       })
     })
+
+    // make responses for each listing in each category
+    if (!resume[catName].length) continue
+    for (let j = 0; j < resume[catName].length; j++) {
+      const entry = resume[catName][j]
+      controller.hears(entry[title], "message, direct_message", async (bot, message) => {
+        await bot.reply(message, {
+          text: entry[title],
+          entry
+        })
+      })
+    }
   }
 
 

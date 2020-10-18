@@ -63,6 +63,41 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
+  const months = {
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December",
+  }
+
+  const formatReply = (catName, entry) => {
+    const lines = []
+    if (catName === "work" || catName === "volunteer") {
+      if (entry.position) lines.push(`Position: ${entry.position}`)
+      const sd = entry.startDate ? entry.startDate.split("-") : false
+      const ed = entry.endDate ? entry.endDate.split("-") : false
+      if (ed && sd) {
+        lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${months[ed[1]]}, ${ed[0]}`)
+      } else if (sd) {
+        lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to present`)
+      }
+      if (entry.summary) lines.push(`Summary: ${entry.summary}`)
+    } else if (catName === "education") {
+
+    } else if (catName === "thing") {
+
+    }
+    return lines.join(`\n`)
+  }
+
   for (let i=0;i<Object.keys(resume).length-1;i++){
     const [catName, title] = categories[i]
 
@@ -82,6 +117,7 @@ module.exports = function (controller) {
     if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
+      const {text, } = formatReply(catName, entry)
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         await bot.reply(message, {
           text: entry[title],

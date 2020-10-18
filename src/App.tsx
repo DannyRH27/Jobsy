@@ -1,7 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
-import { library } from "../node_modules/webpack/types";
+import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
-import { Message } from "./Types";
+import { Message, Event } from "./Types";
+import Input from "./Input";
+import MessageRow from "./components/MessageRow";
+import { colors } from "./constants";
+
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Roboto";
+`;
+
+const MessageList = styled.div`
+  flex: 1;
+  padding: 32px;
+  box-sizing: border-box;
+  background-color: ${colors.aliceBlue};
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  & > * ~ * {
+    margin-top: 6px;
+  }
+`;
 
 interface Options {
   useSockets: boolean;
@@ -24,9 +49,16 @@ const App = ({ options }: Props) => {
     setMessages((messages) => [...messages, message]);
   };
 
-  const deliverMessage = (message: any) => {
+  const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
-      socket.current.send(JSON.stringify(message));
+      socket.current.send(JSON.stringify(event));
+      if (event.type === "message") {
+        addMessageToState({
+          type: event.type,
+          text: event.text || "",
+          direction: "outgoing",
+        });
+      }
     }
   };
 
@@ -39,33 +71,10 @@ const App = ({ options }: Props) => {
         socket.current.addEventListener("open", (event) => {
           console.log("CONNECTED TO SOCKET");
           reconnectCount.current = 0;
-          deliverMessage({
+          sendEvent({
             type: "hello",
             user: 1,
             channel: "socket",
-          });
-          // if (ref.current) {
-          //   ref.current.sayHi();
-          // }
-          deliverMessage({
-            type: "message",
-            text: "REEEEEEE1",
-            user: 1,
-          });
-          deliverMessage({
-            type: "message",
-            text: "REEEEEEE2",
-            user: 1,
-          });
-          deliverMessage({
-            type: "message",
-            text: "REEEEEEE3",
-            user: 1,
-          });
-          deliverMessage({
-            type: "message",
-            text: "REEEEEEE4",
-            user: 1,
           });
         });
 
@@ -85,9 +94,7 @@ const App = ({ options }: Props) => {
 
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
-          console.log(message);
-          // debugger;
-          addMessageToState(message);
+          addMessageToState({ ...message, direction: "incoming" });
         });
       }
     }
@@ -101,12 +108,14 @@ const App = ({ options }: Props) => {
   }, []);
 
   return (
-    <ul>
-      {console.log(messages)}
-      {messages.map((el) => (
-        <li>{el.text}</li>
-      ))}
-    </ul>
+    <Main>
+      <MessageList>
+        {messages.map((message, index) => (
+          <MessageRow key={index} message={message} sendEvent={sendEvent}/>
+        ))}
+      </MessageList>
+      <Input sendEvent={sendEvent} />
+    </Main>
   );
 };
 

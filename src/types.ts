@@ -3,12 +3,19 @@ interface QuickReply {
 	payload: string;
 }
 
+export interface Event {
+	type: "message" | "hello";
+	user: number;
+	text?: string;
+	channel?: string;
+}
+
 export interface Message {
 	type: "message";
-	incoming: boolean;
+	direction: "incoming" | "outgoing";
 	text: string;
-	html: string;
-	quick_reply?: QuickReply[];
+	html?: string;
+	quick_replies?: QuickReply[];
 }
 
 export interface Event {

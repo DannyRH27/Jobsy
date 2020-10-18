@@ -28,7 +28,7 @@ module.exports = function (controller) {
   onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume! 
         My name is Jobsy, how may I assist you?`);
   onboarding.say(reply)
-  // onboarding.say("war", {quick_replies})
+
   controller.addDialog(onboarding)
   controller.on(["hello","welcome_back"], async (bot, message) => {
     await bot.beginDialog("onboarding");

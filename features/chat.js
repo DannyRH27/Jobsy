@@ -35,32 +35,74 @@ module.exports = function (controller) {
       });
     }
   );
-  const companies = resumeScan(resume.work, "company");
-  companies.push({ title: "Back", payload: "back" });
-  controller.hears(
-    "work",
-    "message,direct_message",
-    async (bot, message) => {
-      
-      const quick_replies = companies
-      // console.log(quick_replies)
-      await bot.reply(message, {
-        text: `Which company do you want to know about?`,
-        quick_replies,
-      });
-    }
-  );
 
-  for (let i=0;i<resume.work.length;i++){
-    controller.hears(resume.work[i].company, "message, direct_message", async(bot, message) => {
-      const quick_replies = Object.keys(resume.work[i]).map(key => ({title: key, payload: key}))
-      // console.log(quick_replies)
+  // const companies = resumeScan(resume.work, "company");
+  // companies.push({ title: "Back", payload: "back" });
+  // controller.hears(
+  //   "work",
+  //   "message,direct_message",
+  //   async (bot, message) => {
+      
+  //     const quick_replies = companies
+  //     // console.log(quick_replies)
+  //     await bot.reply(message, {
+  //       text: `Which company do you want to know about?`,
+  //       quick_replies,
+  //     });
+  //   }
+  // );
+  categories = [
+    ["work", "company"],
+    ["volunteer", "organization"],
+    ["education", "institution"],
+    ["awards", "title"],
+    ["publications", "name"],
+    ["skills", "name"],
+    ["languages", "language"],
+    ["interests", "name"],
+    ["references", "name"]
+  ];
+
+  for (let i=0;i<Object.keys(resume).length-1;i++){
+    controller.hears(categories[i][0], "message, direct_message", async(bot, message) => {
+      const quick_replies = resumeScan(resume[categories[i][0]], categories[i][1])
+      // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
+      console.log(quick_replies)
       await bot.reply(message, {
-        text: `Here is a little bit about ${resume.basics.name}'s time at ${resume.work[i].company}.`,
+        text: "TEST",
         quick_replies
       })
     })
   }
+
+
+  // Maybe we can use this loop for skills,publications, references, interests or whatever
+  // for (let i=0;i<resume.work.length;i++){
+  //   controller.hears(resume.work[i].company, "message, direct_message", async(bot, message) => {
+  //     const quick_replies = Object.keys(resume.work[i]).map(key => ({title: key, payload: key}))
+  //     // console.log(quick_replies)
+  //     await bot.reply(message, {
+  //       text: `Here is a little bit about ${resume.basics.name}'s time at ${resume.work[i].company}.`,
+  //       quick_replies
+  //     })
+  //   })
+  // }
+
+  // Make a conversation
+  // Add the different pieces
+  // Tell the bot once they click on the company name to begin the dialog
+  for (let i=0;i<resume.languages[i].length;i++){
+    controller.hears(resume.languages[i].language, "message, direct_message", async(bot, message) => {
+      const quick_replies = Object.keys(resume.language[i]).map(key => ({title: key, payload: key}))
+      // console.log(quick_replies)
+      await bot.reply(message, {
+        text: `Here are the languages that ${resume.basics.name} knows.`,
+        quick_replies
+      })
+    })
+  }
+
+  
 
   controller.on("message,direct_message", async (bot, message) => {
     await bot.reply(message, {text: "COOL, YO", something: "thing"});
@@ -68,5 +110,5 @@ module.exports = function (controller) {
 };
 
 
-// Education
+
 

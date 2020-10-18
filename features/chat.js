@@ -7,15 +7,15 @@ const path = require("path");
 const resume = require("../resume.json");
 const titleize = require("titleize");
 const resumeScan = (section, name) => {
-  if (!section.length) return false
-  return section.map(entry => ({title: entry[name], payload: entry[name]}))
-}
+  if (!section.length) return false;
+  return section.map((entry) => ({ title: entry[name], payload: entry[name] }));
+};
 
 module.exports = function (controller) {
   // make public/index.html available as localhost/index.html
   // by making the /public folder a static/public asset
-  // controller.publicFolder("/", path.join(__dirname, "..", "dist"));
-  controller.publicFolder("/", path.join(__dirname, "..", "public"));
+  controller.publicFolder("/", path.join(__dirname, "..", "dist"));
+  // controller.publicFolder("/", path.join(__dirname, "..", "public"));
 
   console.log("Chat with me: http://localhost:" + (process.env.PORT || 3000));
   controller.hears(
@@ -104,11 +104,22 @@ module.exports = function (controller) {
 
   
 
-  controller.on("message,direct_message", async (bot, message) => {
-    await bot.reply(message, {text: "COOL, YO", something: "thing"});
+  controller.hears("work", "message,direct_message", async (bot, message) => {
+    const sections = resumeScan(resume.work, "company");
+    // if that was false, prevent moving to "work"
+    sections.push({ title: "bafhadshguifsck", payload: "back" });
+    const quick_replies = sections;
+    console.log(quick_replies);
+    await bot.reply(message, {
+      text: `Which company do you want to know about?`,
+      quick_replies,
+    });
   });
-};
 
+  // controller.on("message,direct_message", async (bot, message) => {
+  //   await bot.reply(message, { text: "COOL, YO", something: "thing" });
+  // });
+};
 
 
 

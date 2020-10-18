@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import MessageList, { RefObject } from "./MessageList";
 
 interface Options {
   useSockets: boolean;
@@ -9,22 +10,33 @@ interface Props {
   socket: any;
 }
 
+interface Message {}
+
 const App = ({ options, socket }: Props) => {
+  const reconnectCount = useRef(0);
+  const ref = useRef<RefObject>(null);
+
   const connect = () => {
     if (options.useSockets) {
       console.log("connecting");
       let connectEvent = "hello";
 
       socket.addEventListener("open", (event: any) => {
-        console.log("connected to socket");
-        socket.send(
-          JSON.stringify({
-            type: "message",
-            text: "haha",
-            user: 123321,
-            channel: options.useSockets ? "websocket" : "webhook",
-          })
-        );
+        console.log("CONNECTED TO SOCKET");
+        reconnectCount.current = 0;
+        if (ref.current) {
+          ref.current.sayHi();
+        }
+        // socket.send(
+        //   JSON.stringify({
+        //     type: "message",
+        //     text: "hahha",
+        //     user: 123321,
+        //     mood,
+        //     dtree: 'tree',
+        //     channel: options.useSockets ? "websocket" : "webhook",
+        //   })
+        // );
       });
 
       socket.addEventListener("message", (event: any) => {
@@ -38,7 +50,7 @@ const App = ({ options, socket }: Props) => {
     connect();
   }, []);
 
-  return <div>{options.useSockets}</div>;
+  return <MessageList ref={ref} />;
 };
 
 export default App;

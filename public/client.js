@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
+
+
 var converter = new showdown.Converter();
 converter.setOption('openLinksInNewWindow', true);
 
@@ -188,6 +190,9 @@ var Botkit = {
         // Connection opened
         that.socket.addEventListener('open', function (event) {
             console.log('CONNECTED TO SOCKET');
+
+            // const onboarding = new BotkitConversation("onboarding", controller);
+            // onboarding.say("Hello human!");
             that.reconnect_count = 0;
             that.trigger('connected', event);
             that.deliverMessage({

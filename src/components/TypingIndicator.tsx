@@ -45,7 +45,7 @@ const Typing = styled.div`
 
 const TypingIndicator = () => {
   return (
-    <TypingContainer>
+    <TypingContainer incoming={true}>
       <ProfilePhoto src={"https://via.placeholder.com/40"} />
       <FlexColumn>
         <Typing>

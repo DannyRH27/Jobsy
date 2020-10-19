@@ -80,22 +80,37 @@ module.exports = function (controller) {
 
   const formatReply = (catName, entry) => {
     const lines = []
+    const person = resume.basics.name
     if (catName === "work" || catName === "volunteer") {
+      const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
+      if (comp) lines.push(`${person}'s time at ${comp}:`)
       if (entry.position) lines.push(`Position: ${entry.position}`)
+      if (entry.summary) lines.push(`Summary: ${entry.summary}`)
       const sd = entry.startDate ? entry.startDate.split("-") : false
       const ed = entry.endDate ? entry.endDate.split("-") : false
-      if (ed && sd) {
-        lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${months[ed[1]]}, ${ed[0]}`)
-      } else if (sd) {
-        lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to present`)
+      const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'
+      if (sd) lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${endTime}`)
+      if (entry.highlights && entry.highlights.length) {
+        const hls = entry.highlights.map(hl => "- " + hl)
+        lines.push(`Highlights:`)
+        lines.push(hls.join('  \n'))
       }
-      if (entry.summary) lines.push(`Summary: ${entry.summary}`)
     } else if (catName === "education") {
-
+      lines.push(`${person}'s time at ${entry.institution}:`)
+      if (entry.studyType) lines.push(`Certificate: ${entry.studyType}`)
+      if (entry.area) lines.push(`Area of Focus: ${entry.area}`)
+      const sd = entry.startDate ? entry.startDate.split("-") : false
+      const ed = entry.endDate ? entry.endDate.split("-") : false
+      const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'
+      if (sd) lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${endTime}`)
+      if (entry.gpa) lines.push(`GPA: ${entry.gpa}`)
+      if (entry.courses && entry.courses.length) {
+        lines.push(`Courses: ${entry.summary}`)
+      }
     } else if (catName === "thing") {
 
     }
-    return lines.join(`\n`)
+    return lines.join("  \n")
   }
 
   for (let i=0;i<Object.keys(resume).length-1;i++){
@@ -117,10 +132,10 @@ module.exports = function (controller) {
     if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
-      const {text, } = formatReply(catName, entry)
+      const text = formatReply(catName, entry)
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         await bot.reply(message, {
-          text: entry[title],
+          text,
           entry
         })
       })

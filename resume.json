@@ -137,7 +137,7 @@
   ],
   "skills": [
     {
-      "name": "Backend Languages/Frameworks",
+      "name": "Backend",
       "level": "Proficient",
       "keywords": [
         "Ruby on Rails",
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "name": "Frontend Languages/Frameworks",
+      "name": "Frontend",
       "level": "Proficient",
       "keywords": [
         "HTML",
@@ -195,7 +195,7 @@
       "fluency": "Native speaker"
     },
     {
-      "language": "Chinese (Mandarin)",
+      "language": "Chinese-Mandarin",
       "fluency": "Native speaker"
     }
   ],
@@ -211,8 +211,8 @@
     {
       "name": "Video Games",
       "keywords": [
-        "Los Angeles Chargers",
-        "Fantasy Football"
+        "Apex Legends",
+        "Super Smash Bros."
       ]
     },
     {

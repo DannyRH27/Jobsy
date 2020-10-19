@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
+const fr = require("./format_responses.js")();
 const express = require("express");
 const path = require("path");
 const resume = require("../resume.json");
@@ -63,55 +64,7 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
-  const months = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December",
-  }
-
-  const formatReply = (catName, entry) => {
-    const lines = []
-    const person = resume.basics.name
-    if (catName === "work" || catName === "volunteer") {
-      const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
-      if (comp) lines.push(`${person}'s time at ${comp}:`)
-      if (entry.position) lines.push(`Position: ${entry.position}`)
-      if (entry.summary) lines.push(`Summary: ${entry.summary}`)
-      const sd = entry.startDate ? entry.startDate.split("-") : false
-      const ed = entry.endDate ? entry.endDate.split("-") : false
-      const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'
-      if (sd) lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${endTime}`)
-      if (entry.highlights && entry.highlights.length) {
-        const hls = entry.highlights.map(hl => "- " + hl)
-        lines.push(`Highlights:`)
-        lines.push(hls.join('  \n'))
-      }
-    } else if (catName === "education") {
-      lines.push(`${person}'s time at ${entry.institution}:`)
-      if (entry.studyType) lines.push(`Certificate: ${entry.studyType}`)
-      if (entry.area) lines.push(`Area of Focus: ${entry.area}`)
-      const sd = entry.startDate ? entry.startDate.split("-") : false
-      const ed = entry.endDate ? entry.endDate.split("-") : false
-      const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'
-      if (sd) lines.push(`Timeframe: ${months[sd[1]]}, ${sd[0]} to ${endTime}`)
-      if (entry.gpa) lines.push(`GPA: ${entry.gpa}`)
-      if (entry.courses && entry.courses.length) {
-        lines.push(`Courses: ${entry.summary}`)
-      }
-    } else if (catName === "thing") {
-
-    }
-    return lines.join("  \n")
-  }
+  
 
   for (let i=0;i<Object.keys(resume).length-1;i++){
     const [catName, title] = categories[i]
@@ -119,10 +72,12 @@ module.exports = function (controller) {
     // make responses for each category name
     controller.hears(catName, "message, direct_message", async(bot, message) => {
       const quick_replies = resumeScan(resume[catName], title)
+      // format this reply based on category name
       // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
       console.log(quick_replies)
       // if (quick_replies === false), make an "unavailable" response here
       await bot.reply(message, {
+        // text should be different
         text: catName,
         quick_replies
       })
@@ -132,7 +87,7 @@ module.exports = function (controller) {
     if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
-      const text = formatReply(catName, entry)
+      const text = fr.formatEndNode(catName, entry)
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         await bot.reply(message, {
           text,

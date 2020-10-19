@@ -94,6 +94,7 @@ const App = ({ options }: Props) => {
 
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
+          console.log(message)
           addMessageToState({ ...message, direction: "incoming" });
         });
       }

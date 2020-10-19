@@ -1,24 +1,34 @@
 {
   "basics": {
-    "name": "John Doe",
+    "name": "Danny Huang",
     "label": "Programmer",
     "picture": "",
-    "email": "john@gmail.com",
-    "phone": "(912) 555-4321",
+    "email": "danny.r.huang@gmail.com",
+    "phone": "(858) 314-0788",
     "website": "http://johndoe.com",
     "summary": "A summary of John Doe...",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
+      "address": "1254 Rhode Island St",
+      "postalCode": "CA 94107",
       "city": "San Francisco",
       "countryCode": "US",
       "region": "California"
     },
     "profiles": [
       {
-        "network": "Twitter",
-        "username": "john",
-        "url": "http://twitter.com/john"
+        "network": "LinkedIn",
+        "username": "Danny Huang",
+        "url": "https://www.linkedin.com/in/dannyrhuang/"
+      },
+      {
+        "network": "Angel List",
+        "username": "Danny Huang",
+        "url": "https://angel.co/u/danny-r-huang"
+      },
+      {
+        "network": "Github",
+        "username": "Danny Huang",
+        "url": "https://github.com/DannyRH27"
       }
     ]
   },
@@ -26,82 +36,156 @@
     {
       "company": "AECOM",
       "position": "Project Manager",
-      "website": "http://company.com",
-      "startDate": "2013-01-01",
-      "endDate": "2014-01-01",
-      "summary": "Description...",
+      "website": "https://aecom.com/",
+      "startDate": "2017-07-10",
+      "endDate": "",
+      "summary": "Danny worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
       "picture": "",
       "highlights": [
-        "Started the company"
+        "Created the high level strategy for AECOM NASA project portfolio resulting in winning the contract of $58M dollars."
       ]
     },
     {
-      "company": "Centercode",
-      "position": "Project Manager",
-      "website": "http://company.com",
-      "startDate": "2013-01-01",
-      "endDate": "2014-01-01",
-      "summary": "Description...",
+      "company": "QuEST Global",
+      "position": "Senior Project Analyst",
+      "website": "https://www.quest-global.com/",
+      "startDate": "2016-06-30",
+      "endDate": "2017-06-30",
+      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
       "picture": "",
       "highlights": [
-        "Started the company",
-        "Did some stuff",
-        "Did more stuff",
-        "Did the most stuff"
+        "Built an enterprise project management tool with PostgreSQL, Python, and Javascript that reduced planning cycle time by 25%.",
+        "Created VBA modules to automate analysts' tasks in order to reduce manual inputs/errors."
+      ]
+    },
+    {
+      "company": "Zen: A Modern Asian Bistro",
+      "position": "Cofounder",
+      "website": "https://www.zenmodernasian.com/",
+      "startDate": "2016-01-20",
+      "endDate": "",
+      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
+      "picture": "",
+      "highlights": [
+        "Built an enterprise project management tool with PostgreSQL, Python, and Javascript that reduced planning cycle time by 25%.",
+        "Created VBA modules to automate analysts' tasks in order to reduce manual inputs/errors."
       ]
     }
   ],
   "volunteer": [
     {
-      "organization": "Organization",
+      "organization": "Danny Huang Foundation",
       "picture": "",
-      "position": "Volunteer",
+      "position": "Recipient",
       "website": "http://organization.com/",
-      "startDate": "2012-01-01",
-      "endDate": "2013-01-01",
-      "summary": "Description...",
+      "startDate": "1993-06-30",
+      "endDate": "",
+      "summary": "Danny is really good at accepting donations",
       "highlights": [
-        "Awarded 'Volunteer of the Month'"
+        "Best recipient ever."
       ]
     }
   ],
   "education": [
     {
-      "institution": "University",
-      "area": "Software Development",
+      "institution": "San Diego State University",
+      "area": ["Finance","Econometrics"],
       "picture": "",
       "studyType": "Bachelor",
       "startDate": "2011-01-01",
       "endDate": "2013-01-01",
       "gpa": "4.0",
-      "courses": ["DB1101 - Basic SQL"]
+      "courses": ["Financial Analysis & MGMT","Mathematical Economics","International Business Strategy & Integration"]
+    },
+    {
+      "institution": "App Academy",
+      "area": "FullStack Development",
+      "picture": "",
+      "studyType": "Certification",
+      "startDate": "2020-02-10",
+      "endDate": "2020-05-29",
+      "gpa": "",
+      "courses": ["Ruby on Rails","PostgreSQL","MongoDB","Javascript","React","Redux"]
+    },
+    {
+      "institution": "Product School",
+      "area": "Product Management",
+      "picture": "",
+      "studyType": "Certifcate",
+      "startDate": "2019-06-08",
+      "endDate": "2019-08-08",
+      "gpa": "",
+      "courses": ["Customer Segmentation", "Customer Painpoints", "Product Design", "Product Market Fit", "Agile Methodologies", "Product Marketing and Launch"]
     }
   ],
   "awards": [
     {
-      "title": "Award",
-      "date": "2014-11-01",
-      "awarder": "Company",
+      "title": "Employee of the Month",
+      "date": "2017-10-01",
+      "awarder": "AECOM",
       "summary": "There is no spoon."
     }
   ],
   "publications": [
     {
-      "name": "Publication",
-      "publisher": "Company",
-      "releaseDate": "2014-10-01",
+      "name": "Awesome Patent that Danny wrote",
+      "publisher": "AECOM",
+      "releaseDate": "2020-02-07",
       "website": "http://publication.com",
       "summary": "Description..."
     }
   ],
   "skills": [
     {
-      "name": "Web Development",
-      "level": "Master",
+      "name": "Backend Languages/Frameworks",
+      "level": "Proficient",
+      "keywords": [
+        "Ruby on Rails",
+        "Express,js",
+        "Node.js",
+        "Python"
+      ]
+    },
+    {
+      "name": "Frontend Languages/Frameworks",
+      "level": "Proficient",
       "keywords": [
         "HTML",
         "CSS",
-        "Javascript"
+        "Javascript",
+        "Typescript",
+        "React",
+        "Redux",
+        "Styled Components"
+      ]
+    },
+    {
+      "name": "Database",
+      "level": "Proficient",
+      "keywords": [
+        "PostgreSQL",
+        "MongoDB"
+      ]
+    },
+    {
+      "name": "Product Management",
+      "level": "Proficient",
+      "keywords": [
+        "User Segmentation & Product Market Fit",
+        "Wireframe & Product Design",
+        "Product Roadmap/Backlog Grooming",
+        "Agile"
+      ]
+    },
+    {
+      "name": "Misc.",
+      "level": "Proficient",
+      "keywords": [
+        "Socket.IO",
+        "Peer.js",
+        "WebRTC",
+        "AWS S3",
+        "Git"
       ]
     }
   ],
@@ -109,21 +193,49 @@
     {
       "language": "English",
       "fluency": "Native speaker"
+    },
+    {
+      "language": "Chinese (Mandarin)",
+      "fluency": "Native speaker"
     }
   ],
   "interests": [
     {
-      "name": "Wildlife",
+      "name": "Sports",
       "keywords": [
-        "Ferrets",
-        "Unicorns"
+        "Football",
+        "Bowling",
+        "Boxing"
+      ]
+    },
+    {
+      "name": "Video Games",
+      "keywords": [
+        "Los Angeles Chargers",
+        "Fantasy Football"
+      ]
+    },
+    {
+      "name": "Books",
+      "keywords": [
+        "Captain Blood",
+        "Murakami",
+        "Wuxia Novels"
       ]
     }
   ],
   "references": [
     {
-      "name": "Jane Doe",
-      "reference": "Reference..."
+      "name": "Jonathan Yang",
+      "reference": "Cofounder at Zen Modern Asian Bistro."
+    },
+    {
+      "name": "Andrew Walker",
+      "reference": "Direct Supervisor at QuEST Global."
+    },
+    {
+      "name": "Syna Moshggou",
+      "reference": "Direct Supervisor at AECOM."
     }
   ]
 }

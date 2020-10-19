@@ -7,6 +7,7 @@ const path = require("path");
 const store = require("../store");
 const resume = require("../resume.json");
 const titleize = require("titleize");
+
 const resumeScan = (section, name) => {
   if (!section.length) return false;
 
@@ -26,6 +27,8 @@ module.exports = function (controller) {
     "message,direct_message",
     async (bot, message) => {
       const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
+      // const json = json.parse(resume);
+      console.log(typeof resume)
       sections.push("back")
       // const test_replies = sections
       //   .filter((sec) => !store.includes(sec))

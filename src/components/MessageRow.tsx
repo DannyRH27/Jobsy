@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactMarkdown from 'react-markdown';
 import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
@@ -22,6 +23,11 @@ const MessageBody = styled.div`
 
 const Incoming = styled(MessageBody)`
   background-color: white;
+
+  & > ul {
+    /* list-style: inside; */
+    margin-left: 10px;
+  }
 `;
 
 const Outgoing = styled(MessageBody)`
@@ -92,7 +98,9 @@ const MessageRow = ({ message, sendEvent }: Props) => {
       <ProfilePhoto src={"https://via.placeholder.com/40"} />
       {message.direction === "incoming" ? (
         <FlexColumn>
-          <Incoming>{message.text}</Incoming>
+          <Incoming>
+            <ReactMarkdown source={message.text} escapeHtml={false}/>
+          </Incoming>
           {message.quick_replies && !userReplied && (
             <QuickReplies>
               {message.quick_replies.map((option, index) => {

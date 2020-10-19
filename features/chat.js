@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
+const fr = require("./format_responses.js")();
 const express = require("express");
 const path = require("path");
 const store = require("../store");
@@ -78,6 +79,8 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
+  
+
   for (let i=0;i<Object.keys(resume).length-1;i++){
     const [catName, title] = categories[i]
 
@@ -85,9 +88,11 @@ module.exports = function (controller) {
     controller.hears(catName, "message, direct_message", async(bot, message) => {
       // const store = store.getStore()
       const quick_replies = resumeScan(resume[catName], title)
+      // format this reply based on category name
       // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
       // if (quick_replies === false), make an "unavailable" response here
       await bot.reply(message, {
+        // text should be different
         text: catName,
         quick_replies,
         // store
@@ -98,11 +103,12 @@ module.exports = function (controller) {
     if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
+      const text = fr.formatEndNode(catName, entry)
       const visited = store.getStore()
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         store.addData(entry[title])
         await bot.reply(message, {
-          text: entry[title],
+          text,
           entry,
           visited
         })

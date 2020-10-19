@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { FlexColumn, ProfilePhoto } from "./MessageRow";
+import { Container, FlexColumn, ProfilePhoto } from "./MessageRow";
 import { colors } from "../constants";
 
-const TypingContainer = styled.div`
-  display: flex;
+const TypingContainer = styled(Container)`
   flex-direction: row;
-  align-items: flex-start;
-  gap: 8px;
 `;
 const Typing = styled.div`
   display: flex;

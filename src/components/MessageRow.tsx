@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
 
-const Container = styled.div<{ incoming: boolean }>`
+export const Container = styled.div<{ incoming: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.incoming ? "row" : "row-reverse")};
   align-items: flex-start;

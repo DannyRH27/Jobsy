@@ -3,7 +3,8 @@ import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
 import { Message, Event } from "./Types";
 import Input from "./Input";
-import MessageRow from "./components/MessageRow";
+import { MessageRow } from "./components/MessageRow";
+import TypingIndicator from "./components/TypingIndicator"
 import { colors } from "./constants";
 
 const Main = styled.div`
@@ -107,13 +108,19 @@ const App = ({ options }: Props) => {
       socket.current && socket.current.close();
     };
   }, []);
-
+  
   return (
     <Main>
       <MessageList>
         {messages.map((message, index) => (
-          <MessageRow key={index} message={message} sendEvent={sendEvent}/>
+          <MessageRow key={index} message={message} sendEvent={sendEvent} />
         ))}
+        {/* <TypingIndicator>
+          <span></span>
+          <span></span>
+          <span></span>
+        </TypingIndicator> */}
+      <TypingIndicator/>
       </MessageList>
       <Input sendEvent={sendEvent} />
     </Main>

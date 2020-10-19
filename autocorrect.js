@@ -132,5 +132,5 @@ function correct(word) {
   }
 }
 
-var correction = correct("wildlif")
+var correction = correct("AECOMS")
 console.log(correction)

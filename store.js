@@ -1,46 +1,50 @@
 const store = {};
 
-class BasicUserStore {
+class UserStore {
   constructor(userId) {
     this.userId = userId
     this.visited = new Set(),
     this.history = []
   }
+
+  getVisited() {
+    return this.visited
+  }
+  
+  getHistory() {
+    return this.history
+  }
+  
+  visit(entry) {
+    this.history.push(entry)
+    this.visited.add(entry)
+  }
+  
+  lastVisited() {
+    // this returns "home" if you can't go back anymore
+    if (this.history.length) this.history.pop()
+    return this.history.length ? this.history[this.history.length - 1] : "home"
+  }
+  
+  isVisited(entry) {
+    return this.visited.has(entry)
+  }
 }
 
 const createUser = (userId) => {
-  store[userId] = new BasicUserStore(userId)
+  store[userId] = new UserStore(userId)
 }
+
 const getStore = () => {
   return store;
 }
+
 const getUserStore = (userId) => {
   return store[userId];
-}
-const getVisited = (userId) => {
-  return store[userId].visited
-}
-const getHistory = (userId) => {
-  return store[userId].history
-}
-const visit = (userId, entry) => {
-  store[userId].history.push(entry)
-  store[userId].visited.add(entry)
-}
-const goBack = (userId) => {
-  return store[userId].history.pop()
-}
-const isVisited = (userId, entry) => {
-  return store[userId].visited.has(entry)
 }
 
 module.exports = {
   createUser,
   getStore,
-  getUserStore,
-  getVisited,
-  getHistory,
-  visit,
-  goBack,
-  isVisited
+  getUserStore
 };

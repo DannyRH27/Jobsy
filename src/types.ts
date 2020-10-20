@@ -6,7 +6,7 @@ interface QuickReply {
 
 export interface Event {
 	type: "message" | "hello";
-	user: number;
+	userId: number;
 	text?: string;
 	channel?: string;
 }

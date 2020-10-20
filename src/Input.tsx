@@ -20,7 +20,7 @@ const Input = ({ sendEvent }: Props) => {
     event.preventDefault();
     setText("");
     sendEvent({
-      user: 1,
+      userId: 1,
       type: "message",
       text,
     });

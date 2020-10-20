@@ -9,11 +9,11 @@ const store = require("../store");
 const resume = require("../resume.json");
 const titleize = require("titleize");
 
-const resumeScan = (section, name) => {
+const resumeScan = (section, name, userId) => {
   return section.map((entry) => ({
     title: entry[name],
     payload: entry[name],
-    visited: store.isIncluded(entry[name])
+    visited: store.getUserStore(userId).isVisited(entry[name])
   }));
 };
 
@@ -75,7 +75,7 @@ module.exports = function (controller) {
     // make responses for each category name
     controller.hears(catName, "message, direct_message", async(bot, message) => {
       // const store = store.getStore()
-      const quick_replies = resumeScan(resume[catName], title)
+      const quick_replies = resumeScan(resume[catName], title, message.userId)
 
       const catText = fr.formatCategoryText(catName)
       // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
@@ -92,8 +92,8 @@ module.exports = function (controller) {
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
       const text = fr.formatEndNode(catName, entry)
-      const visited = store.getStore()
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
+        const visited = store.getUserStore(message.userId).visited
         store.addData(entry[title])
         await bot.reply(message, {
           text,

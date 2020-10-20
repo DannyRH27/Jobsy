@@ -75,16 +75,20 @@ export const ProfilePhoto = styled.img`
   height: 40px;
 `;
 
+const Empty = styled.div`
+  min-width: 40px;
+`;
+
 interface Props {
   message: Message;
   sendEvent: (event: Event) => void;
 }
 
 const MessageRow = ({ message, sendEvent }: Props) => {
-  const [userReplied, setUserReplied] = useState(false);
+  // const [userReplied, setUserReplied] = useState(false);
 
   const sendReply = (text: string) => {
-    setUserReplied(true);
+    // setUserReplied(true);
     sendEvent({
       type: "message",
       text,
@@ -93,13 +97,17 @@ const MessageRow = ({ message, sendEvent }: Props) => {
 
   return (
     <Container incoming={message.direction === "incoming"}>
-      <ProfilePhoto src={"https://via.placeholder.com/40"} />
+      {message.showAvatar ? (
+        <ProfilePhoto src={"https://via.placeholder.com/40"} />
+      ) : (
+        <Empty />
+      )}
       {message.direction === "incoming" ? (
         <FlexColumn>
           <Incoming>
             <ReactMarkdown source={message.text} escapeHtml={false} />
           </Incoming>
-          {message.quick_replies && !userReplied && (
+          {message.quick_replies && message.showQuickReplies && (
             <QuickReplies>
               {message.quick_replies.map((option, index) => {
                 return option.visited ? (

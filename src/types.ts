@@ -16,4 +16,6 @@ export interface Message {
 	text: string;
 	html?: string;
 	quick_replies?: QuickReply[];
+	showQuickReplies: boolean;
+	showAvatar: boolean;
 }

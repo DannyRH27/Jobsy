@@ -102,7 +102,7 @@ module.exports = function (controller) {
   }
 
 
-// Catch All
+// // Catch All
   controller.on("message,direct_message", async (bot, message) => {
     console.log(typeof message.text)
     const correction =

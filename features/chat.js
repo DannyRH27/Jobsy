@@ -51,7 +51,7 @@ module.exports = function (controller) {
       });
     }
   );
-
+  
   // const companies = resumeScan(resume.work, "company");
   // companies.push({ title: "Back", payload: "back" });
   // controller.hears(

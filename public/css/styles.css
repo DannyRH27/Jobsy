@@ -297,6 +297,7 @@ a.button:hover {
   display: block;
   border-radius: 50%;
   opacity: 0.4;
+  color:blue;
 }
 .typing-indicator span:nth-of-type(1) {
   animation: 1s blink infinite 0.3333s;

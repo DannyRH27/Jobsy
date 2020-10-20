@@ -79,6 +79,17 @@ const App = ({ options }: Props) => {
     }
   };
 
+  const bottomRef = useRef();
+  const scrollToBottom = () => {
+    bottomRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const connect = () => {
     if (options.useSockets) {
       console.log("connecting");
@@ -114,6 +125,7 @@ const App = ({ options }: Props) => {
           switch (message.type) {
             case "typing":
               setTyping(true);
+              scrollToBottom()
               break;
             case "message":
               setTyping(false);
@@ -150,6 +162,7 @@ const App = ({ options }: Props) => {
         ))}
 
         {typing && <TypingIndicator />}
+        <div ref={bottomRef} className="list-bottom"></div>
       </MessageList>
       <Input sendEvent={sendEvent} />
     </Main>

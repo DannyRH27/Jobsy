@@ -6,6 +6,7 @@
 const { BotkitConversation } = require("botkit");
 const { createComputedPropertyName } = require("typescript");
 const resume = require("../resume.json");
+const store = require("../utils/store.js");
 const titleize = require("titleize");
 module.exports = function (controller) {
   // controller.hears('sample','message,direct_message', async(bot, message) => {
@@ -33,6 +34,7 @@ module.exports = function (controller) {
 
   controller.addDialog(onboarding)
   controller.on(["hello","welcome_back"], async (bot, message) => {
+    store.createUser(message.user)
     await bot.beginDialog("onboarding");
   });
 

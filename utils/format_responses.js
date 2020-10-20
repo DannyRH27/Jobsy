@@ -79,12 +79,16 @@ const formatEndNode = (catName, entry) => {
       lines.push(`Key technologies used: ${entry.technologies.join(", ")}`)
     }
   } else if (catName === "skills") {
-    lines.push(`${fName}'s ${entry.name} skills:`)
+    lines.push(`${fName}'s ${entry.name} skill:`)
     if (entry.level) lines.push(`Level: ${entry.level}`)
-    if (entry.keywords && entry.keywords.length) {
-      lines.push(`Areas of expertise:`)
-      entry.keywords.forEach(keyword => lines.push("- " + keyword))
-    }
+    if (entry.years) lines.push(`Years of experience: ${entry.years}`)
+    const relevantProjects = resume.projects && resume.projects.length ? (
+      resume.projects.filter(proj => proj.technologies.includes(entry.name))
+    ) : []
+    if (relevantProjects.length) lines.push(`Relevant projects:  \n`)
+    relevantProjects.forEach(proj => {
+      lines.push(`- [${proj.title}](${proj.liveUrl})  \n`)
+    })
   } else if (catName === "languages") {
     lines.push(`${fName} speaks ${entry.language} at the ${entry.fluency} level`)
   } else if (catName === "interests") {

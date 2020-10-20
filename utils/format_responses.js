@@ -1,4 +1,5 @@
 const resume = require("../resume.json");
+const fName = resume.basics.name.split(' ')[0]
 
 const months = {
   "01": "January",
@@ -31,10 +32,9 @@ const formatDate = (date, startStr) => {
 
 const formatEndNode = (catName, entry) => {
   const lines = []
-  const person = resume.basics.name
   if (catName === "work" || catName === "volunteer") {
     const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
-    if (comp) lines.push(`${person}'s time at ${comp}:`)
+    if (comp) lines.push(`${fName}'s time at ${comp}:`)
     if (entry.position) lines.push(`Position: ${entry.position}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
 
@@ -46,7 +46,7 @@ const formatEndNode = (catName, entry) => {
       entry.highlights.forEach(hl => lines.push("- " + hl))
     }
   } else if (catName === "education") {
-    lines.push(`${person}'s time at ${entry.institution}:`)
+    lines.push(`${fName}'s time at ${entry.institution}:`)
     if (entry.studyType) lines.push(`Certificate: ${entry.studyType}`)
     if (entry.area) lines.push(`Area of Focus: ${entry.area}`)
     
@@ -59,45 +59,82 @@ const formatEndNode = (catName, entry) => {
       entry.courses.forEach(course => lines.push("- " + course))
     }
   } else if (catName === "awards") {
-    lines.push(`${person}'s ${entry.title} award:`)
+    lines.push(`${fName}'s ${entry.title} award:`)
     const dateStr = formatDate(entry.date, "Date awarded")
     if (dateStr) lines.push(dateStr)
     if (entry.awarder) lines.push(`Received from ${entry.awarder}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
   } else if (catName === "publications") {
-    lines.push(`${person}'s ${entry.name} publication:`)
+    lines.push(`${fName}'s ${entry.name} publication:`)
     const dateStr = formatDate(entry.releaseDate, "Date published")
     if (dateStr) lines.push(dateStr)
     if (entry.publisher) lines.push(`Published by ${entry.publisher}`)
     if (entry.website) lines.push(`Published at ${entry.website}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
   } else if (catName === "skills") {
-    lines.push(`${person}'s ${entry.name} skills:`)
+    lines.push(`${fName}'s ${entry.name} skills:`)
     if (entry.level) lines.push(`Level: ${entry.level}`)
     if (entry.keywords && entry.keywords.length) {
       lines.push(`Keywords:`)
       entry.keywords.forEach(keyword => lines.push("- " + keyword))
     }
   } else if (catName === "languages") {
-    lines.push(`${person} speaks ${entry.language} at the ${entry.fluency} level`)
+    lines.push(`${fName} speaks ${entry.language} at the ${entry.fluency} level`)
   } else if (catName === "interests") {
-    lines.push(`${person} is interested in ${entry.name}`)
+    lines.push(`${fName} is interested in ${entry.name}`)
     if (entry.keywords && entry.keywords.length) {
       lines.push(`Keywords:`)
       entry.keywords.forEach(keyword => lines.push("- " + keyword))
     }
   } else if (catName === "references") {
-    lines.push(`${entry.name} is a reference for ${person}`)
+    lines.push(`${entry.name} is a reference for ${fName}`)
     if (entry.reference) lines.push(`Relationship: ${entry.reference}`)
   }
   return lines.join("  \n")
 }
 
-const formatCategory = (catName) => {
+const formatCategoryText = (title) => {
+  const choose = "  \nChoose one to find out more!"
+  let response;
 
+  switch (title) {
+    case "basics":
+      response = `What would you like to know about ${fName}?`
+      break;
+    case "work":
+      response = `${fName} has worked at the following companies:${choose}`
+      break;
+    case "volunteer":
+      response = `${fName} has volunteered for the following organizations:${choose}`
+      break;
+    case "education":
+      response = `${fName} has studied at the following institutions:${choose}`
+      break;
+    case "awards":
+      response = `${fName} has received the following awards:${choose}`
+      break;
+    case "publications":
+      response = `These are ${fName}'s most noteworthy publications':${choose}`
+      break;
+    case "skills":
+      response = `${fName} is proficient in the following areas:${choose}`
+      break;
+    case "languages":
+      response = `${fName} is proficient in the following languages:${choose}`
+      break;
+    case "interests":
+      response = `Here are some of ${fName}'s interests:${choose}`
+      break;
+    case "interests":
+      response = `Here are some of ${fName}'s references:${choose}`
+      break;
+    default:
+      response = ''
+  }
+  return response
 }
 
-module.exports = () => ({
+module.exports = {
   formatEndNode,
-  formatCategory
-})
+  formatCategoryText
+}

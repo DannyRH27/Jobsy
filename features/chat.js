@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
-const fr = require("./format_responses.js")();
+const fr = require("../utils/format_responses.js");
 const express = require("express");
 const path = require("path");
 const store = require("../store");
@@ -10,9 +10,11 @@ const resume = require("../resume.json");
 const titleize = require("titleize");
 
 const resumeScan = (section, name) => {
-  if (!section.length) return false;
-
-  return section.map((entry) => ({ title: entry[name], payload: entry[name], visited : store.isIncluded(entry[name]) }));
+  return section.map((entry) => ({
+    title: entry[name],
+    payload: entry[name],
+    visited: store.isIncluded(entry[name])
+  }));
 };
 
 module.exports = function (controller) {
@@ -52,21 +54,6 @@ module.exports = function (controller) {
     }
   );
 
-  // const companies = resumeScan(resume.work, "company");
-  // companies.push({ title: "Back", payload: "back" });
-  // controller.hears(
-  //   "work",
-  //   "message,direct_message",
-  //   async (bot, message) => {
-      
-  //     const quick_replies = companies
-  //     // console.log(quick_replies)
-  //     await bot.reply(message, {
-  //       text: `Which company do you want to know about?`,
-  //       quick_replies,
-  //     });
-  //   }
-  // );
   categories = [
     ["work", "company"],
     ["volunteer", "organization"],
@@ -79,21 +66,22 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
-  
-
   for (let i=0;i<Object.keys(resume).length-1;i++){
     const [catName, title] = categories[i]
+    if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
+      // make an unavailable message and return
+    }
 
     // make responses for each category name
     controller.hears(catName, "message, direct_message", async(bot, message) => {
       // const store = store.getStore()
       const quick_replies = resumeScan(resume[catName], title)
-      // format this reply based on category name
+
+      const catText = fr.formatCategoryText(catName)
       // const quick_replies = Object.keys(resume.work).map(key => ({title: key[], payload: key}))
       // if (quick_replies === false), make an "unavailable" response here
       await bot.reply(message, {
-        // text should be different
-        text: catName,
+        text: catText,
         quick_replies,
         // store
       })
@@ -113,22 +101,10 @@ module.exports = function (controller) {
           visited
         })
         console.log(visited)
+        console.log(message)
       })
     }
   }
-
-
-  // Maybe we can use this loop for skills,publications, references, interests or whatever
-  // for (let i=0;i<resume.work.length;i++){
-  //   controller.hears(resume.work[i].company, "message, direct_message", async(bot, message) => {
-  //     const quick_replies = Object.keys(resume.work[i]).map(key => ({title: key, payload: key}))
-  //     // console.log(quick_replies)
-  //     await bot.reply(message, {
-  //       text: `Here is a little bit about ${resume.basics.name}'s time at ${resume.work[i].company}.`,
-  //       quick_replies
-  //     })
-  //   })
-  // }
 
   // Make a conversation
   // Add the different pieces
@@ -143,19 +119,6 @@ module.exports = function (controller) {
       })
     })
   }
-
-  
-
-  controller.hears("work", "message,direct_message", async (bot, message) => {
-    const sections = resumeScan(resume.work, "company");
-    // if that was false, prevent moving to "work"
-    sections.push({ title: "bafhadshguifsck", payload: "back" });
-    const quick_replies = sections;
-    await bot.reply(message, {
-      text: `Which company do you want to know about?`,
-      quick_replies,
-    });
-  });
 
   // controller.on("message,direct_message", async (bot, message) => {
   //   await bot.reply(message, { text: "COOL, YO", something: "thing" });

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useReducer } from "react";
 import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
 import { Message, Event } from "./Types";
@@ -6,7 +6,10 @@ import Input from "./Input";
 import { generateGuid } from "./util";
 import MessageRow from "./components/MessageRow";
 import TypingIndicator from "./components/TypingIndicator";
+import messageReducer from "./reducers/messageReducer";
 import { colors } from "./constants";
+import { receiveMessage } from "./reducers/actions";
+import MessageHeader from "./components/MessageHeader";
 
 const Main = styled.div`
   display: flex;
@@ -41,27 +44,37 @@ interface Props {
   options: Options;
 }
 
+const initialMessages: Message[] = [];
+
 const App = ({ options }: Props) => {
   const reconnectCount = useRef(0);
   // const ref = useRef<RefObject>(null);
   const socket = useRef<WebSocket | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  // const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, dispatch] = useReducer(messageReducer, initialMessages);
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
 
-  const addMessageToState = (message: Message) => {
-    setMessages((messages) => [...messages, message]);
-  };
+  // const addMessageToState = (message: Message) => {
+  //   setMessages((messages) => [...messages, message]);
+  // };
 
   const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
-      socket.current.send(JSON.stringify({ ...event, user }));
+      setTimeout(() => {
+        socket.current &&
+          socket.current.send(JSON.stringify({ ...event, user }));
+      }, 200);
       if (event.type === "message") {
-        addMessageToState({
-          type: event.type,
-          text: event.text || "",
-          direction: "outgoing",
-        });
+        dispatch(
+          receiveMessage({
+            type: event.type,
+            text: event.text || "",
+            direction: "outgoing",
+            showQuickReplies: true,
+            showAvatar: true,
+          })
+        );
       }
     }
   };
@@ -104,7 +117,14 @@ const App = ({ options }: Props) => {
               break;
             case "message":
               setTyping(false);
-              addMessageToState({ ...message, direction: "incoming" });
+              dispatch(
+                receiveMessage({
+                  ...message,
+                  direction: "incoming",
+                  showQuickReplies: true,
+                  showAvatar: true,
+                })
+              );
               break;
             default:
               break;
@@ -123,6 +143,7 @@ const App = ({ options }: Props) => {
 
   return (
     <Main>
+      <MessageHeader />
       <MessageList>
         {messages.map((message, index) => (
           <MessageRow key={index} message={message} sendEvent={sendEvent} />

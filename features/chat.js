@@ -33,8 +33,6 @@ module.exports = function (controller) {
       const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
       // const json = json.parse(resume);
 
-      sections.push("back")
-
       const quick_replies = sections
         // .filter((sec) => store.includes(sec))
         .map((sec) => ({
@@ -103,15 +101,18 @@ module.exports = function (controller) {
     }
   }
 
-  // Make a conversation
-  // Add the different pieces
-  // Tell the bot once they click on the company name to begin the dialog
 
+// Catch All
   controller.on("message,direct_message", async (bot, message) => {
-    const correction = autocorrect.correct(message.text)
+    console.log(typeof message.text)
+    const correction =
+      message.text.length < "publications".length
+        ? autocorrect.correct(message.text)
+        : message.text;
+
     const response =
       message.text === correction
-        ? `Sorry, I didn't understand ${correction}`
+        ? `Sorry, I didn't understand ${correction}. Could you repeat that one more time?`
         : `Did you mean to check out ${resume.basics.name}'s experience with ${correction}?`;
 
     await bot.reply(message, { text: response, something: "thing" });

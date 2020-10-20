@@ -1,4 +1,4 @@
-const resume = require("./resume.json");
+const resume = require("../resume.json");
 
 categories = [
   ["work", "company"],
@@ -43,6 +43,7 @@ function editDistance1(word) {
       var newWord = word.slice();
       newWord.splice(i, 0, alphabet[j]);
       results.push(newWord.join(""));
+      results.push(newWord.join("").toUpperCase());
     }
   }
 
@@ -73,7 +74,7 @@ function editDistance1(word) {
       results.push(newWord.join(""));
     }
   }
-
+  console.log(results)
   return results;
 }
 
@@ -81,6 +82,7 @@ function correct(word) {
   if (word in WORD_COUNTS) {
     return word;
   }
+  
 
   var maxCount = 0;
   var correctWord = word;
@@ -106,6 +108,7 @@ function correct(word) {
   console.log(
     "========================================================================"
   );
+  
   var maxCount2 = 0;
   var correctWord2 = correctWord;
 
@@ -132,5 +135,6 @@ function correct(word) {
   }
 }
 
-var correction = correct("AECOMS")
-console.log(correction)
+module.exports = {
+  correct
+}

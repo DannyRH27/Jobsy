@@ -48,6 +48,11 @@ module.exports = function (controller) {
   controller.hears("back", "message, direct_message", async (bot, message) => {
     const userStore = store.getUserStore(message.user)
     const previousResponse = userStore.lastVisited()
+    if (previousResponse.hasOwnProperty('quick_replies')) {
+      previousResponse.quick_replies.forEach(qr => {
+        qr.visited = userStore.isVisited(qr.title)
+      })
+    }
     await bot.reply(message, previousResponse)
   })
 

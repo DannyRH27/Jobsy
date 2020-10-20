@@ -75,7 +75,7 @@ const formatEndNode = (catName, entry) => {
     lines.push(`${fName}'s ${entry.name} skills:`)
     if (entry.level) lines.push(`Level: ${entry.level}`)
     if (entry.keywords && entry.keywords.length) {
-      lines.push(`Keywords:`)
+      lines.push(`Areas of expertise:`)
       entry.keywords.forEach(keyword => lines.push("- " + keyword))
     }
   } else if (catName === "languages") {
@@ -89,6 +89,8 @@ const formatEndNode = (catName, entry) => {
   } else if (catName === "references") {
     lines.push(`${entry.name} is a reference for ${fName}`)
     if (entry.reference) lines.push(`Relationship: ${entry.reference}`)
+  } else if (catName === "profiles") {
+    lines.push(`[Click here](${entry.url}) to go to ${fName}'s ${entry.network} profile!`)
   }
   return lines.join("  \n")
 }
@@ -125,8 +127,41 @@ const formatCategoryText = (title) => {
     case "interests":
       response = `Here are some of ${fName}'s interests:${choose}`
       break;
-    case "interests":
-      response = `Here are some of ${fName}'s references:${choose}`
+    default:
+      response = ''
+  }
+  return response
+}
+
+const formatBasicsText = (title) => {
+  // const choose = "  \nChoose one to find out more!"
+  let response;
+
+  switch (title) {
+    case "email":
+      response = `${fName}'s email is ${resume.basics.email}`
+      break;
+    case "phone":
+      response = `${fName}'s phone number is ${resume.basics.phone}`
+      break;
+    case "website":
+      response = `${fName}'s website is ${resume.basics.website}`
+      break;
+    case "summary":
+      response = `Here is a summary of ${fName}:  \n${resume.basics.summary}`
+      break;
+    case "profiles":
+      response = `Here are some of ${fName}'s online profiles:`
+      break;
+    case "location":
+      const loc = resume.basics.location
+      response = `${fName}'s location is:  \n`
+      if (loc.address) response += `${loc.address}  \n`
+      if (loc.city) {
+        response += `${loc.city}`
+        if (loc.postalCode) response += `, ${loc.postalCode}`
+        response += '  \n'
+      }
       break;
     default:
       response = ''
@@ -136,5 +171,6 @@ const formatCategoryText = (title) => {
 
 module.exports = {
   formatEndNode,
-  formatCategoryText
+  formatCategoryText,
+  formatBasicsText
 }

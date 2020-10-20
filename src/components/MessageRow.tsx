@@ -80,7 +80,7 @@ interface Props {
   sendEvent: (event: Event) => void;
 }
 
-export const MessageRow = ({ message, sendEvent }: Props) => {
+const MessageRow = ({ message, sendEvent }: Props) => {
   const [userReplied, setUserReplied] = useState(false);
 
   const sendReply = (text: string) => {
@@ -126,4 +126,4 @@ export const MessageRow = ({ message, sendEvent }: Props) => {
   );
 };
 
-// export default MessageRow;
+export default MessageRow;

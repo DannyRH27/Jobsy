@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
@@ -46,7 +46,6 @@ const QuickReplies = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
 `;
 
 const Button = styled.button`
@@ -58,16 +57,16 @@ const Button = styled.button`
   transition: opacity 0.3s;
   color: white;
   border-radius: 4px;
-  
+
   &:hover {
-    opacity: 1;  
+    opacity: 1;
   }
 `;
 
 const VisitedButton = styled(Button)`
   background-color: ${colors.sandyBrown};
   opacity: 0.4;
-`
+`;
 
 export const ProfilePhoto = styled.img`
   object-fit: cover;
@@ -81,13 +80,12 @@ interface Props {
   sendEvent: (event: Event) => void;
 }
 
-export const MessageRow = ({ message, sendEvent }: Props) => {
+const MessageRow = ({ message, sendEvent }: Props) => {
   const [userReplied, setUserReplied] = useState(false);
 
   const sendReply = (text: string) => {
     setUserReplied(true);
     sendEvent({
-      user: 1,
       type: "message",
       text,
     });
@@ -99,13 +97,16 @@ export const MessageRow = ({ message, sendEvent }: Props) => {
       {message.direction === "incoming" ? (
         <FlexColumn>
           <Incoming>
-            <ReactMarkdown source={message.text} escapeHtml={false}/>
+            <ReactMarkdown source={message.text} escapeHtml={false} />
           </Incoming>
           {message.quick_replies && !userReplied && (
             <QuickReplies>
               {message.quick_replies.map((option, index) => {
                 return option.visited ? (
-                  <VisitedButton key={index} onClick={() => sendReply(option.payload)}>
+                  <VisitedButton
+                    key={index}
+                    onClick={() => sendReply(option.payload)}
+                  >
                     {option.title}
                   </VisitedButton>
                 ) : (
@@ -125,4 +126,4 @@ export const MessageRow = ({ message, sendEvent }: Props) => {
   );
 };
 
-// export default MessageRow;
+export default MessageRow;

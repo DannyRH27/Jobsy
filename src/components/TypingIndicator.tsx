@@ -42,20 +42,19 @@ const Typing = styled.div`
   }
 `;
 
-
 const TypingIndicator = () => {
   return (
     <TypingContainer incoming={true}>
       <ProfilePhoto src={"https://via.placeholder.com/40"} />
       <FlexColumn>
         <Typing>
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </Typing>
       </FlexColumn>
     </TypingContainer>
   );
-}
+};
 
-export default TypingIndicator
+export default TypingIndicator;

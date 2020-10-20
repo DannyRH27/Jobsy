@@ -31,7 +31,7 @@ module.exports = function (controller) {
     async (bot, message) => {
       const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
       // const json = json.parse(resume);
-      console.log(typeof resume)
+
       sections.push("back")
 
       const quick_replies = sections

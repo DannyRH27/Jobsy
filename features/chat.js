@@ -48,7 +48,6 @@ module.exports = function (controller) {
       });
     }
   );
-
   categories = [
     ["work", "company"],
     ["volunteer", "organization"],

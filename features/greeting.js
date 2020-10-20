@@ -26,8 +26,10 @@ module.exports = function (controller) {
     text: "Here are your options!",
     quick_replies
   };
-  onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume! 
-        My name is Jobsy, how may I assist you?`);
+  onboarding.addMessage({ type: "typing" }, "typing");
+  onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume!`);
+  onboarding.say(`${resume.basics.name} is currently open to opportunities!`);
+  onboarding.say(`My name is Jobsy, how may I assist you?`);
   onboarding.say(reply)
 
   controller.addDialog(onboarding)

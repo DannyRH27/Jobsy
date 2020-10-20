@@ -3,7 +3,8 @@ import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
 import { Message, Event } from "./Types";
 import Input from "./Input";
-import MessageRow from "./components/MessageRow";
+import { MessageRow } from "./components/MessageRow";
+import TypingIndicator from "./components/TypingIndicator"
 import { colors } from "./constants";
 
 const Main = styled.div`
@@ -44,6 +45,7 @@ const App = ({ options }: Props) => {
   // const ref = useRef<RefObject>(null);
   const socket = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [typing, setTyping] = useState(false);
 
   const addMessageToState = (message: Message) => {
     setMessages((messages) => [...messages, message]);
@@ -62,6 +64,10 @@ const App = ({ options }: Props) => {
     }
   };
 
+  const fakeType = () => {
+    setTyping(true)
+    // setTimeout(() => setTyping(false), 1000)
+  }
   const connect = () => {
     if (options.useSockets) {
       console.log("connecting");
@@ -95,7 +101,19 @@ const App = ({ options }: Props) => {
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
           console.log(message)
-          addMessageToState({ ...message, direction: "incoming" });
+          switch (message.type) {
+            case "typing":
+              fakeType()
+              break
+            case "message":
+              setTyping(false)
+              addMessageToState({ ...message, direction: "incoming" });
+              break
+            default:
+              break;
+          }
+          
+
         });
       }
     }
@@ -107,13 +125,15 @@ const App = ({ options }: Props) => {
       socket.current && socket.current.close();
     };
   }, []);
-
+  
   return (
     <Main>
       <MessageList>
         {messages.map((message, index) => (
-          <MessageRow key={index} message={message} sendEvent={sendEvent}/>
+          <MessageRow key={index} message={message} sendEvent={sendEvent} />
         ))}
+        
+        {typing && <TypingIndicator/>}
       </MessageList>
       <Input sendEvent={sendEvent} />
     </Main>

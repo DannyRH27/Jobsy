@@ -9,6 +9,7 @@ import TypingIndicator from "./components/TypingIndicator";
 import messageReducer from "./reducers/messageReducer";
 import { colors } from "./constants";
 import { receiveMessage } from "./reducers/actions";
+import MessageHeader from "./components/MessageHeader";
 
 const Main = styled.div`
   display: flex;
@@ -142,6 +143,7 @@ const App = ({ options }: Props) => {
 
   return (
     <Main>
+      <MessageHeader />
       <MessageList>
         {messages.map((message, index) => (
           <MessageRow key={index} message={message} sendEvent={sendEvent} />

@@ -13,13 +13,14 @@ export const Container = styled.div<{ incoming: boolean }>`
 `;
 
 const Space = styled.div`
-  min-width: 200px;
+  min-width: 70px;
 `;
 
 const MessageBody = styled.div`
   padding: 12px 16px;
   border-radius: 8px;
   box-shadow: 2px 2px 6px ${colors.shadow};
+  line-height: 1.4em;
 `;
 
 const Incoming = styled(MessageBody)`
@@ -36,10 +37,10 @@ const Outgoing = styled(MessageBody)`
   color: white;
 `;
 
-export const FlexColumn = styled.div`
+export const FlexColumn = styled.div<{ incoming?: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: ${({ incoming }) => (incoming ? "flex-start" : "flex-end")};
 `;
 
 const QuickReplies = styled.div`
@@ -69,12 +70,12 @@ const VisitedButton = styled(Button)`
   opacity: 0.4;
 `;
 
-export const ProfilePhoto = styled.img<{ incoming: boolean }>`
+export const ProfilePhoto = styled.img`
   object-fit: cover;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  margin-top: ${({ incoming }) => incoming && "16px"};
+  margin-top: 16px;
 `;
 
 const Empty = styled.div`
@@ -118,16 +119,13 @@ const MessageRow = ({ message, sendEvent }: Props) => {
       <Container incoming={message.direction === "incoming"}>
         {message.showAvatar ? (
           <>
-            <ProfilePhoto
-              incoming={message.direction === "incoming"}
-              src={"https://via.placeholder.com/40"}
-            />
+            <ProfilePhoto src={"https://via.placeholder.com/40"} />
           </>
         ) : (
           <Empty />
         )}
         {message.direction === "incoming" ? (
-          <FlexColumn>
+          <FlexColumn incoming>
             {message.showAvatar && <Name>Jobsy</Name>}
             <Incoming>
               <ReactMarkdown source={message.text} escapeHtml={false} />
@@ -155,7 +153,10 @@ const MessageRow = ({ message, sendEvent }: Props) => {
             )}
           </FlexColumn>
         ) : (
-          <Outgoing>{message.text}</Outgoing>
+          <FlexColumn>
+            {message.showAvatar && <Name>You</Name>}
+            <Outgoing>{message.text}</Outgoing>
+          </FlexColumn>
         )}
         <Space />
       </Container>

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
 import { Message, Event } from "./Types";
 import Input from "./Input";
 import MessageRow from "./components/MessageRow";
+import { generateGuid } from './util';
 import { colors } from "./constants";
 
 const Main = styled.div`
@@ -44,6 +45,7 @@ const App = ({ options }: Props) => {
   // const ref = useRef<RefObject>(null);
   const socket = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const user = useMemo(generateGuid, [])
 
   const addMessageToState = (message: Message) => {
     setMessages((messages) => [...messages, message]);
@@ -51,7 +53,7 @@ const App = ({ options }: Props) => {
 
   const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
-      socket.current.send(JSON.stringify(event));
+      socket.current.send(JSON.stringify({ ...event, user }));
       if (event.type === "message") {
         addMessageToState({
           type: event.type,
@@ -73,7 +75,6 @@ const App = ({ options }: Props) => {
           reconnectCount.current = 0;
           sendEvent({
             type: "hello",
-            user: 1,
             channel: "socket",
           });
         });
@@ -94,7 +95,7 @@ const App = ({ options }: Props) => {
 
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
-          console.log(message)
+          console.log(message);
           addMessageToState({ ...message, direction: "incoming" });
         });
       }
@@ -112,7 +113,7 @@ const App = ({ options }: Props) => {
     <Main>
       <MessageList>
         {messages.map((message, index) => (
-          <MessageRow key={index} message={message} sendEvent={sendEvent}/>
+          <MessageRow key={index} message={message} sendEvent={sendEvent} />
         ))}
       </MessageList>
       <Input sendEvent={sendEvent} />

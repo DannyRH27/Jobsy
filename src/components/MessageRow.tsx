@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
@@ -68,15 +69,22 @@ const VisitedButton = styled(Button)`
   opacity: 0.4;
 `;
 
-export const ProfilePhoto = styled.img`
+export const ProfilePhoto = styled.img<{ incoming: boolean }>`
   object-fit: cover;
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  margin-top: ${({ incoming }) => incoming && "16px"};
 `;
 
 const Empty = styled.div`
   min-width: 40px;
+`;
+
+const Name = styled.div`
+  height: 16px;
+  font-size: 12px;
+  color: ${colors.grey};
 `;
 
 interface Props {
@@ -95,42 +103,63 @@ const MessageRow = ({ message, sendEvent }: Props) => {
     });
   };
 
+  const variants = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 20 },
+  };
+
   return (
-    <Container incoming={message.direction === "incoming"}>
-      {message.showAvatar ? (
-        <ProfilePhoto src={"https://via.placeholder.com/40"} />
-      ) : (
-        <Empty />
-      )}
-      {message.direction === "incoming" ? (
-        <FlexColumn>
-          <Incoming>
-            <ReactMarkdown source={message.text} escapeHtml={false} />
-          </Incoming>
-          {message.quick_replies && message.showQuickReplies && (
-            <QuickReplies>
-              {message.quick_replies.map((option, index) => {
-                return option.visited ? (
-                  <VisitedButton
-                    key={index}
-                    onClick={() => sendReply(option.payload)}
-                  >
-                    {option.title}
-                  </VisitedButton>
-                ) : (
-                  <Button key={index} onClick={() => sendReply(option.payload)}>
-                    {option.title}
-                  </Button>
-                );
-              })}
-            </QuickReplies>
-          )}
-        </FlexColumn>
-      ) : (
-        <Outgoing>{message.text}</Outgoing>
-      )}
-      <Space />
-    </Container>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={variants}
+      transition={{ duration: 0.2 }}
+    >
+      <Container incoming={message.direction === "incoming"}>
+        {message.showAvatar ? (
+          <>
+            <ProfilePhoto
+              incoming={message.direction === "incoming"}
+              src={"https://via.placeholder.com/40"}
+            />
+          </>
+        ) : (
+          <Empty />
+        )}
+        {message.direction === "incoming" ? (
+          <FlexColumn>
+            {message.showAvatar && <Name>Jobsy</Name>}
+            <Incoming>
+              <ReactMarkdown source={message.text} escapeHtml={false} />
+            </Incoming>
+            {message.quick_replies && message.showQuickReplies && (
+              <QuickReplies>
+                {message.quick_replies.map((option, index) => {
+                  return option.visited ? (
+                    <VisitedButton
+                      key={index}
+                      onClick={() => sendReply(option.payload)}
+                    >
+                      {option.title}
+                    </VisitedButton>
+                  ) : (
+                    <Button
+                      key={index}
+                      onClick={() => sendReply(option.payload)}
+                    >
+                      {option.title}
+                    </Button>
+                  );
+                })}
+              </QuickReplies>
+            )}
+          </FlexColumn>
+        ) : (
+          <Outgoing>{message.text}</Outgoing>
+        )}
+        <Space />
+      </Container>
+    </motion.div>
   );
 };
 

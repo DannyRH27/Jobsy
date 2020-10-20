@@ -60,7 +60,10 @@ const App = ({ options }: Props) => {
 
   const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
-      socket.current.send(JSON.stringify({ ...event, user }));
+      setTimeout(() => {
+        socket.current &&
+          socket.current.send(JSON.stringify({ ...event, user }));
+      }, 200);
       if (event.type === "message") {
         dispatch(
           receiveMessage({

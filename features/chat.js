@@ -8,7 +8,6 @@ const path = require("path");
 const store = require("../utils/store");
 const resume = require("../resume.json");
 const titleize = require("titleize");
-const { formatCategoryText } = require("../utils/format_responses.js");
 
 const resumeScan = (section, name, userStore) => {
   return section.map((entry) => ({
@@ -27,27 +26,29 @@ module.exports = function (controller) {
   console.log("Chat with me: http://localhost:" + (process.env.PORT || 3000));
 
   controller.hears("home", "message, direct_message", async (bot, message) => {
-      const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
+    const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
 
-      sections.push("back")
+    const quick_replies = sections
+      .map((sec) => ({
+        title: titleize(sec),
+        payload: titleize(sec),
+      }));
 
-      const quick_replies = sections
-        .map((sec) => ({
-          title: titleize(sec),
-          payload: titleize(sec),
-        }));
-      await bot.reply(message, {
-        text: `Welcome back to ${resume.basics.name}'s interactive resume! 
+    const botReply = {
+      text: `Welcome back to ${resume.basics.name}'s interactive resume! 
         Here are your options!`,
-        quick_replies
-      });
+      quick_replies
     }
-  );
+    
+    const userStore = store.getUserStore(message.user)
+    userStore.visit(botReply, "home")
+    await bot.reply(message, botReply);
+  });
 
   controller.hears("back", "message, direct_message", async (bot, message) => {
     const userStore = store.getUserStore(message.user)
-    const lastVisited = userStore.lastVisited()
-    // send a message to jobsy with lastVisited as the text that the user would have sent
+    const previousResponse = userStore.lastVisited()
+    await bot.reply(message, previousResponse)
   })
 
   const basicsKeys = []
@@ -69,12 +70,13 @@ module.exports = function (controller) {
       visited: userStore.isVisited(key)
     }))
 
-    userStore.visit("basics")
-
-    await bot.reply(message, {
+    const botReply = {
       text: fr.formatCategoryText("basics"),
       quick_replies
-    })
+    }
+
+    userStore.visit(botReply, "basics")
+    await bot.reply(message, botReply)
   })
 
   for (let i = 0; i < basicsKeys.length; i++) {
@@ -94,10 +96,11 @@ module.exports = function (controller) {
         })
       }
 
-      userStore.visit(key)
-
+      
       const text = fr.formatBasicsText(key)
       const botReply = quick_replies.length ? {text, quick_replies} : {text}
+
+      userStore.visit(botReply, key)
       await bot.reply(message, botReply)
     })
   }
@@ -109,12 +112,14 @@ module.exports = function (controller) {
 
       controller.hears(prof.network, "message, direct_message", async (bot, message) => {
         const userStore = store.getUserStore(message.user)
-        userStore.visit(prof.network)
-
-        await bot.reply(message, {
+        
+        const botReply = {
           text: nodeText,
           entry: prof
-        })
+        }
+
+        userStore.visit(botReply, prof.network)
+        await bot.reply(message, botReply)
       })
     }
   }
@@ -145,14 +150,16 @@ module.exports = function (controller) {
       const userStore = store.getUserStore(message.user)
       
       const quick_replies = resumeScan(resume[catName], title, userStore)
-      userStore.visit(catName)
+      // if (quick_replies === false), make an "unavailable" response here
       
       const catText = fr.formatCategoryText(catName)
-      // if (quick_replies === false), make an "unavailable" response here
-      await bot.reply(message, {
+      const botReply = {
         text: catText,
         quick_replies
-      })
+      }
+
+      userStore.visit(botReply, catName)
+      await bot.reply(message, botReply)
     })
     
     // make responses for each listing in each category
@@ -163,14 +170,15 @@ module.exports = function (controller) {
 
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         const userStore = store.getUserStore(message.user)
-        userStore.visit(entry[title])
-
-        console.log(userStore.history)
-
-        await bot.reply(message, {
+        
+        const botReply = {
           text: nodeText,
           entry
-        })
+        }
+        // console.log(userStore.history)
+        
+        userStore.visit(botReply, entry[title])
+        await bot.reply(message, botReply)
       })
     }
   }

@@ -6,6 +6,7 @@
 const { BotkitConversation } = require("botkit");
 const { createComputedPropertyName } = require("typescript");
 const resume = require("../resume.json");
+const store = require("../utils/store.js");
 const titleize = require("titleize");
 module.exports = function (controller) {
   // controller.hears('sample','message,direct_message', async(bot, message) => {
@@ -25,14 +26,16 @@ module.exports = function (controller) {
     text: "Here are your options!",
     quick_replies
   };
-  onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume! 
-        My name is Jobsy, how may I assist you?`);
+  onboarding.addMessage({ type: "typing" }, "typing");
+  onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume!`);
+  onboarding.say(`${resume.basics.name} is currently open to opportunities!`);
+  onboarding.say(`My name is Jobsy, how may I assist you?`);
   onboarding.say(reply)
 
   controller.addDialog(onboarding)
   controller.on(["hello","welcome_back"], async (bot, message) => {
+    store.createUser(message.user)
     await bot.beginDialog("onboarding");
-
   });
 
 };

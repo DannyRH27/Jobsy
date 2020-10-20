@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
 
-const Container = styled.div<{ incoming: boolean }>`
+export const Container = styled.div<{ incoming: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.incoming ? "row" : "row-reverse")};
   align-items: flex-start;
@@ -35,7 +35,7 @@ const Outgoing = styled(MessageBody)`
   color: white;
 `;
 
-const FlexColumn = styled.div`
+export const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -68,7 +68,7 @@ const VisitedButton = styled(Button)`
   opacity: 0.4;
 `;
 
-const ProfilePhoto = styled.img`
+export const ProfilePhoto = styled.img`
   object-fit: cover;
   border-radius: 50%;
   width: 40px;
@@ -80,7 +80,7 @@ interface Props {
   sendEvent: (event: Event) => void;
 }
 
-const MessageRow = ({ message, sendEvent }: Props) => {
+export const MessageRow = ({ message, sendEvent }: Props) => {
   const [userReplied, setUserReplied] = useState(false);
 
   const sendReply = (text: string) => {
@@ -126,4 +126,4 @@ const MessageRow = ({ message, sendEvent }: Props) => {
   );
 };
 
-export default MessageRow;
+// export default MessageRow;

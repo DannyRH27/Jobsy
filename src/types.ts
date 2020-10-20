@@ -17,7 +17,3 @@ export interface Message {
 	html?: string;
 	quick_replies?: QuickReply[];
 }
-
-export interface Event {
-
-}

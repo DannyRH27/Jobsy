@@ -118,6 +118,27 @@
       "courses": ["Customer Segmentation", "Customer Painpoints", "Product Design", "Product Market Fit", "Agile Methodologies", "Product Marketing and Launch"]
     }
   ],
+  "projects": [
+    {
+      "title": "DistanSing",
+      "summary": "Proj summary",
+      "liveUrl": "stuff.com",
+      "gitUrl": "stuff.com",
+      "technologies": [
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "title": "DannyDash",
+      "liveUrl": "stuff.com",
+      "gitUrl": "stuff.com",
+      "technologies": [
+        "CSS",
+        "Ruby on Rails"
+      ]
+    }
+  ],
   "awards": [
     {
       "title": "Employee of the Month",
@@ -136,58 +157,28 @@
     }
   ],
   "skills": [
-    {
-      "name": "Backend",
-      "level": "Proficient",
-      "keywords": [
-        "Ruby on Rails",
-        "Express,js",
-        "Node.js",
-        "Python"
-      ]
-    },
-    {
-      "name": "Frontend",
-      "level": "Proficient",
-      "keywords": [
-        "HTML",
-        "CSS",
-        "Javascript",
-        "Typescript",
-        "React",
-        "Redux",
-        "Styled Components"
-      ]
-    },
-    {
-      "name": "Database",
-      "level": "Proficient",
-      "keywords": [
-        "PostgreSQL",
-        "MongoDB"
-      ]
-    },
-    {
-      "name": "Product Management",
-      "level": "Proficient",
-      "keywords": [
-        "User Segmentation & Product Market Fit",
-        "Wireframe & Product Design",
-        "Product Roadmap/Backlog Grooming",
-        "Agile"
-      ]
-    },
-    {
-      "name": "Misc.",
-      "level": "Proficient",
-      "keywords": [
-        "Socket.IO",
-        "Peer.js",
-        "WebRTC",
-        "AWS S3",
-        "Git"
-      ]
-    }
+    { "name": "Ruby on Rails", "level": "Proficient", "years": 1 },
+    { "name": "Express.js", "level": "Proficient", "years": 1 },
+    { "name": "Node.js", "level": "Proficient", "years": 1 },
+    { "name": "Python", "level": "Proficient", "years": 1 },
+    { "name": "HTML", "level": "Proficient", "years": 1 },
+    { "name": "CSS", "level": "Proficient", "years": 1 },
+    { "name": "JavaScript", "level": "Proficient", "years": 1 },
+    { "name": "TypeScript", "level": "Proficient", "years": 1 },
+    { "name": "React", "level": "Proficient", "years": 1 },
+    { "name": "Redux", "level": "Proficient", "years": 1 },
+    { "name": "Styled Components", "level": "Proficient", "years": 1 },
+    { "name": "PostgreSQL", "level": "Proficient", "years": 1 },
+    { "name": "MongoDB", "level": "Proficient", "years": 1 },
+    { "name": "User Segmentation & Product Market Fit", "level": "Proficient", "years": 1 },
+    { "name": "Wireframe & Product Design", "level": "Proficient", "years": 1 },
+    { "name": "Product Roadmap/Backlog Grooming", "level": "Proficient", "years": 1 },
+    { "name": "Agile", "level": "Proficient", "years": 1 },
+    { "name": "Socket.IO", "level": "Proficient", "years": 1 },
+    { "name": "Peer.js", "level": "Proficient", "years": 1 },
+    { "name": "WebRTC", "level": "Proficient", "years": 1 },
+    { "name": "AWS S3", "level": "Proficient", "years": 1 },
+    { "name": "Git", "level": "Proficient", "years": 1 }
   ],
   "languages": [
     {

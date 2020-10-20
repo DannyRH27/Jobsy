@@ -15,15 +15,15 @@ class UserStore {
     return this.history
   }
   
-  visit(entry) {
-    this.history.push(entry)
-    this.visited.add(entry)
+  visit(botReply, text) {
+    this.history.push(botReply)
+    this.visited.add(text)
   }
   
   lastVisited() {
     // this returns "home" if you can't go back anymore
-    if (this.history.length) this.history.pop()
-    return this.history.length ? this.history[this.history.length - 1] : "home"
+    if (this.history.length > 1) this.history.pop()
+    return this.history[this.history.length - 1]
   }
   
   isVisited(entry) {

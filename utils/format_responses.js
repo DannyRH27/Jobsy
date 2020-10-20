@@ -71,13 +71,24 @@ const formatEndNode = (catName, entry) => {
     if (entry.publisher) lines.push(`Published by ${entry.publisher}`)
     if (entry.website) lines.push(`Published at ${entry.website}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
-  } else if (catName === "skills") {
-    lines.push(`${fName}'s ${entry.name} skills:`)
-    if (entry.level) lines.push(`Level: ${entry.level}`)
-    if (entry.keywords && entry.keywords.length) {
-      lines.push(`Keywords:`)
-      entry.keywords.forEach(keyword => lines.push("- " + keyword))
+  } else if (catName === "projects") {
+    lines.push(`${entry.title}: ${entry.summary}`)
+    if (entry.liveUrl) lines.push(`[Live Link](${entry.liveUrl})`)
+    if (entry.gitUrl) lines.push(`[GitHub Link](${entry.gitUrl})`)
+    if (entry.technologies && entry.technologies.length) {
+      lines.push(`Key technologies used: ${entry.technologies.join(", ")}`)
     }
+  } else if (catName === "skills") {
+    lines.push(`${fName}'s ${entry.name} skill:`)
+    if (entry.level) lines.push(`Level: ${entry.level}`)
+    if (entry.years) lines.push(`Years of experience: ${entry.years}`)
+    const relevantProjects = resume.projects && resume.projects.length ? (
+      resume.projects.filter(proj => proj.technologies.includes(entry.name))
+    ) : []
+    if (relevantProjects.length) lines.push(`Relevant projects:  \n`)
+    relevantProjects.forEach(proj => {
+      lines.push(`- [${proj.title}](${proj.liveUrl})  \n`)
+    })
   } else if (catName === "languages") {
     lines.push(`${fName} speaks ${entry.language} at the ${entry.fluency} level`)
   } else if (catName === "interests") {
@@ -89,6 +100,8 @@ const formatEndNode = (catName, entry) => {
   } else if (catName === "references") {
     lines.push(`${entry.name} is a reference for ${fName}`)
     if (entry.reference) lines.push(`Relationship: ${entry.reference}`)
+  } else if (catName === "profiles") {
+    lines.push(`[Click here](${entry.url}) to go to ${fName}'s ${entry.network} profile!`)
   }
   return lines.join("  \n")
 }
@@ -110,6 +123,9 @@ const formatCategoryText = (title) => {
     case "education":
       response = `${fName} has studied at the following institutions:${choose}`
       break;
+    case "projects":
+      response = `Here are some of ${fName}'s most interesting projects:${choose}`
+      break;
     case "awards":
       response = `${fName} has received the following awards:${choose}`
       break;
@@ -125,8 +141,41 @@ const formatCategoryText = (title) => {
     case "interests":
       response = `Here are some of ${fName}'s interests:${choose}`
       break;
-    case "interests":
-      response = `Here are some of ${fName}'s references:${choose}`
+    default:
+      response = ''
+  }
+  return response
+}
+
+const formatBasicsText = (title) => {
+  // const choose = "  \nChoose one to find out more!"
+  let response;
+
+  switch (title) {
+    case "email":
+      response = `${fName}'s email is ${resume.basics.email}`
+      break;
+    case "phone":
+      response = `${fName}'s phone number is ${resume.basics.phone}`
+      break;
+    case "website":
+      response = `${fName}'s website is ${resume.basics.website}`
+      break;
+    case "summary":
+      response = `Here is a summary of ${fName}:  \n${resume.basics.summary}`
+      break;
+    case "profiles":
+      response = `Here are some of ${fName}'s online profiles:`
+      break;
+    case "location":
+      const loc = resume.basics.location
+      response = `${fName}'s location is:  \n`
+      if (loc.address) response += `${loc.address}  \n`
+      if (loc.city) {
+        response += `${loc.city}`
+        if (loc.postalCode) response += `, ${loc.postalCode}`
+        response += '  \n'
+      }
       break;
     default:
       response = ''
@@ -136,5 +185,6 @@ const formatCategoryText = (title) => {
 
 module.exports = {
   formatEndNode,
-  formatCategoryText
+  formatCategoryText,
+  formatBasicsText
 }

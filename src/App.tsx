@@ -45,6 +45,7 @@ const App = ({ options }: Props) => {
   // const ref = useRef<RefObject>(null);
   const socket = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [typing, setTyping] = useState(false);
 
   const addMessageToState = (message: Message) => {
     setMessages((messages) => [...messages, message]);
@@ -63,6 +64,10 @@ const App = ({ options }: Props) => {
     }
   };
 
+  const fakeType = () => {
+    setTyping(true)
+    // setTimeout(() => setTyping(false), 1000)
+  }
   const connect = () => {
     if (options.useSockets) {
       console.log("connecting");
@@ -96,7 +101,19 @@ const App = ({ options }: Props) => {
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
           console.log(message)
-          addMessageToState({ ...message, direction: "incoming" });
+          switch (message.type) {
+            case "typing":
+              fakeType()
+              break
+            case "message":
+              setTyping(false)
+              addMessageToState({ ...message, direction: "incoming" });
+              break
+            default:
+              break;
+          }
+          
+
         });
       }
     }
@@ -115,12 +132,8 @@ const App = ({ options }: Props) => {
         {messages.map((message, index) => (
           <MessageRow key={index} message={message} sendEvent={sendEvent} />
         ))}
-        {/* <TypingIndicator>
-          <span></span>
-          <span></span>
-          <span></span>
-        </TypingIndicator> */}
-      <TypingIndicator/>
+        
+        {typing && <TypingIndicator/>}
       </MessageList>
       <Input sendEvent={sendEvent} />
     </Main>

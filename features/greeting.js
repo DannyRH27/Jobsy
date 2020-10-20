@@ -34,7 +34,6 @@ module.exports = function (controller) {
   controller.addDialog(onboarding)
   controller.on(["hello","welcome_back"], async (bot, message) => {
     await bot.beginDialog("onboarding");
-
   });
 
 };

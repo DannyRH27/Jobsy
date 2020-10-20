@@ -65,7 +65,7 @@ module.exports = function (controller) {
 
     const quick_replies = basicsKeys.map(key => ({
       title: titleize(key),
-      payload: key,
+      payload: titleize(key),
       visited: userStore.isVisited(key)
     }))
 
@@ -128,6 +128,7 @@ module.exports = function (controller) {
     ["skills", "name"],
     ["languages", "language"],
     ["interests", "name"],
+    ["projects", "title"],
     ["references", "name"]
   ];
 

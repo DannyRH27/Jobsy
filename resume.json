@@ -118,6 +118,27 @@
       "courses": ["Customer Segmentation", "Customer Painpoints", "Product Design", "Product Market Fit", "Agile Methodologies", "Product Marketing and Launch"]
     }
   ],
+  "projects": [
+    {
+      "title": "DistanSing",
+      "summary": "Proj summary",
+      "liveUrl": "stuff.com",
+      "gitUrl": "stuff.com",
+      "technologies": [
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "title": "DannyDash",
+      "liveUrl": "stuff.com",
+      "gitUrl": "stuff.com",
+      "technologies": [
+        "CSS",
+        "Ruby"
+      ]
+    }
+  ],
   "awards": [
     {
       "title": "Employee of the Month",
@@ -137,14 +158,9 @@
   ],
   "skills": [
     {
-      "name": "Backend",
+      "name": "HTML",
       "level": "Proficient",
-      "keywords": [
-        "Ruby on Rails",
-        "Express,js",
-        "Node.js",
-        "Python"
-      ]
+      "years": 2
     },
     {
       "name": "Frontend",

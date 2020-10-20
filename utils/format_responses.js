@@ -71,6 +71,13 @@ const formatEndNode = (catName, entry) => {
     if (entry.publisher) lines.push(`Published by ${entry.publisher}`)
     if (entry.website) lines.push(`Published at ${entry.website}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
+  } else if (catName === "projects") {
+    lines.push(`${entry.title}: ${entry.summary}`)
+    if (entry.liveUrl) lines.push(`[Live Link](${entry.liveUrl})`)
+    if (entry.gitUrl) lines.push(`[GitHub Link](${entry.gitUrl})`)
+    if (entry.technologies && entry.technologies.length) {
+      lines.push(`Key technologies used: ${entry.technologies.join(", ")}`)
+    }
   } else if (catName === "skills") {
     lines.push(`${fName}'s ${entry.name} skills:`)
     if (entry.level) lines.push(`Level: ${entry.level}`)
@@ -111,6 +118,9 @@ const formatCategoryText = (title) => {
       break;
     case "education":
       response = `${fName} has studied at the following institutions:${choose}`
+      break;
+    case "projects":
+      response = `Here are some of ${fName}'s most interesting projects:${choose}`
       break;
     case "awards":
       response = `${fName} has received the following awards:${choose}`

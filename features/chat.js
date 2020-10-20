@@ -2,6 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
+const autocorrect = require("../utils/autocorrect")
 const fr = require("../utils/format_responses.js");
 const express = require("express");
 const path = require("path");
@@ -106,9 +107,15 @@ module.exports = function (controller) {
   // Add the different pieces
   // Tell the bot once they click on the company name to begin the dialog
 
-  // controller.on("message,direct_message", async (bot, message) => {
-  //   await bot.reply(message, { text: "COOL, YO", something: "thing" });
-  // });
+  controller.on("message,direct_message", async (bot, message) => {
+    const correction = autocorrect.correct(message.text)
+    const response =
+      message.text === correction
+        ? `Sorry, I didn't understand ${correction}`
+        : `Did you mean to check out ${resume.basics.name}'s experience with ${correction}?`;
+
+    await bot.reply(message, { text: response, something: "thing" });
+  });
 };
 
 

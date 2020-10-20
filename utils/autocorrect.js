@@ -31,7 +31,7 @@ function getWordCounts() {
 
 var WORD_COUNTS = getWordCounts();
 var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-console.log(getWordCounts())
+
 
 function editDistance1(word) {
   word = word.toLowerCase().split("");

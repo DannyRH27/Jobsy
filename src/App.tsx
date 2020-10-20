@@ -73,7 +73,7 @@ const App = ({ options }: Props) => {
           reconnectCount.current = 0;
           sendEvent({
             type: "hello",
-            userId: 1,
+            user: 1,
             channel: "socket",
           });
         });

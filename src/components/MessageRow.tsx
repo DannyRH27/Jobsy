@@ -87,7 +87,7 @@ const MessageRow = ({ message, sendEvent }: Props) => {
   const sendReply = (text: string) => {
     setUserReplied(true);
     sendEvent({
-      userId: 1,
+      user: 1,
       type: "message",
       text,
     });

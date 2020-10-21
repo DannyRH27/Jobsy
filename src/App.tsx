@@ -10,13 +10,40 @@ import messageReducer from "./reducers/messageReducer";
 import { colors } from "./constants";
 import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
+import { useSpring, animated } from "react-spring";
+
+const Face = styled(animated.img)`
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background-color: ${colors.persianGreenLight};
+  border: 5px solid white;
+  box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+`;
+
+const View = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 const Main = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
   font-family: "Roboto";
+`;
+
+const Panel = styled.div`
+  width: 35%;
+  min-width: 500px;
+  background-color: ${colors.charcoal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const MessageList = styled.div`
@@ -44,10 +71,22 @@ interface Props {
   options: Options;
 }
 
+const calc = (x, y) => [
+  -(y - window.innerHeight / 2) / 40,
+  (x - window.innerWidth * 0.175) / 40,
+  1,
+];
+const trans = (x, y, s) =>
+  `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
+
 const initialMessages: Message[] = [];
 
 const App = ({ options }: Props) => {
   const reconnectCount = useRef(0);
+  const [props, set] = useSpring(() => ({
+    xys: [0, 0, 1],
+    config: { mass: 5, tension: 350, friction: 40 },
+  }));
   // const ref = useRef<RefObject>(null);
   const socket = useRef<WebSocket | null>(null);
   // const [messages, setMessages] = useState<Message[]>([]);
@@ -125,7 +164,7 @@ const App = ({ options }: Props) => {
           switch (message.type) {
             case "typing":
               setTyping(true);
-              scrollToBottom()
+              scrollToBottom();
               break;
             case "message":
               setTyping(false);
@@ -154,18 +193,28 @@ const App = ({ options }: Props) => {
   }, []);
 
   return (
-    <Main>
-      <MessageHeader />
-      <MessageList>
-        {messages.map((message, index) => (
-          <MessageRow key={index} message={message} sendEvent={sendEvent} />
-        ))}
+    <View
+      onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+    >
+      <Panel>
+        <Face
+          style={{ transform: props.xys.interpolate(trans) }}
+          src="./chatbot.png"
+        />
+      </Panel>
+      <Main>
+        <MessageHeader />
+        <MessageList>
+          {messages.map((message, index) => (
+            <MessageRow key={index} message={message} sendEvent={sendEvent} />
+          ))}
 
-        {typing && <TypingIndicator />}
-        <div ref={bottomRef} className="list-bottom"></div>
-      </MessageList>
-      <Input sendEvent={sendEvent} />
-    </Main>
+          {typing && <TypingIndicator />}
+          <div ref={bottomRef} className="list-bottom"></div>
+        </MessageList>
+        <Input sendEvent={sendEvent} />
+      </Main>
+    </View>
   );
 };
 

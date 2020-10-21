@@ -66,7 +66,7 @@ module.exports = function (controller) {
 
   const basicsKeys = ['contact']
   Object.keys(resume.basics).forEach(key => {
-    const nots = new Set(['name', 'label', 'picture', 'openToOpps'])
+    const nots = new Set(['name', 'label', 'picture', 'openToOpps', 'yourself', 'idealCompany'])
     if (nots.has(key)) {
     } else if (key === "profiles") {
       if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
@@ -77,12 +77,24 @@ module.exports = function (controller) {
 
   controller.hears("basics", "message, direct_message", async (bot, message) => {
     const userStore = store.getUserStore(message.user)
+    const noThanks = new Set(['email', 'phone', 'location'])
 
-    const quick_replies = basicsKeys.map(key => ({
+    const orig_replies = basicsKeys.filter(key => !noThanks.has(key))
+    .map(key => ({
       title: titleize(key),
       payload: titleize(key),
       visited: userStore.isVisited(key)
-    })).concat(extra_replies)
+    }))
+
+    if (resume.basics.yourself) orig_replies.unshift(
+      {
+        title: "Tell me about yourself",
+        payload: "Tell me about yourself",
+        visited: userStore.isVisited("Tell me about yourself")
+      }
+    )
+
+    const quick_replies = orig_replies.concat(extra_replies)
 
     const botReply = {
       text: fr.formatCategoryText("basics"),
@@ -92,6 +104,36 @@ module.exports = function (controller) {
     userStore.visit(botReply, '')
     await bot.reply(message, botReply)
   })
+
+  if (resume.basics.yourself) {
+    controller.hears(/your ?self/, "message, direct_message", async (bot, message) => {
+      const userStore = store.getUserStore(message.user)
+      const quick_replies = extra_replies
+  
+      const botReply = {
+        text: resume.basics.yourself,
+        quick_replies
+      }
+  
+      userStore.visit(botReply, "Tell me about yourself")
+      await bot.reply(message, botReply)
+    })
+  }
+
+  if (resume.basics.idealCompany) {
+    controller.hears("ideal company", "message, direct_message", async (bot, message) => {
+      const userStore = store.getUserStore(message.user)
+      const quick_replies = extra_replies
+  
+      const botReply = {
+        text: resume.basics.idealCompany,
+        quick_replies
+      }
+  
+      userStore.visit(botReply, 'idealCompany')
+      await bot.reply(message, botReply)
+    })
+  }
 
   for (let i = 0; i < basicsKeys.length; i++) {
     const key = basicsKeys[i]

@@ -20,6 +20,7 @@ const Nodes = [
   "email",
   "phone",
   "website",
+  "ideal company",
   "summary",
   "location",
   "profile",

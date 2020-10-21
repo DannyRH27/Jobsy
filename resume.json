@@ -3,6 +3,8 @@
     "name": "Danny Huang",
     "label": "Programmer",
     "openToOpps": true,
+    "yourself": "Hi, my name is Danny and I'm a software engineer...",
+    "idealCompany": "I'd love to work for a huge soulless corporation and become a cog in the machine",
     "picture": "",
     "email": "danny.r.huang@gmail.com",
     "phone": "(858) 314-0788",
@@ -203,17 +205,17 @@
   "references": [
     {
       "name": "Jonathan Yang",
-      "reference": "Cofounder at Zen Modern Asian Bistro.",
+      "reference": "Cofounder at Zen Modern Asian Bistro",
       "contact": ""
     },
     {
       "name": "Andrew Walker",
-      "reference": "Direct Supervisor at QuEST Global.",
+      "reference": "Direct Supervisor at QuEST Global",
       "contact": "DON'T CONTACT ME"
     },
     {
       "name": "Syna Moshggou",
-      "reference": "Direct Supervisor at AECOM.",
+      "reference": "Direct Supervisor at AECOM",
       "contact": ""
     }
   ]

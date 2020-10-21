@@ -1,5 +1,5 @@
 const resume = require("../resume.json");
-const fName = resume.basics.name.split(' ')[0]
+// const fName = resume.basics.name.split(' ')[0]
 
 const months = {
   "01": "January",
@@ -29,7 +29,7 @@ const timePeriod = (sd, ed, verb, place, work) => {
 const formatDate = (date, startStr) => {
   if (!date) return ''
   date = date.split("-")
-  return `${startStr} ${months[date[1]]} ${date[2]}, ${date[0]}.`
+  return `${startStr} ${months[date[1]]} ${date[2]}, ${date[0]}`
 }
 
 const formatEndNode = (catName, entry) => {
@@ -37,7 +37,7 @@ const formatEndNode = (catName, entry) => {
   if (catName === "work" || catName === "volunteer") {
     const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
     const timeStr = timePeriod(entry.startDate, entry.endDate, catName, comp, true)
-    const roleStr = timeStr + ` in the role of ${entry.position}.`
+    const roleStr = timeStr + ` in the role of ${entry.position}`
     lines.push(roleStr)
     if (entry.summary) lines.push(entry.summary)
 
@@ -50,10 +50,10 @@ const formatEndNode = (catName, entry) => {
     if (timeStr) lines.push(timeStr)
 
     const degreeText = entry.endDate ? 'I earned a' : 'I will earn a'
-    if (entry.studyType) lines.push(`${degreeText} ${entry.studyType} in ${entry.area}.`)
+    if (entry.studyType) lines.push(`${degreeText} ${entry.studyType} in ${entry.area}`)
     
     const gpaText = entry.endDate ? 'was' : 'is'
-    if (entry.gpa) lines.push(`My GPA ${gpaText} ${entry.gpa}.`)
+    if (entry.gpa) lines.push(`My GPA ${gpaText} ${entry.gpa}`)
     if (entry.courses && entry.courses.length) {
       lines.push(`Here's a list of some of my courses:`)
       entry.courses.forEach(course => lines.push("- " + course))
@@ -73,8 +73,8 @@ const formatEndNode = (catName, entry) => {
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
   } else if (catName === "projects") {
     lines.push(`${entry.title}: ${entry.summary}`)
-    if (entry.liveUrl) lines.push(`Click here for the [Live Link](${entry.liveUrl}).`)
-    if (entry.gitUrl) lines.push(`Click here for the [GitHub Link](${entry.gitUrl}).`)
+    if (entry.liveUrl) lines.push(`[Live Link](${entry.liveUrl})`)
+    if (entry.gitUrl) lines.push(`[GitHub Link](${entry.gitUrl})`)
     if (entry.technologies && entry.technologies.length) {
       lines.push(`Here are some of the key technologies I used on ${entry.title}:  \n${entry.technologies.join(", ")}`)
     }
@@ -82,7 +82,7 @@ const formatEndNode = (catName, entry) => {
     lines.push(`I'm skilled at ${entry.name}!`)
     if (entry.level) lines.push(`I would describe my level of familiarity as ${entry.level}`)
     const yrText = (entry.years && entry.years != 1) ? "years" : "year"
-    if (entry.years) lines.push(`I have ${entry.years} ${yrText} of experience with ${entry.name}.`)
+    if (entry.years) lines.push(`I have ${entry.years} ${yrText} of experience with ${entry.name}`)
     const relevantProjects = resume.projects && resume.projects.length ? (
       resume.projects.filter(proj => proj.technologies.includes(entry.name))
     ) : []
@@ -91,7 +91,7 @@ const formatEndNode = (catName, entry) => {
       lines.push(`- [${proj.title}](${proj.liveUrl})  \n`)
     })
   } else if (catName === "languages") {
-    lines.push(`I speak ${entry.language} at the ${entry.fluency} level.`)
+    lines.push(`I speak ${entry.language} at the ${entry.fluency} level`)
   } else if (catName === "interests") {
     lines.push(`I'm interested in ${entry.name}!`)
     if (entry.keywords && entry.keywords.length) {

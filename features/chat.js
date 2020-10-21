@@ -167,6 +167,7 @@ module.exports = function (controller) {
         }
         await bot.reply(message, botReply)
       })
+      continue
     }
 
 

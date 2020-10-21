@@ -10,7 +10,6 @@ import messageReducer from "./reducers/messageReducer";
 import { colors } from "./constants";
 import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
-import { getSuggestions } from "../utils/autocorrect"
 
 const Main = styled.div`
   display: flex;

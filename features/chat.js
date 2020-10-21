@@ -213,19 +213,23 @@ module.exports = function (controller) {
 
 // // Catch All
   controller.on("message,direct_message", async (bot, message) => {
-
+    const userStore = store.getUserStore(message.user)
     const autocorrections = autocorrect.getSuggestions(message.text)
     const suggestedReplies = []
-    for (let i=0;i<autocorrections.length;i++){
-      suggestedReplies.push({title: titleize(autocorrections[i][1]), payload: titleize(autocorrections[i][1])})
+    if (autocorrections){
+      for (let i = 0; i < autocorrections.length; i++) {
+        suggestedReplies.push({
+          title: titleize(autocorrections[i][1]),
+          payload: titleize(autocorrections[i][1]),
+          visited: userStore.isVisited(autocorrections[i][1])
+        });
+      }
     }
-    console.log(message.text)
-    console.log(autocorrections)
+    
     const response =
-      suggestedReplies.length === 0 
-        ? `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`
-        : `Did you mean to check out ${fName}'s experience with one of these?`;
-    console.log(suggestedReplies)
+      autocorrections
+        ? `Did you mean to check out ${fName}'s experience with one of these?`
+        : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
     await bot.reply(message, { text: response, quick_replies: suggestedReplies });
   });
 };

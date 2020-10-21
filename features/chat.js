@@ -213,18 +213,20 @@ module.exports = function (controller) {
 
 // // Catch All
   controller.on("message,direct_message", async (bot, message) => {
-    console.log(typeof message.text)
-    const correction =
-      message.text.length < "publications".length
-        ? autocorrect.correct(message.text)
-        : message.text;
 
+    const autocorrections = autocorrect.getSuggestions(message.text)
+    const suggestedReplies = []
+    for (let i=0;i<autocorrections.length;i++){
+      suggestedReplies.push({title: titleize(autocorrections[i][1]), payload: titleize(autocorrections[i][1])})
+    }
+    console.log(message.text)
+    console.log(autocorrections)
     const response =
-      message.text === correction
-        ? `Sorry, I didn't understand '${correction}'. Could you repeat that one more time?`
-        : `Did you mean to check out ${fName}'s experience with ${correction}?`;
-
-    await bot.reply(message, { text: response, quick_replies: extra_replies });
+      suggestedReplies.length === 0 
+        ? `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`
+        : `Did you mean to check out ${fName}'s experience with one of these?`;
+    console.log(suggestedReplies)
+    await bot.reply(message, { text: response, quick_replies: suggestedReplies });
   });
 };
 

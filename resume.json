@@ -59,7 +59,7 @@
       ]
     },
     {
-      "company": "Zen: A Modern Asian Bistro",
+      "company": "Zen",
       "position": "Cofounder",
       "website": "https://www.zenmodernasian.com/",
       "startDate": "2016-01-20",
@@ -158,13 +158,8 @@
     { "name": "Styled Components", "level": "Proficient", "years": 1 },
     { "name": "PostgreSQL", "level": "Proficient", "years": 1 },
     { "name": "MongoDB", "level": "Proficient", "years": 1 },
-    { "name": "User Segmentation & Product Market Fit", "level": "Proficient", "years": 1 },
-    { "name": "Wireframe & Product Design", "level": "Proficient", "years": 1 },
-    { "name": "Product Roadmap/Backlog Grooming", "level": "Proficient", "years": 1 },
-    { "name": "Agile", "level": "Proficient", "years": 1 },
     { "name": "Socket.IO", "level": "Proficient", "years": 1 },
     { "name": "Peer.js", "level": "Proficient", "years": 1 },
-    { "name": "WebRTC", "level": "Proficient", "years": 1 },
     { "name": "AWS S3", "level": "Proficient", "years": 1 },
     { "name": "Git", "level": "Proficient", "years": 1 }
   ],

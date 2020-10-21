@@ -62,7 +62,7 @@ for (let i=0;i<Nodes.length;i++){
   wordsArray.add(Nodes[i]);
 }
 
-function getSuggestions(word) {
+const getSuggestions = (word) => {
   return wordsArray.get(word);
 }
 

@@ -18,9 +18,9 @@ const Face = styled.img`
   /* margin-left: -25px;
   margin-top: -25px; */
 
-  background-color: ${colors.persianGreenLight};
-
+  background-color: white;
   will-change: transform;
+  transition: 1s ease-in;
 `;
 
 const Circle = styled(animated.div)`
@@ -31,7 +31,7 @@ const Circle = styled(animated.div)`
   box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.5s;
   overflow: hidden;
-  background-color: ${colors.persianGreenLight};
+  background-color: white;
   /* display: flex;
   justify-content: center; */
 `;

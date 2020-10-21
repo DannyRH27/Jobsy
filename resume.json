@@ -2,11 +2,10 @@
   "basics": {
     "name": "Danny Huang",
     "label": "Programmer",
+    "openToOpps": true,
     "picture": "",
     "email": "danny.r.huang@gmail.com",
     "phone": "(858) 314-0788",
-    "website": "http://dannyrhuang.com",
-    "summary": "A summary of John Doe...",
     "location": {
       "address": "1254 Rhode Island St",
       "postalCode": "CA 94107",
@@ -14,6 +13,8 @@
       "countryCode": "US",
       "region": "California"
     },
+    "website": "http://dannyrhuang.com",
+    "summary": "A summary of John Doe...",
     "profiles": [
       {
         "network": "LinkedIn",
@@ -77,9 +78,9 @@
   "education": [
     {
       "institution": "San Diego State University",
-      "area": ["Finance","Econometrics"],
+      "area": "Finance and Econometrics",
       "picture": "",
-      "studyType": "Bachelor",
+      "studyType": "Bachelors",
       "startDate": "2011-01-01",
       "endDate": "2013-01-01",
       "gpa": "4.0",
@@ -109,7 +110,7 @@
   "projects": [
     {
       "title": "DistanSing",
-      "summary": "Proj summary",
+      "summary": "DistanSing summary",
       "liveUrl": "stuff.com",
       "gitUrl": "stuff.com",
       "technologies": [
@@ -119,6 +120,7 @@
     },
     {
       "title": "DannyDash",
+      "summary": "DannyDash summary",
       "liveUrl": "stuff.com",
       "gitUrl": "stuff.com",
       "technologies": [
@@ -201,15 +203,18 @@
   "references": [
     {
       "name": "Jonathan Yang",
-      "reference": "Cofounder at Zen Modern Asian Bistro."
+      "reference": "Cofounder at Zen Modern Asian Bistro.",
+      "contact": ""
     },
     {
       "name": "Andrew Walker",
-      "reference": "Direct Supervisor at QuEST Global."
+      "reference": "Direct Supervisor at QuEST Global.",
+      "contact": "DON'T CONTACT ME"
     },
     {
       "name": "Syna Moshggou",
-      "reference": "Direct Supervisor at AECOM."
+      "reference": "Direct Supervisor at AECOM.",
+      "contact": ""
     }
   ]
 }

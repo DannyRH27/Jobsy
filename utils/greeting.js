@@ -1,13 +1,16 @@
-/**
+/*
+PUT ME BACK IN FEATURES IF YOU WANT TO USE THIS AS JOBSY
+*/
+
+/*
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
- */
-// const resume = require("../resume.json")
+*/
 const { BotkitConversation } = require("botkit");
 const { createComputedPropertyName } = require("typescript");
 const resume = require("../resume.json");
 const fName = resume.basics.name.split(' ')[0]
-const store = require("../utils/store.js");
+const store = require("./store.js");
 const titleize = require("titleize");
 module.exports = function (controller) {
 

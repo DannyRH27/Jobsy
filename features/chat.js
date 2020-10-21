@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 const autocorrect = require("../utils/autocorrect")
-const fr = require("../utils/format_responses.js");
+const fr = require("../utils/fp_format.js");
 const express = require("express");
 const path = require("path");
 const store = require("../utils/store");
@@ -64,9 +64,10 @@ module.exports = function (controller) {
     await bot.reply(message, previousResponse)
   })
 
-  const basicsKeys = []
+  const basicsKeys = ['contact']
   Object.keys(resume.basics).forEach(key => {
-    if (key === "name" || key === "label" || key === "picture") {
+    const nots = new Set(['name', 'label', 'picture', 'openToOpps'])
+    if (nots.has(key)) {
     } else if (key === "profiles") {
       if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
     } else if (key === "location") {

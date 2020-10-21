@@ -12,20 +12,34 @@ import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
 
-const Face = styled(animated.img)`
+const Face = styled.img`
+  width: 400px;
+  height: auto;
+  /* margin-left: -25px;
+  margin-top: -25px; */
+
+  background-color: ${colors.persianGreenLight};
+
+  will-change: transform;
+`;
+
+const Circle = styled(animated.div)`
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background-color: ${colors.persianGreenLight};
-  border: 5px solid white;
+  border: 8px solid white;
   box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.5s;
-  will-change: transform;
+  overflow: hidden;
+  background-color: ${colors.persianGreenLight};
+  /* display: flex;
+  justify-content: center; */
 `;
 
 const View = styled.div`
   display: flex;
   width: 100%;
+  font-family: "Roboto";
 `;
 
 const Main = styled.div`
@@ -34,7 +48,6 @@ const Main = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  font-family: "Roboto";
 `;
 
 const Panel = styled.div`
@@ -44,6 +57,39 @@ const Panel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+`;
+
+const Title = styled.h1`
+  font-size: 3em;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Oswald";
+  opacity: 0.8;
+`;
+
+const SubTitle = styled(Title)`
+  margin-top: 8px;
+  font-size: 2em;
+  opacity: 0.6;
+`;
+
+const Copyright = styled.div`
+  color: white;
+  align-self: center;
+  opacity: 0.3;
 `;
 
 const MessageList = styled.div`
@@ -72,8 +118,8 @@ interface Props {
 }
 
 const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 40,
-  (x - window.innerWidth * 0.175) / 40,
+  -(y - window.innerHeight / 2) / 60,
+  (x - window.innerWidth * 0.175) / 120,
   1,
 ];
 const trans = (x, y, s) =>
@@ -197,10 +243,16 @@ const App = ({ options }: Props) => {
       onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
     >
       <Panel>
-        <Face
-          style={{ transform: props.xys.interpolate(trans) }}
-          src="./chatbot.png"
-        />
+        <Overlay>
+          <div>
+            <Title>Danny Huang</Title>
+            <SubTitle>Interactive Resume</SubTitle>
+          </div>
+          <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
+        </Overlay>
+        <Circle style={{ transform: props.xys.interpolate(trans) }}>
+          <Face src="./danny.jpg" />
+        </Circle>
       </Panel>
       <Main>
         <MessageHeader />

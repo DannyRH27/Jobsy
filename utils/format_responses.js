@@ -130,7 +130,7 @@ const formatCategoryText = (title) => {
       response = `${fName} has received the following awards:${choose}`
       break;
     case "publications":
-      response = `These are ${fName}'s most noteworthy publications':${choose}`
+      response = `These are ${fName}'s most noteworthy publications:${choose}`
       break;
     case "skills":
       response = `${fName} is proficient in the following areas:${choose}`
@@ -153,13 +153,13 @@ const formatBasicsText = (title) => {
 
   switch (title) {
     case "email":
-      response = `${fName}'s email is ${resume.basics.email}`
+      response = `${fName}'s email address is <${resume.basics.email}>`
       break;
     case "phone":
       response = `${fName}'s phone number is ${resume.basics.phone}`
       break;
     case "website":
-      response = `${fName}'s website is ${resume.basics.website}`
+      response = `${fName}'s website is <${resume.basics.website}>`
       break;
     case "summary":
       response = `Here is a summary of ${fName}:  \n${resume.basics.summary}`

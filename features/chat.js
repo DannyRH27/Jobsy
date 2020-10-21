@@ -28,11 +28,13 @@ module.exports = function (controller) {
 
   controller.hears("home", "message, direct_message", async (bot, message) => {
     const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
+    const userStore = store.getUserStore(message.user)
 
     const quick_replies = sections
       .map((sec) => ({
         title: titleize(sec),
         payload: titleize(sec),
+        visited: userStore.isVisited(sec)
       }));
 
     const botReply = {
@@ -41,7 +43,6 @@ module.exports = function (controller) {
       quick_replies
     }
     
-    const userStore = store.getUserStore(message.user)
     userStore.visit(botReply, "home")
     await bot.reply(message, botReply);
   });

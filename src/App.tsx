@@ -79,9 +79,9 @@ const App = ({ options }: Props) => {
     }
   };
 
-  const bottomRef = useRef();
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const scrollToBottom = () => {
-    bottomRef.current.scrollIntoView({
+    bottomRef?.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });

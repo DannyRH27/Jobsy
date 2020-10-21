@@ -28,7 +28,7 @@ module.exports = function (controller) {
   };
   onboarding.addMessage({ type: "typing" }, "typing");
   onboarding.say(`Welcome to ${resume.basics.name}'s interactive resume!`);
-  onboarding.say(`${resume.basics.name} is currently open to opportunities!`);
+  onboarding.say(`${resume.basics.name.split(' ')[0]} is currently open to opportunities!`);
   onboarding.say(`My name is Jobsy, how may I assist you?`);
   onboarding.say(botReply)
 

@@ -14,9 +14,9 @@ categories = [
 
 function getWordCounts() {
   var wordsArray = Object.keys(resume)
-  for (let i=0;i < categories.length;i++){
-    wordsArray.push(resume[categories[i][0]][0][categories[i][1]]);
-  }
+  // for (let i=0;i < categories.length;i++){
+  //   wordsArray.push(resume[categories[i][0]][0][categories[i][1]]);
+  // }
   console.log(wordsArray)
   var resultObj = {};
   for (var i = 0; i < wordsArray.length; i++) {

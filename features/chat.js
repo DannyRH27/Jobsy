@@ -8,6 +8,7 @@ const express = require("express");
 const path = require("path");
 const store = require("../utils/store");
 const resume = require("../resume.json");
+const fName = resume.basics.name.split(' ')[0]
 const titleize = require("titleize");
 
 const resumeScan = (section, name, userStore) => {
@@ -138,7 +139,7 @@ module.exports = function (controller) {
     }
   }
 
-  categories = [
+  const categories = [
     ["work", "company"],
     ["volunteer", "organization"],
     ["education", "institution"],
@@ -155,7 +156,17 @@ module.exports = function (controller) {
     const [catName, title] = categories[i]
     if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
       // make an unavailable message and return
+      controller.hears(catName, "message, direct_message", async (bot, message) => {
+        const quick_replies = extra_replies
 
+        let replyText = `There are no listings for ${catName} on ${fName}'s resume.  
+        Why not ask ${fName} about it by emailing <${resume.basics.email}>?`
+        const botReply = {
+          text: replyText,
+          quick_replies
+        }
+        await bot.reply(message, botReply)
+      })
     }
 
 
@@ -210,7 +221,7 @@ module.exports = function (controller) {
     const response =
       message.text === correction
         ? `Sorry, I didn't understand '${correction}'. Could you repeat that one more time?`
-        : `Did you mean to check out ${resume.basics.name.split(' ')[0]}'s experience with ${correction}?`;
+        : `Did you mean to check out ${fName}'s experience with ${correction}?`;
 
     await bot.reply(message, { text: response, quick_replies: extra_replies });
   });

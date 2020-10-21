@@ -153,13 +153,13 @@ const formatBasicsText = (title) => {
 
   switch (title) {
     case "email":
-      response = `${fName}'s email is ${resume.basics.email}`
+      response = `${fName}'s email address is <${resume.basics.email}>`
       break;
     case "phone":
       response = `${fName}'s phone number is ${resume.basics.phone}`
       break;
     case "website":
-      response = `${fName}'s website is ${resume.basics.website}`
+      response = `${fName}'s website is <${resume.basics.website}>`
       break;
     case "summary":
       response = `Here is a summary of ${fName}:  \n${resume.basics.summary}`

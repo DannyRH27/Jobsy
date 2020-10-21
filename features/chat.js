@@ -8,6 +8,7 @@ const express = require("express");
 const path = require("path");
 const store = require("../utils/store");
 const resume = require("../resume.json");
+const fName = resume.basics.name.split(' ')[0]
 const titleize = require("titleize");
 
 const resumeScan = (section, name, userStore) => {
@@ -26,6 +27,11 @@ module.exports = function (controller) {
 
   console.log("Chat with me: http://localhost:" + (process.env.PORT || 3000));
 
+  const extra_replies = [
+    {title: "Back", payload: "Back", special: true},
+    {title: "Home", payload: "Home", special: true}
+  ]
+
   controller.hears("home", "message, direct_message", async (bot, message) => {
     const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
     const userStore = store.getUserStore(message.user)
@@ -35,7 +41,7 @@ module.exports = function (controller) {
         title: titleize(sec),
         payload: titleize(sec),
         visited: userStore.isVisited(sec)
-      }));
+      })).concat([extra_replies[0]]);
 
     const botReply = {
       text: `Welcome back to ${resume.basics.name}'s interactive resume! 
@@ -43,7 +49,7 @@ module.exports = function (controller) {
       quick_replies
     }
     
-    userStore.visit(botReply, "home")
+    userStore.visit(botReply, '')
     await bot.reply(message, botReply);
   });
 
@@ -75,14 +81,14 @@ module.exports = function (controller) {
       title: titleize(key),
       payload: titleize(key),
       visited: userStore.isVisited(key)
-    }))
+    })).concat(extra_replies)
 
     const botReply = {
       text: fr.formatCategoryText("basics"),
       quick_replies
     }
 
-    userStore.visit(botReply, "basics")
+    userStore.visit(botReply, '')
     await bot.reply(message, botReply)
   })
 
@@ -102,12 +108,13 @@ module.exports = function (controller) {
           })
         })
       }
+      extra_replies.forEach(rep => quick_replies.push(rep))
 
       
       const text = fr.formatBasicsText(key)
-      const botReply = quick_replies.length ? {text, quick_replies} : {text}
+      const botReply = {text, quick_replies}
 
-      userStore.visit(botReply, key)
+      userStore.visit(botReply, key === "profiles" ? '' : key)
       await bot.reply(message, botReply)
     })
   }
@@ -122,7 +129,8 @@ module.exports = function (controller) {
         
         const botReply = {
           text: nodeText,
-          entry: prof
+          entry: prof,
+          quick_replies: extra_replies
         }
 
         userStore.visit(botReply, prof.network)
@@ -131,16 +139,16 @@ module.exports = function (controller) {
     }
   }
 
-  categories = [
+  const categories = [
     ["work", "company"],
     ["volunteer", "organization"],
     ["education", "institution"],
+    ["projects", "title"],
     ["awards", "title"],
     ["publications", "name"],
     ["skills", "name"],
     ["languages", "language"],
     ["interests", "name"],
-    ["projects", "title"],
     ["references", "name"]
   ];
 
@@ -148,7 +156,18 @@ module.exports = function (controller) {
     const [catName, title] = categories[i]
     if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
       // make an unavailable message and return
+      controller.hears(catName, "message, direct_message", async (bot, message) => {
+        const quick_replies = extra_replies
 
+        let replyText = `There are no listings for ${catName} on ${fName}'s resume.  
+        Why not ask ${fName} about it by emailing <${resume.basics.email}>?`
+        const botReply = {
+          text: replyText,
+          quick_replies
+        }
+        await bot.reply(message, botReply)
+      })
+      continue
     }
 
 
@@ -157,6 +176,7 @@ module.exports = function (controller) {
       const userStore = store.getUserStore(message.user)
       
       const quick_replies = resumeScan(resume[catName], title, userStore)
+        .concat(extra_replies)
       // if (quick_replies === false), make an "unavailable" response here
       
       const catText = fr.formatCategoryText(catName)
@@ -165,12 +185,11 @@ module.exports = function (controller) {
         quick_replies
       }
 
-      userStore.visit(botReply, catName)
+      userStore.visit(botReply, '')
       await bot.reply(message, botReply)
     })
     
     // make responses for each listing in each category
-    if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
       const nodeText = fr.formatEndNode(catName, entry)
@@ -180,7 +199,8 @@ module.exports = function (controller) {
         
         const botReply = {
           text: nodeText,
-          entry
+          entry,
+          quick_replies: extra_replies
         }
         // console.log(userStore.history)
         
@@ -193,18 +213,24 @@ module.exports = function (controller) {
 
 // // Catch All
   controller.on("message,direct_message", async (bot, message) => {
-    console.log(typeof message.text)
-    const correction =
-      message.text.length < "publications".length
-        ? autocorrect.correct(message.text)
-        : message.text;
-
+    const userStore = store.getUserStore(message.user)
+    const autocorrections = autocorrect.getSuggestions(message.text)
+    const suggestedReplies = []
+    if (autocorrections){
+      for (let i = 0; i < autocorrections.length; i++) {
+        suggestedReplies.push({
+          title: titleize(autocorrections[i][1]),
+          payload: titleize(autocorrections[i][1]),
+          visited: userStore.isVisited(autocorrections[i][1])
+        });
+      }
+    }
+    
     const response =
-      message.text === correction
-        ? `Sorry, I didn't understand ${correction}. Could you repeat that one more time?`
-        : `Did you mean to check out ${resume.basics.name}'s experience with ${correction}?`;
-
-    await bot.reply(message, { text: response, something: "thing" });
+      autocorrections
+        ? `Did you mean to check out ${fName}'s experience with one of these?`
+        : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
+    await bot.reply(message, { text: response, quick_replies: suggestedReplies });
   });
 };
 

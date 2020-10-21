@@ -26,6 +26,11 @@ module.exports = function (controller) {
 
   console.log("Chat with me: http://localhost:" + (process.env.PORT || 3000));
 
+  const extra_replies = [
+    {title: "Back", payload: "Back", special: true},
+    {title: "Home", payload: "Home", special: true}
+  ]
+
   controller.hears("home", "message, direct_message", async (bot, message) => {
     const sections = Object.keys(resume).filter(key => key === "basics" || (resume[key] && resume[key].length))
     const userStore = store.getUserStore(message.user)
@@ -35,7 +40,7 @@ module.exports = function (controller) {
         title: titleize(sec),
         payload: titleize(sec),
         visited: userStore.isVisited(sec)
-      }));
+      })).concat([extra_replies[0]]);
 
     const botReply = {
       text: `Welcome back to ${resume.basics.name}'s interactive resume! 
@@ -43,7 +48,7 @@ module.exports = function (controller) {
       quick_replies
     }
     
-    userStore.visit(botReply, "home")
+    userStore.visit(botReply, '')
     await bot.reply(message, botReply);
   });
 
@@ -75,14 +80,14 @@ module.exports = function (controller) {
       title: titleize(key),
       payload: titleize(key),
       visited: userStore.isVisited(key)
-    }))
+    })).concat(extra_replies)
 
     const botReply = {
       text: fr.formatCategoryText("basics"),
       quick_replies
     }
 
-    userStore.visit(botReply, "basics")
+    userStore.visit(botReply, '')
     await bot.reply(message, botReply)
   })
 
@@ -102,12 +107,13 @@ module.exports = function (controller) {
           })
         })
       }
+      extra_replies.forEach(rep => quick_replies.push(rep))
 
       
       const text = fr.formatBasicsText(key)
-      const botReply = quick_replies.length ? {text, quick_replies} : {text}
+      const botReply = {text, quick_replies}
 
-      userStore.visit(botReply, key)
+      userStore.visit(botReply, key === "profiles" ? '' : key)
       await bot.reply(message, botReply)
     })
   }
@@ -122,7 +128,8 @@ module.exports = function (controller) {
         
         const botReply = {
           text: nodeText,
-          entry: prof
+          entry: prof,
+          quick_replies: extra_replies
         }
 
         userStore.visit(botReply, prof.network)
@@ -135,12 +142,12 @@ module.exports = function (controller) {
     ["work", "company"],
     ["volunteer", "organization"],
     ["education", "institution"],
+    ["projects", "title"],
     ["awards", "title"],
     ["publications", "name"],
     ["skills", "name"],
     ["languages", "language"],
     ["interests", "name"],
-    ["projects", "title"],
     ["references", "name"]
   ];
 
@@ -157,6 +164,7 @@ module.exports = function (controller) {
       const userStore = store.getUserStore(message.user)
       
       const quick_replies = resumeScan(resume[catName], title, userStore)
+        .concat(extra_replies)
       // if (quick_replies === false), make an "unavailable" response here
       
       const catText = fr.formatCategoryText(catName)
@@ -165,12 +173,11 @@ module.exports = function (controller) {
         quick_replies
       }
 
-      userStore.visit(botReply, catName)
+      userStore.visit(botReply, '')
       await bot.reply(message, botReply)
     })
     
     // make responses for each listing in each category
-    if (!resume[catName].length) continue
     for (let j = 0; j < resume[catName].length; j++) {
       const entry = resume[catName][j]
       const nodeText = fr.formatEndNode(catName, entry)
@@ -180,7 +187,8 @@ module.exports = function (controller) {
         
         const botReply = {
           text: nodeText,
-          entry
+          entry,
+          quick_replies: extra_replies
         }
         // console.log(userStore.history)
         
@@ -201,10 +209,10 @@ module.exports = function (controller) {
 
     const response =
       message.text === correction
-        ? `Sorry, I didn't understand ${correction}. Could you repeat that one more time?`
-        : `Did you mean to check out ${resume.basics.name}'s experience with ${correction}?`;
+        ? `Sorry, I didn't understand '${correction}'. Could you repeat that one more time?`
+        : `Did you mean to check out ${resume.basics.name.split(' ')[0]}'s experience with ${correction}?`;
 
-    await bot.reply(message, { text: response, something: "thing" });
+    await bot.reply(message, { text: response, quick_replies: extra_replies });
   });
 };
 

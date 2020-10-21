@@ -17,7 +17,7 @@ class UserStore {
   
   visit(botReply, text) {
     this.history.push(botReply)
-    this.visited.add(text.toLowerCase())
+    if (text) this.visited.add(text.toLowerCase())
   }
   
   lastVisited() {

@@ -16,7 +16,7 @@ module.exports = function (controller) {
   const sections = Object.keys(resume).filter(
     (key) => key === "basics" || (resume[key] && resume[key].length)
   );
-  sections.push("back");
+
   const quick_replies = sections.map((sec) => ({
     title: titleize(sec),
     payload: titleize(sec),
@@ -39,7 +39,7 @@ module.exports = function (controller) {
     userStore.visit({
       text: `You're at the base level of ${resume.basics.name}'s resume.  \nChoose from the following options:`,
       quick_replies
-    }, "home")
+    }, '')
     await bot.beginDialog("onboarding");
   });
 

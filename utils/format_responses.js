@@ -130,7 +130,7 @@ const formatCategoryText = (title) => {
       response = `${fName} has received the following awards:${choose}`
       break;
     case "publications":
-      response = `These are ${fName}'s most noteworthy publications':${choose}`
+      response = `These are ${fName}'s most noteworthy publications:${choose}`
       break;
     case "skills":
       response = `${fName} is proficient in the following areas:${choose}`

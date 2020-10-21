@@ -42,8 +42,13 @@
       "website": "https://aecom.com/",
       "startDate": "2017-07-10",
       "endDate": "",
-      "summary": "Danny worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
+      "summary": "I worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
       "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/AECOM.jpg",
+        "linkPath": "https://aecom.com/",
+        "leftText": "AECOM"
+      },
       "highlights": [
         "Created the high level strategy for AECOM NASA project portfolio resulting in winning the contract of $58M dollars."
       ]
@@ -54,8 +59,13 @@
       "website": "https://www.quest-global.com/",
       "startDate": "2016-06-30",
       "endDate": "2017-06-30",
-      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
+      "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
       "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/QuEST.jpg",
+        "linkPath": "https://www.quest-global.com/",
+        "leftText": "QuEST Global"
+      },
       "highlights": [
         "Built an enterprise project management tool with PostgreSQL, Python, and Javascript that reduced planning cycle time by 25%.",
         "Created VBA modules to automate analysts' tasks in order to reduce manual inputs/errors."
@@ -67,11 +77,15 @@
       "website": "https://www.zenmodernasian.com/",
       "startDate": "2016-01-20",
       "endDate": "",
-      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
+      "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
       "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Zen.png",
+        "linkPath": "https://www.yelp.com/biz/zen-modern-asian-san-diego?osq=zen+modern+asian",
+        "leftText": "Zen Modern Asian"
+      },
       "highlights": [
-        "Built an enterprise project management tool with PostgreSQL, Python, and Javascript that reduced planning cycle time by 25%.",
-        "Created VBA modules to automate analysts' tasks in order to reduce manual inputs/errors."
+        "Placed 1st out of 10 teams in inaugural “A Noodle Cook-Off” competition judged by YouTube Influencer Mikey Chen."
       ]
     }
   ],
@@ -81,72 +95,105 @@
     {
       "institution": "San Diego State University",
       "area": "Finance and Econometrics",
-      "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/SDSU.png",
+        "linkPath": "https://www.sdsu.edu/",
+        "leftText": "San Diego State University"
+      },
       "studyType": "Bachelors",
       "startDate": "2011-01-01",
       "endDate": "2013-01-01",
       "gpa": "4.0",
-      "courses": ["Financial Analysis & MGMT","Mathematical Economics","International Business Strategy & Integration"]
+      "courses": [
+        "Financial Analysis & MGMT",
+        "Mathematical Economics",
+        "International Business Strategy & Integration"
+      ]
     },
     {
       "institution": "App Academy",
       "area": "FullStack Development",
-      "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/AA.png",
+        "linkPath": "https://www.appacademy.io/",
+        "leftText": "App Academy"
+      },
       "studyType": "Certification",
       "startDate": "2020-02-10",
       "endDate": "2020-05-29",
       "gpa": "",
-      "courses": ["Ruby on Rails","PostgreSQL","MongoDB","Javascript","React","Redux"]
+      "courses": [
+        "Ruby on Rails",
+        "PostgreSQL",
+        "MongoDB",
+        "Javascript",
+        "React",
+        "Redux"
+      ]
     },
     {
       "institution": "Product School",
       "area": "Product Management",
-      "picture": "",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Product.png",
+        "linkPath": "https://productschool.com/",
+        "leftText": "Product School"
+      },
       "studyType": "Certifcate",
       "startDate": "2019-06-08",
       "endDate": "2019-08-08",
       "gpa": "",
-      "courses": ["Customer Segmentation", "Customer Painpoints", "Product Design", "Product Market Fit", "Agile Methodologies", "Product Marketing and Launch"]
+      "courses": [
+        "Customer Segmentation",
+        "Customer Painpoints",
+        "Product Design",
+        "Product Market Fit",
+        "Agile Methodologies",
+        "Product Marketing and Launch"
+      ]
     }
   ],
   "projects": [
     {
-      "title": "DistanSing",
-      "summary": "DistanSing summary",
-      "liveUrl": "stuff.com",
-      "gitUrl": "stuff.com",
-      "technologies": [
-        "HTML",
-        "CSS"
-      ]
+      "title": "DannyDash",
+      "summary":"A FullStack project inspired by DoorDash. The twist: All deliveries are estimated by Danny's walking speed. Hope you're not hungry!",
+      "liveUrl": "https://dannydash.herokuapp.com/",
+      "gitUrl": "https://github.com/DannyRH27/DannyDash",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/DannyDash.png",
+        "linkPath": "https://dannydash.herokuapp.com/",
+        "leftText": "DannyDash"
+      },
+      "technologies": ["HTML","CSS","Ruby on Rails","PostgreSQL","React","Redux","AWS S3"]
     },
     {
-      "title": "DannyDash",
-      "summary": "DannyDash summary",
-      "liveUrl": "stuff.com",
-      "gitUrl": "stuff.com",
-      "technologies": [
-        "CSS",
-        "Ruby on Rails"
-      ]
+      "title": "DistanSing",
+      "summary": "A FullStack virtual event hosting app developed during the COVID-19 pandemic as a solution for artists/bands to continue catering to their fans. We are all only 6 beats apart from our music community.",
+      "liveUrl": "https://distansing.herokuapp.com/",
+      "gitUrl": "https://github.com/DannyRH27/DistanSing",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/DistanSing.png",
+        "linkPath": "https://www.yelp.com/biz/zen-modern-asian-san-diego?osq=zen+modern+asian",
+        "leftText": "DistanSing"
+      },
+      "technologies": ["HTML", "CSS","Node.js","Express.js","MongoDB","Socket.IO","Peer.js","React","Redux"]
     }
   ],
   "awards": [
     {
       "title": "Employee of the Month",
-      "date": "2017-10-01",
-      "awarder": "AECOM",
-      "summary": "There is no spoon."
+      "date": "2017-11-29",
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Award2.jpg",
+        "linkPath": "",
+        "leftText": "AECOM & NASA Employee of the Month"
+      },
+      "awarder": "AECOM & NASA Ames Research Center",
+      "summary": "I won Employee of the Month award for improving client relations by revamping budget reporting systems."
     }
   ],
   "publications": [
-    {
-      "name": "Awesome Patent that Danny wrote",
-      "publisher": "AECOM",
-      "releaseDate": "2020-02-07",
-      "website": "http://publication.com",
-      "summary": "Description..."
-    }
+
   ],
   "skills": [
     { "name": "Ruby on Rails", "level": "Proficient", "years": 1 },
@@ -156,16 +203,13 @@
     { "name": "HTML", "level": "Proficient", "years": 1 },
     { "name": "CSS", "level": "Proficient", "years": 1 },
     { "name": "JavaScript", "level": "Proficient", "years": 1 },
-    { "name": "TypeScript", "level": "Proficient", "years": 1 },
     { "name": "React", "level": "Proficient", "years": 1 },
     { "name": "Redux", "level": "Proficient", "years": 1 },
-    { "name": "Styled Components", "level": "Proficient", "years": 1 },
     { "name": "PostgreSQL", "level": "Proficient", "years": 1 },
     { "name": "MongoDB", "level": "Proficient", "years": 1 },
     { "name": "Socket.IO", "level": "Proficient", "years": 1 },
     { "name": "Peer.js", "level": "Proficient", "years": 1 },
-    { "name": "AWS S3", "level": "Proficient", "years": 1 },
-    { "name": "Git", "level": "Proficient", "years": 1 }
+    { "name": "AWS S3", "level": "Proficient", "years": 1 }
   ],
   "languages": [
     {
@@ -180,26 +224,30 @@
   "interests": [
     {
       "name": "Sports",
-      "keywords": [
-        "Football",
-        "Bowling",
-        "Boxing"
-      ]
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Sports.jpg",
+        "linkPath": "",
+        "leftText": "Sports"
+      },
+      "keywords": ["Football", "Bowling", "Boxing"]
     },
     {
       "name": "Video Games",
-      "keywords": [
-        "Apex Legends",
-        "Super Smash Bros."
-      ]
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/VideoGames.jpg",
+        "linkPath": "",
+        "leftText": "Video Games"
+      },
+      "keywords": ["Apex Legends", "Super Smash Bros."]
     },
     {
       "name": "Books",
-      "keywords": [
-        "Captain Blood",
-        "Murakami",
-        "Wuxia Novels"
-      ]
+      "metadata": {
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Books.jpg",
+        "linkPath": "",
+        "leftText": "Books"
+      },
+      "keywords": ["Captain Blood", "Murakami", "Wuxia Novels"]
     }
   ],
   "references": [
@@ -211,7 +259,7 @@
     {
       "name": "Andrew Walker",
       "reference": "Direct Supervisor at QuEST Global",
-      "contact": "DON'T CONTACT ME"
+      "contact": ""
     },
     {
       "name": "Syna Moshggou",

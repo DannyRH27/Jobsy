@@ -18,9 +18,9 @@ const Face = styled.img`
   /* margin-left: -25px;
   margin-top: -25px; */
 
-  background-color: ${colors.persianGreenLight};
-
+  background-color: white;
   will-change: transform;
+  transition: 1s ease-in;
 `;
 
 const Circle = styled(animated.div)`
@@ -31,7 +31,7 @@ const Circle = styled(animated.div)`
   box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.5s;
   overflow: hidden;
-  background-color: ${colors.persianGreenLight};
+  background-color: white;
   /* display: flex;
   justify-content: center; */
 `;
@@ -139,10 +139,11 @@ const App = ({ options }: Props) => {
   const [messages, dispatch] = useReducer(messageReducer, initialMessages);
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
-
+  const [picture, setPicture] = useState("./danny.jpg")
   // const addMessageToState = (message: Message) => {
   //   setMessages((messages) => [...messages, message]);
   // };
+
 
   const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
@@ -222,6 +223,12 @@ const App = ({ options }: Props) => {
                   showAvatar: true,
                 })
               );
+              if (message.entry && message.entry.metadata){
+                setPicture(message.entry.metadata.picturePath);
+              } else {
+                setPicture("./danny.jpg")
+              }
+              // Could set side panel state to show metadata
               break;
             default:
               break;
@@ -251,7 +258,7 @@ const App = ({ options }: Props) => {
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
         <Circle style={{ transform: props.xys.interpolate(trans) }}>
-          <Face src="./danny.jpg" />
+          <Face src={picture} />
         </Circle>
       </Panel>
       <Main>

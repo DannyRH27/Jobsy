@@ -139,10 +139,11 @@ const App = ({ options }: Props) => {
   const [messages, dispatch] = useReducer(messageReducer, initialMessages);
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
-
+  const [picture, setPicture] = useState("./danny.jpg")
   // const addMessageToState = (message: Message) => {
   //   setMessages((messages) => [...messages, message]);
   // };
+
 
   const sendEvent = (event: Event) => {
     if (options.useSockets && socket.current) {
@@ -222,6 +223,12 @@ const App = ({ options }: Props) => {
                   showAvatar: true,
                 })
               );
+              if (message.entry && message.entry.metadata){
+                setPicture(message.entry.metadata.picturePath);
+              } else {
+                setPicture("./danny.jpg")
+              }
+              // Could set side panel state to show metadata
               break;
             default:
               break;
@@ -251,7 +258,7 @@ const App = ({ options }: Props) => {
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
         <Circle style={{ transform: props.xys.interpolate(trans) }}>
-          <Face src="./danny.jpg" />
+          <Face src={picture} />
         </Circle>
       </Panel>
       <Main>

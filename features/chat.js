@@ -196,7 +196,7 @@ module.exports = function (controller) {
 
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
         const userStore = store.getUserStore(message.user)
-        
+        // console.log(entry)
         const botReply = {
           text: nodeText,
           entry,
@@ -225,7 +225,7 @@ module.exports = function (controller) {
         });
       }
     }
-    
+    console.log(autocorrections)
     const response =
       autocorrections
         ? `Did you mean to check out ${fName}'s experience with one of these?`

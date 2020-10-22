@@ -128,7 +128,7 @@ const MessageRow = ({ message, sendEvent }: Props) => {
         )}
         {message.direction === "incoming" ? (
           <FlexColumn incoming>
-            {message.showAvatar && <Name>Jobsy</Name>}
+            {message.showAvatar && <Name>Danny</Name>}
             <Incoming>
               <ReactMarkdown source={message.text} escapeHtml={false} />
             </Incoming>

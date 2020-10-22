@@ -17,6 +17,7 @@ import {
   FaGithub,
   FaGithubAlt,
 } from "react-icons/fa";
+import Info from "./components/Info";
 
 const PictureContainer = styled.div`
   display: flex;
@@ -433,6 +434,7 @@ const App = ({ options }: Props) => {
             <PictureCaption href={`${link}`}>{caption}</PictureCaption>
           ) : null}
         </PictureContainer>
+        <Info />
       </Panel>
       <AnimatePresence>
         {!landing && (

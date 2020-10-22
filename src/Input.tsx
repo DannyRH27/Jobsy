@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Event } from "./Types";
 import { colors } from "./constants";
 import { FaTelegramPlane } from "react-icons/fa";
+
 const Form = styled.form`
   display: flex;
   align-items: center;
@@ -31,7 +32,7 @@ const SendButton = styled(FaTelegramPlane)`
   user-select: none;
   cursor: pointer;
   transition: 0.2s;
-  
+
   &:hover {
     /* background-color: ${colors.persianGreenLight}; */
     opacity: 0.8;
@@ -47,7 +48,7 @@ const InputBox = styled.input`
   padding-left: 20px;
   transition: 0.2s;
   &:focus {
-    border-color: rgb(180,180,180);
+    border-color: rgb(180, 180, 180);
   }
 `;
 
@@ -60,11 +61,13 @@ const Input = ({ sendEvent }: Props, ref: any) => {
 
   const sendMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setText("");
-    sendEvent({
-      type: "message",
-      text,
-    });
+    if (text.length !== 0) {
+      setText("");
+      sendEvent({
+        type: "message",
+        text,
+      });
+    }
   };
 
   return (
@@ -75,7 +78,7 @@ const Input = ({ sendEvent }: Props, ref: any) => {
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
       />
-      <SendButton onClick={sendMessage}/>
+      <SendButton onClick={sendMessage} />
     </Form>
   );
 };

@@ -38,7 +38,7 @@ const formatEndNode = (catName, entry) => {
     const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
     const timeStr = timePeriod(entry.startDate, entry.endDate, catName, comp, true)
     const roleStr = timeStr + ` in the role of ${entry.position}`
-    lines.push(roleStr)
+    lines.push(roleStr + '.')
     if (entry.summary) lines.push(entry.summary)
 
     if (entry.highlights && entry.highlights.length) {
@@ -50,10 +50,10 @@ const formatEndNode = (catName, entry) => {
     if (timeStr) lines.push(timeStr)
 
     const degreeText = entry.endDate ? 'I earned a' : 'I will earn a'
-    if (entry.studyType) lines.push(`${degreeText} ${entry.studyType} in ${entry.area}`)
+    if (entry.studyType) lines.push(`${degreeText} ${entry.studyType} in ${entry.area}.`)
     
     const gpaText = entry.endDate ? 'was' : 'is'
-    if (entry.gpa) lines.push(`My GPA ${gpaText} ${entry.gpa}`)
+    if (entry.gpa) lines.push(`My GPA ${gpaText} ${entry.gpa}.`)
     if (entry.courses && entry.courses.length) {
       lines.push(`Here's a list of some of my courses:`)
       entry.courses.forEach(course => lines.push("- " + course))
@@ -62,7 +62,7 @@ const formatEndNode = (catName, entry) => {
     const awarderText = entry.awarder ? ` from ${entry.awarder}` : ''
     const ds = entry.date ? entry.date.split('-') : ''
     const dateStr = ds ? ` in ${months[ds[1]]}, ${ds[0]}` : ''
-    lines.push(`I earned the ${entry.title} award${awarderText}${dateStr}`)
+    lines.push(`I earned the ${entry.title} award${awarderText}${dateStr}!`)
     if (entry.summary) lines.push(`Here's a summary of the award:  \n${entry.summary}`)
   } else if (catName === "publications") {
     lines.push(`Here's a little about my ${entry.name} publication:`)
@@ -80,9 +80,9 @@ const formatEndNode = (catName, entry) => {
     }
   } else if (catName === "skills") {
     lines.push(`I'm skilled at ${entry.name}!`)
-    if (entry.level) lines.push(`I would describe my level of familiarity as ${entry.level}`)
+    if (entry.level) lines.push(`I would describe my level of familiarity as ${entry.level}.`)
     const yrText = (entry.years && entry.years != 1) ? "years" : "year"
-    if (entry.years) lines.push(`I have ${entry.years} ${yrText} of experience with ${entry.name}`)
+    if (entry.years) lines.push(`I have ${entry.years} ${yrText} of experience with ${entry.name}.`)
     const relevantProjects = resume.projects && resume.projects.length ? (
       resume.projects.filter(proj => proj.technologies.includes(entry.name))
     ) : []
@@ -91,7 +91,7 @@ const formatEndNode = (catName, entry) => {
       lines.push(`- [${proj.title}](${proj.liveUrl})  \n`)
     })
   } else if (catName === "languages") {
-    lines.push(`I speak ${entry.language} at the ${entry.fluency} level`)
+    lines.push(`I speak ${entry.language} at the ${entry.fluency} level.`)
   } else if (catName === "interests") {
     lines.push(`I'm interested in ${entry.name}!`)
     if (entry.keywords && entry.keywords.length) {
@@ -99,7 +99,7 @@ const formatEndNode = (catName, entry) => {
       entry.keywords.forEach(keyword => lines.push("- " + keyword))
     }
   } else if (catName === "references") {
-    lines.push(`${entry.name} was my ${entry.reference}`)
+    lines.push(`${entry.name} was my ${entry.reference}.`)
     if (entry.contact) lines.push(`Contact info: ${entry.contact}`)
   } else if (catName === "profiles") {
     lines.push(`[Click here](${entry.url}) to head over to my ${entry.network} profile!`)
@@ -157,17 +157,17 @@ const formatBasicsText = (title) => {
 
   switch (title) {
     case "email":
-      response = `My email address is <${resume.basics.email}>`
+      response = `My email address is <${resume.basics.email}>.`
       break;
     case "phone":
-      response = `My phone number is ${resume.basics.phone}`
+      response = `My phone number is ${resume.basics.phone}.`
       break;
     case "website":
-      response = `Check out my website at <${resume.basics.website}>`
+      response = `Check out my website at <${resume.basics.website}>!`
       break;
-    case "summary":
-      response = `Here's a little about me:  \n${resume.basics.summary}`
-      break;
+    // case "summary":
+    //   response = `Here's a little about me:  \n${resume.basics.summary}`
+    //   break;
     case "profiles":
       response = `Check out some of my online profiles:`
       break;
@@ -183,8 +183,8 @@ const formatBasicsText = (title) => {
       break;
     case "contact":
       response = ''
-      if (resume.basics.email) response += `My email address is <${resume.basics.email}>  \n`
-      if (resume.basics.phone) response += `My phone number is ${resume.basics.phone}  \n`
+      if (resume.basics.email) response += `My email address is <${resume.basics.email}>.  \n`
+      if (resume.basics.phone) response += `My phone number is ${resume.basics.phone}.  \n`
       const loc2 = resume.basics.location
       if (loc2) {
         response += `Here's my location:  \n`

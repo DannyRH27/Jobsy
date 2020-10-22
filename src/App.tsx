@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useReducer } from "react";
 import styled from "styled-components";
 // import MessageList, { RefObject } from "./MessageList";
 import { Message, Event } from "./Types";
+import { motion, AnimatePresence } from "framer-motion";
 import Input from "./Input";
 import { generateGuid } from "./util";
 import MessageRow from "./components/MessageRow";
@@ -13,10 +14,10 @@ import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
 
 const Face = styled.img`
+  position: absolute;
   width: 400px;
-  height: auto;
-  /* margin-left: -25px;
-  margin-top: -25px; */
+  height: 400px;
+  object-fit: cover;
 
   background-color: white;
   will-change: transform;
@@ -24,6 +25,7 @@ const Face = styled.img`
 `;
 
 const Circle = styled(animated.div)`
+  position: relative;
   width: 400px;
   height: 400px;
   border-radius: 50%;
@@ -31,9 +33,23 @@ const Circle = styled(animated.div)`
   box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.5s;
   overflow: hidden;
-  background-color: white;
+  /* background-color: white; */
+  background-image: url("./danny.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   /* display: flex;
   justify-content: center; */
+`;
+
+const OverFace = styled.img`
+  /* position: absolute; */
+  width: 400px;
+  height: 400px;
+  /* margin-left: -25px;
+  margin-top: -25px; */
+  object-fit: cover;
+  z-index: 100;
+  background-color: white;
 `;
 
 const View = styled.div`
@@ -72,6 +88,11 @@ const Overlay = styled.div`
   padding: 32px;
 `;
 
+const FlexedDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.h1`
   font-size: 3em;
   color: white;
@@ -84,6 +105,14 @@ const SubTitle = styled(Title)`
   margin-top: 8px;
   font-size: 2em;
   opacity: 0.6;
+`;
+
+const Email = styled.a`
+  font-size: 1.5em;
+  color: white;
+  font-family: "Oswald";
+  text-decoration: none;
+  margin-top: 20px;
 `;
 
 const Copyright = styled.div`
@@ -127,7 +156,11 @@ const trans = (x, y, s) =>
 
 const initialMessages: Message[] = [];
 
+const emailBody =
+  "Hi%20Danny,%0D%0A%0D%0AMy%20name%20is%20<Your%20Name>%20and%20I'm%20a%20recruiter/the%20hiring%20manager%20for%20<Your%20Company>.%0D%0A%0D%0AI%20would%20like%20to%20have%20a%20phone%20discussion%20about%20an%20Software%20Engineer/Product%20Manager%20role%20that%20we%20have%20available.%0D%0A%0D%0AI'd%20like%20to%20talk%20with%20you%20more%20about%20<Your%20Company>%20and%20your%20experience.%0D%0A%0D%0AWhat%20is%20your%20availability%20for%20a%20short%20introductory%20call?%0D%0A%0D%0ALooking%20forward%20to%20hearing%20from%20you.%0D%0A%0D%0AKind%20Regards,%0D%0A%0D%0A<Your%20Name>";
+
 const App = ({ options }: Props) => {
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const reconnectCount = useRef(0);
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
@@ -145,8 +178,8 @@ const App = ({ options }: Props) => {
   //   setMessages((messages) => [...messages, message]);
   // };
 
-
   const sendEvent = (event: Event) => {
+    if (inputRef.current) inputRef.current.focus()
     if (options.useSockets && socket.current) {
       setTimeout(() => {
         socket.current &&
@@ -224,10 +257,10 @@ const App = ({ options }: Props) => {
                   showAvatar: true,
                 })
               );
-              if (message.entry && message.entry.metadata){
+              if (message.entry && message.entry.metadata) {
                 setPicture(message.entry.metadata.picturePath);
               } else {
-                setPicture("./danny.jpg")
+                setPicture("./danny.jpg");
               }
               // Could set side panel state to show metadata
               break;
@@ -252,18 +285,35 @@ const App = ({ options }: Props) => {
     >
       <Panel>
         <Overlay>
-          <div>
-            <Title>Danny Huang</Title>
-            <SubTitle>Interactive Resume</SubTitle>
-          </div>
+          <FlexedDiv>
+            <div>
+              <Title>Danny Huang</Title>
+              <SubTitle>Interactive Resume</SubTitle>
+            </div>
+            <Email href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}>
+              Email me!
+            </Email>
+          </FlexedDiv>
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
         <Circle style={{ transform: props.xys.interpolate(trans) }}>
+          <AnimatePresence>
+            {picture !== "./danny.jpg" && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                exit={{ opacity: 0 }}
+              >
+                <OverFace src={picture} />
+              </motion.div>
+            )}
+          </AnimatePresence>
           <Face src={picture} />
         </Circle>
       </Panel>
       <Main>
-        <MessageHeader />
+        {/* <MessageHeader /> */}
         <MessageList>
           {messages.map((message, index) => (
             <MessageRow key={index} message={message} sendEvent={sendEvent} />
@@ -272,7 +322,7 @@ const App = ({ options }: Props) => {
           {typing && <TypingIndicator />}
           <div ref={bottomRef} className="list-bottom"></div>
         </MessageList>
-        <Input sendEvent={sendEvent} />
+        <Input ref={inputRef} sendEvent={sendEvent} />
       </Main>
     </View>
   );

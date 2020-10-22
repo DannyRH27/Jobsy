@@ -11,17 +11,52 @@ import { colors } from "./constants";
 import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
-import { FaChevronLeft, FaEnvelope } from "react-icons/fa";
+import {
+  FaChevronLeft,
+  FaEnvelope,
+  FaGithub,
+  FaGithubAlt,
+} from "react-icons/fa";
+
+const PictureContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Face = styled.img`
   position: absolute;
   width: 400px;
   height: 400px;
   object-fit: cover;
-
   background-color: white;
   will-change: transform;
   transition: 1s ease-in;
+`;
+
+const PictureCaption = styled.a`
+  position: absolute;
+  /* height: 40px; */
+  font-family: "Roboto";
+  opacity: 1;
+  color: white;
+  text-decoration: none;
+  font-size: 1.4em;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 8px;
+  /* box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5); */
+  line-height: 1.4em;
+  background-color: ${colors.persianGreen};
+  /* padding: 5px; */
+  margin-top: 560px;
+  opacity: 1;
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Circle = styled(animated.div)`
@@ -69,6 +104,15 @@ const Main = styled(motion.div)`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+`;
+
+const External = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > * ~ * {
+    margin-left: 8px;
+  }
 `;
 
 const Panel = styled.div`
@@ -209,9 +253,10 @@ const App = ({ options }: Props) => {
   const [messages, dispatch] = useReducer(messageReducer, initialMessages);
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
-  const [picture, setPicture] = useState("./danny.jpg");
-  const [caption, setCaption] = useState();
   const [landing, setLanding] = useState(true);
+  const [picture, setPicture] = useState("./danny.jpg");
+  const [caption, setCaption] = useState("");
+  const [link, setLink] = useState("");
 
   const sendEvent = (event: Event) => {
     if (inputRef.current) inputRef.current.focus();
@@ -276,7 +321,7 @@ const App = ({ options }: Props) => {
 
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
-          console.log(message);
+          // console.log(message);
           switch (message.type) {
             case "typing":
               setTyping(true);
@@ -294,8 +339,12 @@ const App = ({ options }: Props) => {
               );
               if (message.entry && message.entry.metadata) {
                 setPicture(message.entry.metadata.picturePath);
+                setCaption(message.entry.metadata.leftText);
+                setLink(message.entry.metadata.linkPath);
               } else {
                 setPicture("./danny.jpg");
+                setCaption("");
+                setLink("");
               }
               // Could set side panel state to show metadata
               break;
@@ -331,7 +380,14 @@ const App = ({ options }: Props) => {
                     exit={{ width: 0, opacity: 0 }}
                     style={{ overflow: "hidden" }}
                   >
-                    <Back onClick={() => setLanding(true)} />
+                    <Back
+                      onClick={() => {
+                        setLanding(true);
+                        setPicture("./danny.jpg");
+                        setCaption("");
+                        setLink("");
+                      }}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -341,32 +397,42 @@ const App = ({ options }: Props) => {
                 <SubTitle>Interactive Resume</SubTitle>
               </div>
             </Logo>
-            <Email
-              href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
-            >
-              <FaEnvelope />
-            </Email>
+            <External>
+              <Email
+                href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
+              >
+                <FaEnvelope />
+              </Email>
+              <Email href="https://github.com/DannyRH27/Jobsy">
+                <FaGithub />
+              </Email>
+            </External>
           </FlexedDiv>
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
-        <Circle
-          style={{ transform: props.xys.interpolate(trans) }}
-          onClick={() => setLanding(false)}
-        >
-          <AnimatePresence>
-            {picture !== "./danny.jpg" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
-                exit={{ opacity: 0 }}
-              >
-                <OverFace src={picture} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <Face src={picture} />
-        </Circle>
+        <PictureContainer>
+          <Circle
+            style={{ transform: props.xys.interpolate(trans) }}
+            onClick={() => setLanding(false)}
+          >
+            <AnimatePresence>
+              {picture !== "./danny.jpg" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <OverFace src={picture} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <Face src={picture} />
+          </Circle>
+          {caption && link ? (
+            <PictureCaption href={`${link}`}>{caption}</PictureCaption>
+          ) : null}
+        </PictureContainer>
       </Panel>
       <AnimatePresence>
         {!landing && (

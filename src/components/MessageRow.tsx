@@ -36,6 +36,10 @@ const Incoming = styled(MessageBody)`
   & > hr {
     border-color: ${colors.shadow};
   }
+
+  & a, a:visited {
+    color: ${colors.persianGreen}
+  }
   
   & .smoller {
     font-size: 14px;
@@ -153,15 +157,14 @@ const MessageRow = ({ message, sendEvent }: Props) => {
                   if (quickReply.special && !usedSeperator.current) {
                     usedSeperator.current = true;
                     return (
-                      <>
+                      <React.Fragment key={index}>
                         {index !== 0 && <Seperator>|</Seperator>}
 
                         <QuickReply
                           quickReply={quickReply}
-                          key={index}
                           sendReply={sendReply}
                         />
-                      </>
+                      </React.Fragment>
                     );
                   }
                   return (

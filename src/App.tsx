@@ -172,7 +172,8 @@ const App = ({ options }: Props) => {
   const [messages, dispatch] = useReducer(messageReducer, initialMessages);
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
-  const [picture, setPicture] = useState("./danny.jpg");
+  const [picture, setPicture] = useState("./danny.jpg")
+  const [caption, setCaption] = useState()
   // const addMessageToState = (message: Message) => {
   //   setMessages((messages) => [...messages, message]);
   // };

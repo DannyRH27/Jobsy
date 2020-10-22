@@ -1,12 +1,52 @@
 import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 import { Event } from "./Types";
-
+import { colors } from "./constants";
+import { FaTelegramPlane } from "react-icons/fa";
 const Form = styled.form`
   display: flex;
   align-items: center;
   padding: 32px;
   box-sizing: border-box;
+`;
+// const InputContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   height: 50px;
+//   margin: 0 auto;
+//   width: 100%;
+//   border-radius: 20px;
+//   background-color: #f1f6f9;
+//   /* background-color: black; */
+// `;
+const SendButton = styled(FaTelegramPlane)`
+  margin-left: 30px;
+  padding: 8px 20px;
+  height: 36px;
+  width: 72px;
+  color: white;
+  border-radius: 20px;
+  background-color: ${colors.persianGreen};
+  user-select: none;
+  cursor: pointer;
+  transition: 0.2s;
+  
+  &:hover {
+    background-color: ${colors.persianGreenLight};
+  }
+`;
+const InputBox = styled.input`
+  height: 50px;
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background-color: #f1f6f9;
+  padding-left: 20px;
+  transition: 0.2s;
+  &:focus {
+    border-color: rgb(180,180,180);
+  }
 `;
 
 interface Props {
@@ -27,13 +67,13 @@ const Input = ({ sendEvent }: Props, ref: any) => {
 
   return (
     <Form onSubmit={sendMessage}>
-      <input
+      <InputBox
         type="text"
         ref={ref}
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
       />
-      <button type="submit">Send</button>
+      <SendButton onClick={sendMessage}/>
     </Form>
   );
 };

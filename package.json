@@ -7,7 +7,8 @@
     "start": "node bot.js",
     "dev": "nodemon bot.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --watch --mode=development"
+    "webpack": "webpack --watch --mode=development",
+    "postinstall": "webpack"
   },
   "dependencies": {
     "@types/react": "^16.9.53",

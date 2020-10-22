@@ -26,13 +26,15 @@ const SendButton = styled(FaTelegramPlane)`
   width: 72px;
   color: white;
   border-radius: 20px;
+  opacity: 1;
   background-color: ${colors.persianGreen};
   user-select: none;
   cursor: pointer;
   transition: 0.2s;
   
   &:hover {
-    background-color: ${colors.persianGreenLight};
+    /* background-color: ${colors.persianGreenLight}; */
+    opacity: 0.8;
   }
 `;
 const InputBox = styled.input`

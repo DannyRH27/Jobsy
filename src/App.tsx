@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState, useReducer } from "react";
 import styled from "styled-components";
+import useSound from "use-sound";
 import { Message, Event } from "./Types";
 import { motion, AnimatePresence } from "framer-motion";
 import Input from "./Input";
@@ -11,13 +12,10 @@ import { colors } from "./constants";
 import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
-import {
-  FaChevronLeft,
-  FaEnvelope,
-  FaGithub,
-  FaGithubAlt,
-} from "react-icons/fa";
+import { FaChevronLeft, FaEnvelope, FaGithub } from "react-icons/fa";
 import Info from "./components/Info";
+
+import mp3 from "./chat.mp3";
 
 const PictureContainer = styled.div`
   display: flex;
@@ -112,7 +110,7 @@ const External = styled.div`
   align-items: center;
 
   & > * ~ * {
-    margin-left: 8px;
+    margin-left: 12px;
   }
 `;
 
@@ -190,11 +188,35 @@ const Email = styled.a`
   border-radius: 50%;
   opacity: 0.8;
   transition: all 0.3s;
-  box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  user-select: none;
+  /* box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5); */
 
   &:hover {
     opacity: 1;
+    color: white;
   }
+`;
+
+const Start = styled(motion.div)`
+  background-color: ${colors.sandyBrown};
+  padding: 0px 20px;
+  color: white;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.8;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+    color: white;
+  }
+  /* box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5); */
 `;
 
 const Copyright = styled.div`
@@ -243,6 +265,7 @@ const emailBody =
 
 const App = ({ options }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [play] = useSound(mp3);
   const reconnectCount = useRef(0);
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
@@ -267,6 +290,7 @@ const App = ({ options }: Props) => {
           socket.current.send(JSON.stringify({ ...event, user }));
       }, 200);
       if (event.type === "message") {
+        play();
         dispatch(
           receiveMessage({
             type: event.type,
@@ -289,7 +313,7 @@ const App = ({ options }: Props) => {
   };
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, landing]);
 
   const connect = () => {
     if (options.useSockets) {
@@ -399,6 +423,20 @@ const App = ({ options }: Props) => {
               </div>
             </Logo>
             <External>
+              <AnimatePresence>
+                {landing && (
+                  <Start
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setLanding(false)}
+                  >
+                    Let's Chat!
+                  </Start>
+                )}
+              </AnimatePresence>
+
               <Email
                 href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
               >
@@ -434,7 +472,7 @@ const App = ({ options }: Props) => {
             <PictureCaption href={`${link}`}>{caption}</PictureCaption>
           ) : null}
         </PictureContainer>
-        <Info />
+        <AnimatePresence>{landing && <Info />}</AnimatePresence>
       </Panel>
       <AnimatePresence>
         {!landing && (

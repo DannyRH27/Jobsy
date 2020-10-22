@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 import { Event } from "./Types";
 
@@ -13,7 +13,7 @@ interface Props {
   sendEvent: (event: Event) => void;
 }
 
-const Input = ({ sendEvent }: Props) => {
+const Input = ({ sendEvent }: Props, ref: any) => {
   const [text, setText] = useState("");
 
   const sendMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,6 +29,7 @@ const Input = ({ sendEvent }: Props) => {
     <Form onSubmit={sendMessage}>
       <input
         type="text"
+        ref={ref}
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
       />
@@ -37,4 +38,4 @@ const Input = ({ sendEvent }: Props) => {
   );
 };
 
-export default Input;
+export default forwardRef(Input);

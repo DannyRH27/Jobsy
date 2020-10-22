@@ -61,9 +61,18 @@ const Name = styled.div`
   color: ${colors.grey};
 `;
 
-export const ProfilePhoto = styled.img`
+export const ProfilePhoto = styled.div`
   object-fit: cover;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.sandyBrown};
+  color: white;
+  font-family: "Oswald";
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 40px;
   width: 40px;
   height: 40px;
   margin-top: 16px;
@@ -76,12 +85,6 @@ const Seperator = styled.div`
 
 const Empty = styled.div`
   min-width: 40px;
-`;
-
-const NameBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 `;
 
 interface Props {
@@ -117,20 +120,16 @@ const MessageRow = ({ message, sendEvent }: Props) => {
       transition={{ duration: 0.2 }}
     >
       <Container incoming={message.direction === "incoming"}>
-        {message.showAvatar ? (
+        {message.showAvatar && message.direction === "incoming" ? (
           <>
-            <ProfilePhoto src={"https://via.placeholder.com/40"} />
+            <ProfilePhoto>DH</ProfilePhoto>
           </>
-        ) : (
+        ) : message.direction === "incoming" ? (
           <Empty />
-        )}
+        ) : null}
         {message.direction === "incoming" ? (
           <FlexColumn incoming>
-            {message.showAvatar && (
-              <NameBar>
-                <Name>Jobsy</Name>
-              </NameBar>
-            )}
+            {message.showAvatar && <Name>Danny</Name>}
             <Incoming>
               <ReactMarkdown source={message.text} escapeHtml={false} />
             </Incoming>

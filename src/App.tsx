@@ -13,15 +13,44 @@ import { receiveMessage } from "./reducers/actions";
 import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
 
+
+const PictureContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & a {
+    font-family: "Roboto";
+    background-color: ${colors.persianGreen};
+
+    color: white;
+    text-decoration: none;
+  }
+`;
+
 const Face = styled.img`
   position: absolute;
   width: 400px;
   height: 400px;
   object-fit: cover;
-
   background-color: white;
   will-change: transform;
   transition: 1s ease-in;
+`;
+
+const PictureCaption = styled.h2`
+  position: absolute;
+  /* height: 40px; */
+  font-size: 1.4em;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
+  line-height: 1.4em;
+  background-color: ${colors.persianGreen};
+  /* padding: 5px; */
+  margin-top: 520px;
 `;
 
 const Circle = styled(animated.div)`
@@ -135,6 +164,7 @@ const MessageList = styled.div`
   }
 `;
 
+
 interface Options {
   useSockets: boolean;
   wsUrl: string;
@@ -173,7 +203,8 @@ const App = ({ options }: Props) => {
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
   const [picture, setPicture] = useState("./danny.jpg")
-  const [caption, setCaption] = useState()
+  const [caption, setCaption] = useState("")
+  const [link, setLink] = useState("")
   // const addMessageToState = (message: Message) => {
   //   setMessages((messages) => [...messages, message]);
   // };
@@ -259,8 +290,12 @@ const App = ({ options }: Props) => {
               );
               if (message.entry && message.entry.metadata) {
                 setPicture(message.entry.metadata.picturePath);
+                setCaption(message.entry.metadata.leftText)
+                setLink(message.entry.metadata.linkPath)
               } else {
                 setPicture("./danny.jpg");
+                setCaption("")
+                setLink("")
               }
               // Could set side panel state to show metadata
               break;
@@ -290,27 +325,32 @@ const App = ({ options }: Props) => {
               <Title>Danny Huang</Title>
               <SubTitle>Interactive Resume</SubTitle>
             </div>
-            <Email href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}>
+            <Email
+              href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
+            >
               Email me!
             </Email>
           </FlexedDiv>
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
-        <Circle style={{ transform: props.xys.interpolate(trans) }}>
-          <AnimatePresence>
-            {picture !== "./danny.jpg" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
-                exit={{ opacity: 0 }}
-              >
-                <OverFace src={picture} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <Face src={picture} />
-        </Circle>
+        <PictureContainer>
+          <Circle style={{ transform: props.xys.interpolate(trans) }}>
+            <AnimatePresence>
+              {picture !== "./danny.jpg" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <OverFace src={picture} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <Face src={picture} />
+          </Circle>
+          {caption ? <PictureCaption><a href={`${link}`}>{caption}</a></PictureCaption> : null}
+        </PictureContainer>
       </Panel>
       <Main>
         {/* <MessageHeader /> */}

@@ -21,8 +21,8 @@ const Form = styled.form`
 // `;
 const SendButton = styled(FaTelegramPlane)`
   margin-left: 30px;
-  padding: 8px 20px;
-  height: 36px;
+  padding: 8px 10px;
+  height: 28px;
   width: 72px;
   color: white;
   border-radius: 20px;
@@ -36,7 +36,7 @@ const SendButton = styled(FaTelegramPlane)`
   }
 `;
 const InputBox = styled.input`
-  height: 50px;
+  height: 40px;
   margin: 0 auto;
   width: 100%;
   border: 1px solid transparent;

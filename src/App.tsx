@@ -20,13 +20,6 @@ const PictureContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  & a {
-    font-family: "Roboto";
-    background-color: ${colors.persianGreen};
-
-    color: white;
-    text-decoration: none;
-  }
 `;
 
 const Face = styled.img`
@@ -39,18 +32,28 @@ const Face = styled.img`
   transition: 1s ease-in;
 `;
 
-const PictureCaption = styled.h2`
+const PictureCaption = styled.a`
   position: absolute;
   /* height: 40px; */
+  font-family: "Roboto";
+  opacity: 1;
+  color: white;
+  text-decoration: none;
   font-size: 1.4em;
   font-weight: 500;
   padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0px 20px 40px -5px rgba(0, 0, 0, 0.5); */
   line-height: 1.4em;
   background-color: ${colors.persianGreen};
   /* padding: 5px; */
-  margin-top: 520px;
+  margin-top: 560px;
+  opacity: 1;
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Circle = styled(animated.div)`
@@ -272,7 +275,7 @@ const App = ({ options }: Props) => {
 
         socket.current.addEventListener("message", (event) => {
           let message = JSON.parse(event.data);
-          console.log(message);
+          // console.log(message);
           switch (message.type) {
             case "typing":
               setTyping(true);
@@ -349,7 +352,11 @@ const App = ({ options }: Props) => {
             </AnimatePresence>
             <Face src={picture} />
           </Circle>
-          {caption ? <PictureCaption><a href={`${link}`}>{caption}</a></PictureCaption> : null}
+          {caption && link ? (
+            <PictureCaption href={`${link}`}>
+              {caption}
+            </PictureCaption>
+          ) : null}
         </PictureContainer>
       </Panel>
       <Main>

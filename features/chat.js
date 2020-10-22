@@ -268,7 +268,7 @@ module.exports = function (controller) {
         });
       }
     }
-    console.log(autocorrections)
+    // console.log(autocorrections)
     const response =
       autocorrections
         ? `Did you mean to check out my experience with one of these?`

@@ -1,7 +1,8 @@
-interface QuickReply {
+export interface QuickReply {
 	title: string;
   payload: string;
-  visited: boolean;
+	visited: boolean;
+	special: boolean;
 }
 
 export interface Event {

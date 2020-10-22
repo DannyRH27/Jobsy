@@ -3,9 +3,8 @@
     "name": "Danny Huang",
     "label": "Programmer",
     "openToOpps": true,
-    "yourself": "Hi, my name is Danny and I'm a software engineer...",
-    "idealCompany": "I'd love to work for a huge soulless corporation and become a cog in the machine",
-    "picture": "",
+    "yourself": "Hi, my name is Danny and I enjoy solving complex problems with a mixture of analytical and creative thinking, and I particularly enjoy collaborating in a team to find unique solutions to hard problems.",
+    "idealCompany": "My ideal company is one that values individual employees and encourages them to speak up and share ideas about the long term vision/direction of the company, but also has a commitment to the employee's career growth.",
     "email": "danny.r.huang@gmail.com",
     "phone": "(858) 314-0788",
     "location": {
@@ -42,7 +41,6 @@
       "startDate": "2017-07-10",
       "endDate": "",
       "summary": "I worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
-      "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/AECOM.jpg",
         "linkPath": "https://aecom.com/",
@@ -59,7 +57,6 @@
       "startDate": "2016-06-30",
       "endDate": "2017-06-30",
       "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
-      "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/QuEST.jpg",
         "linkPath": "https://www.quest-global.com/",
@@ -77,7 +74,6 @@
       "startDate": "2016-01-20",
       "endDate": "",
       "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
-      "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Zen.png",
         "linkPath": "https://www.yelp.com/biz/zen-modern-asian-san-diego?osq=zen+modern+asian",

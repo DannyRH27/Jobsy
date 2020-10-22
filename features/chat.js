@@ -273,7 +273,10 @@ module.exports = function (controller) {
       autocorrections
         ? `Did you mean to check out my experience with one of these?`
         : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
-    await bot.reply(message, { text: response, quick_replies: suggestedReplies });
+        
+    const botReply = { text: response, quick_replies: suggestedReplies.concat(extra_replies) }
+    userStore.visit(botReply, '')
+    await bot.reply(message, botReply);
   });
 };
 

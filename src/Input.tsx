@@ -2,7 +2,28 @@ import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 import { Event } from "./Types";
 import { colors } from "./constants";
-import { FaTelegramPlane } from "react-icons/fa";
+import { FaTelegramPlane, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+
+const Mute = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
+  height: 40px;
+  background-color: ${colors.sandyBrown};
+  border-radius: 50%;
+  transition: 0.2s;
+  box-sizing: initial;
+  color: white;
+  opacity: 0.8;
+  cursor: pointer;
+  margin-right: 29px;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
 
 const Form = styled.form`
   display: flex;
@@ -54,9 +75,11 @@ const InputBox = styled.input`
 
 interface Props {
   sendEvent: (event: Event) => void;
+  mute: boolean;
+  setMute: (bool: boolean) => void;
 }
 
-const Input = ({ sendEvent }: Props, ref: any) => {
+const Input = ({ sendEvent, mute, setMute }: Props, ref: any) => {
   const [text, setText] = useState("");
 
   const sendMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +95,9 @@ const Input = ({ sendEvent }: Props, ref: any) => {
 
   return (
     <Form onSubmit={sendMessage}>
+      <Mute onClick={() => setMute(!mute)}>
+        {mute ? <FaVolumeMute /> : <FaVolumeUp />}
+      </Mute>
       <InputBox
         type="text"
         ref={ref}

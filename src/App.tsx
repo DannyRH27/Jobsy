@@ -60,7 +60,8 @@ const PictureCaption = styled.a`
   }
 `;
 
-const Circle = styled(animated.div)`
+const Circle = styled(animated.div)<{ landing: string }>`
+  cursor: ${(props) => (props.landing === "true" ? "pointer" : "default")};
   position: relative;
   width: 400px;
   height: 400px;
@@ -225,6 +226,15 @@ const Copyright = styled.div`
   color: white;
   align-self: center;
   opacity: 0.3;
+
+  a {
+    color: white;
+    transition: 0.3s;
+  }
+
+  a:hover {
+    color: ${colors.persianGreen};
+  }
 `;
 
 const MessageList = styled.div`
@@ -355,7 +365,7 @@ const App = ({ options }: Props) => {
               scrollToBottom();
               break;
             case "message":
-              setTyping(false)
+              setTyping(false);
               dispatch(
                 receiveMessage({
                   ...message,
@@ -449,12 +459,18 @@ const App = ({ options }: Props) => {
               </Email>
             </External>
           </FlexedDiv>
-          <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
+          <Copyright>
+            © 2020,{" "}
+            <a href="https://www.linkedin.com/in/dannyrhuang/">Danny Huang</a>,{" "}
+            <a href="https://www.linkedin.com/in/tj-mccabe/">TJ McCabe</a> and{" "}
+            <a href="https://www.linkedin.com/in/waynesu-an/">Wayne Su</a>
+          </Copyright>
         </Overlay>
         <PictureContainer>
           <Circle
             style={{ transform: props.xys.interpolate(trans) }}
             onClick={() => setLanding(false)}
+            landing={landing ? "true" : "false"}
           >
             <AnimatePresence>
               {picture !== "./danny.jpg" && (
@@ -464,11 +480,11 @@ const App = ({ options }: Props) => {
                   transition={{ duration: 0.4 }}
                   exit={{ opacity: 0 }}
                 >
-                  <OverFace src={picture} />
+                  <OverFace src={picture} draggable={false} />
                 </motion.div>
               )}
             </AnimatePresence>
-            <Face src={picture} />
+            <Face src={picture} draggable={false} />
           </Circle>
           {caption && link ? (
             <PictureCaption href={`${link}`}>{caption}</PictureCaption>

@@ -21,7 +21,7 @@ const Typing = styled.div`
     width: 5px;
     float: left;
     margin: 0 1px;
-    background-color: blue;
+    background-color: ${colors.persianGreen};
     display: block;
     border-radius: 50%;
     opacity: 0.4;
@@ -42,11 +42,20 @@ const Typing = styled.div`
   }
 `;
 
+const Name = styled.div`
+  height: 12px;
+  margin-bottom: 4px;
+  line-height: 1;
+  font-size: 12px;
+  color: ${colors.grey};
+`;
+
 const TypingIndicator = () => {
   return (
     <TypingContainer incoming={true}>
-      <ProfilePhoto src={"https://via.placeholder.com/40"} />
-      <FlexColumn>
+      <ProfilePhoto>DH</ProfilePhoto>
+      <FlexColumn incoming>
+        <Name>Danny</Name>
         <Typing>
           <span />
           <span />

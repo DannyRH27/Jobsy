@@ -202,8 +202,8 @@ module.exports = function (controller) {
       controller.hears(catName, "message, direct_message", async (bot, message) => {
         const quick_replies = extra_replies
 
-        let replyText = `There are no listings for ${catName} on my resume.  
-        Why not ask me about it by emailing <${resume.basics.email}>?`
+        let replyText = `There are no listings for *${catName}* on my resume.  
+        Why not ask me about it by emailing *<${resume.basics.email}>*?`
         const botReply = {
           text: replyText,
           quick_replies
@@ -272,8 +272,8 @@ module.exports = function (controller) {
     const response =
       autocorrections
         ? `Did you mean to check out my experience with one of these?`
-        : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
-    await bot.reply(message, { text: response, quick_replies: suggestedReplies });
+        : `Sorry, I didn't understand *'${message.text}'*. Could you repeat that one more time?`;
+    await bot.reply(message, { text: response, quick_replies: suggestedReplies.concat(extra_replies) });
   });
 };
 

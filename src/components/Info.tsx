@@ -154,4 +154,4 @@ const Info = () => (
   </Wrapper>
 );
 
-export default Info;
+// export default Info;

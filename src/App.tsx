@@ -55,6 +55,8 @@ const PictureCaption = styled.a`
 
   &:hover {
     opacity: 0.8;
+    text-decoration: none;
+    color: white;
   }
 `;
 
@@ -353,7 +355,7 @@ const App = ({ options }: Props) => {
               scrollToBottom();
               break;
             case "message":
-              setTyping(false);
+              setTyping(false)
               dispatch(
                 receiveMessage({
                   ...message,

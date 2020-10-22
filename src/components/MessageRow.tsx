@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Message, Event } from "../Types";
 import { colors } from "../constants";
+import QuickReply from "./QuickReply";
 
 export const Container = styled.div<{ incoming: boolean }>`
   display: flex;
@@ -25,6 +26,7 @@ const MessageBody = styled.div`
 
 const Incoming = styled(MessageBody)`
   background-color: white;
+  position: relative;
 
   & > ul {
     /* list-style: inside; */
@@ -46,28 +48,17 @@ export const FlexColumn = styled.div<{ incoming?: boolean }>`
 const QuickReplies = styled.div`
   margin-top: 8px;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 8px;
 `;
 
-const Button = styled.button`
-  opacity: 0.8;
-  padding: 4px 8px;
-  font-size: 14px;
-  background-color: ${colors.persianGreen};
-  border-color: transparent;
-  transition: opacity 0.3s;
-  color: white;
-  border-radius: 4px;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
-const VisitedButton = styled(Button)`
-  background-color: ${colors.sandyBrown};
-  opacity: 0.4;
+const Name = styled.div`
+  height: 12px;
+  margin-bottom: 4px;
+  line-height: 1;
+  font-size: 12px;
+  color: ${colors.grey};
 `;
 
 export const ProfilePhoto = styled.div`
@@ -87,14 +78,13 @@ export const ProfilePhoto = styled.div`
   margin-top: 16px;
 `;
 
-const Empty = styled.div`
-  min-width: 40px;
+const Seperator = styled.div`
+  font-size: 20px;
+  color: ${colors.shadow};
 `;
 
-const Name = styled.div`
-  height: 16px;
-  font-size: 12px;
-  color: ${colors.grey};
+const Empty = styled.div`
+  min-width: 40px;
 `;
 
 interface Props {
@@ -104,16 +94,18 @@ interface Props {
 
 const MessageRow = ({ message, sendEvent }: Props) => {
   // const [userReplied, setUserReplied] = useState(false);
+  const usedSeperator = useRef(false);
+
+  useEffect(() => {
+    if (usedSeperator.current) usedSeperator.current = false;
+  }, []);
 
   const sendReply = (text: string) => {
-    // setUserReplied(true);
     sendEvent({
       type: "message",
       text,
     });
   };
-
-  
 
   const variants = {
     visible: { opacity: 1, y: 0 },
@@ -128,13 +120,13 @@ const MessageRow = ({ message, sendEvent }: Props) => {
       transition={{ duration: 0.2 }}
     >
       <Container incoming={message.direction === "incoming"}>
-        {message.showAvatar && message.direction === 'incoming' ? (
+        {message.showAvatar && message.direction === "incoming" ? (
           <>
             <ProfilePhoto>DH</ProfilePhoto>
           </>
-        ) : message.direction === 'incoming' ? (
+        ) : message.direction === "incoming" ? (
           <Empty />
-        ) : null }
+        ) : null}
         {message.direction === "incoming" ? (
           <FlexColumn incoming>
             {message.showAvatar && <Name>Danny</Name>}
@@ -143,21 +135,27 @@ const MessageRow = ({ message, sendEvent }: Props) => {
             </Incoming>
             {message.quick_replies && message.showQuickReplies && (
               <QuickReplies>
-                {message.quick_replies.map((option, index) => {
-                  return option.visited ? (
-                    <VisitedButton
+                {message.quick_replies.map((quickReply, index) => {
+                  if (quickReply.special && !usedSeperator.current) {
+                    usedSeperator.current = true;
+                    return (
+                      <>
+                        {index !== 0 && <Seperator>|</Seperator>}
+
+                        <QuickReply
+                          quickReply={quickReply}
+                          key={index}
+                          sendReply={sendReply}
+                        />
+                      </>
+                    );
+                  }
+                  return (
+                    <QuickReply
+                      quickReply={quickReply}
                       key={index}
-                      onClick={() => sendReply(option.payload)}
-                    >
-                      {option.title}
-                    </VisitedButton>
-                  ) : (
-                    <Button
-                      key={index}
-                      onClick={() => sendReply(option.payload)}
-                    >
-                      {option.title}
-                    </Button>
+                      sendReply={sendReply}
+                    />
                   );
                 })}
               </QuickReplies>

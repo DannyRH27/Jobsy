@@ -293,6 +293,7 @@ const App = ({ options }: Props) => {
   const [picture, setPicture] = useState("./danny.jpg");
   const [caption, setCaption] = useState("");
   const [link, setLink] = useState("");
+  const [mute, setMute] = useState(false);
 
   const sendEvent = (event: Event) => {
     if (inputRef.current) inputRef.current.focus();
@@ -302,7 +303,7 @@ const App = ({ options }: Props) => {
           socket.current.send(JSON.stringify({ ...event, user }));
       }, 200);
       if (event.type === "message") {
-        play();
+        !mute && play();
         dispatch(
           receiveMessage({
             type: event.type,
@@ -511,7 +512,12 @@ const App = ({ options }: Props) => {
               {typing && <TypingIndicator />}
               <div ref={bottomRef} className="list-bottom"></div>
             </MessageList>
-            <Input ref={inputRef} sendEvent={sendEvent} />
+            <Input
+              ref={inputRef}
+              sendEvent={sendEvent}
+              mute={mute}
+              setMute={setMute}
+            />
           </Main>
         )}
       </AnimatePresence>

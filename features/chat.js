@@ -271,7 +271,7 @@ module.exports = function (controller) {
     console.log(autocorrections)
     const response =
       autocorrections
-        ? `Did you mean to check out ${fName}'s experience with one of these?`
+        ? `Did you mean to check out my experience with one of these?`
         : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
     await bot.reply(message, { text: response, quick_replies: suggestedReplies });
   });

@@ -40,6 +40,6 @@ module.exports = function(controller) {
             // will have to reset context because turn has now ended.
             await bot.changeContext(message.reference);
             await bot.reply(message, 'Typed!');
-        }, 10000);
+        }, 3000);
     });
 };

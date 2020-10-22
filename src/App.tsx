@@ -17,7 +17,7 @@ import {
   FaGithub,
   FaGithubAlt,
 } from "react-icons/fa";
-import Info from "./components/Info";
+// import Info from "./components/Info";
 
 const PictureContainer = styled.div`
   display: flex;
@@ -57,6 +57,8 @@ const PictureCaption = styled.a`
 
   &:hover {
     opacity: 0.8;
+    text-decoration: none;
+    color: white;
   }
 `;
 
@@ -329,7 +331,7 @@ const App = ({ options }: Props) => {
               scrollToBottom();
               break;
             case "message":
-              setTyping(false);
+              setTyping(false)
               dispatch(
                 receiveMessage({
                   ...message,
@@ -434,7 +436,7 @@ const App = ({ options }: Props) => {
             <PictureCaption href={`${link}`}>{caption}</PictureCaption>
           ) : null}
         </PictureContainer>
-        <Info />
+        {/* <Info /> */}
       </Panel>
       <AnimatePresence>
         {!landing && (

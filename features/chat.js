@@ -76,6 +76,7 @@ module.exports = function (controller) {
   })
 
   controller.hears("basics", "message, direct_message", async (bot, message) => {
+    await bot.reply(message, { type: "typing" });
     const userStore = store.getUserStore(message.user)
     const noThanks = new Set(['email', 'phone', 'location'])
 
@@ -102,11 +103,16 @@ module.exports = function (controller) {
     }
 
     userStore.visit(botReply, '')
-    await bot.reply(message, botReply)
+    setTimeout(async () => {
+      // will have to reset context because turn has now ended.
+      await bot.changeContext(message.reference);
+      await bot.reply(message, botReply);
+    }, 1000);
   })
 
   if (resume.basics.yourself) {
     controller.hears(/your ?self/, "message, direct_message", async (bot, message) => {
+      await bot.reply(message, { type: "typing" });
       const userStore = store.getUserStore(message.user)
       const quick_replies = extra_replies
   
@@ -116,12 +122,17 @@ module.exports = function (controller) {
       }
   
       userStore.visit(botReply, "Tell me about yourself")
-      await bot.reply(message, botReply)
+      setTimeout(async () => {
+        // will have to reset context because turn has now ended.
+        await bot.changeContext(message.reference);
+        await bot.reply(message, botReply);
+      }, 1000);
     })
   }
 
   if (resume.basics.idealCompany) {
     controller.hears("ideal company", "message, direct_message", async (bot, message) => {
+      await bot.reply(message, { type: "typing" });
       const userStore = store.getUserStore(message.user)
       const quick_replies = extra_replies
   
@@ -131,13 +142,18 @@ module.exports = function (controller) {
       }
   
       userStore.visit(botReply, 'idealCompany')
-      await bot.reply(message, botReply)
+      setTimeout(async () => {
+        // will have to reset context because turn has now ended.
+        await bot.changeContext(message.reference);
+        await bot.reply(message, botReply);
+      }, 1000);
     })
   }
 
   for (let i = 0; i < basicsKeys.length; i++) {
     const key = basicsKeys[i]
     controller.hears(key, "message, direct_message", async (bot, message) => {
+      await bot.reply(message, { type: "typing" });
       const userStore = store.getUserStore(message.user)
 
       const quick_replies = []
@@ -158,7 +174,11 @@ module.exports = function (controller) {
       const botReply = {text, quick_replies}
 
       userStore.visit(botReply, key === "profiles" ? '' : key)
-      await bot.reply(message, botReply)
+      setTimeout(async () => {
+        // will have to reset context because turn has now ended.
+        await bot.changeContext(message.reference);
+        await bot.reply(message, botReply);
+      }, 1000);
     })
   }
 
@@ -168,6 +188,7 @@ module.exports = function (controller) {
       const nodeText = fr.formatEndNode("profiles", prof)
 
       controller.hears(prof.network, "message, direct_message", async (bot, message) => {
+        await bot.reply(message, { type: "typing" });
         const userStore = store.getUserStore(message.user)
         
         const botReply = {
@@ -177,7 +198,11 @@ module.exports = function (controller) {
         }
 
         userStore.visit(botReply, prof.network)
-        await bot.reply(message, botReply)
+        setTimeout(async () => {
+          // will have to reset context because turn has now ended.
+          await bot.changeContext(message.reference);
+          await bot.reply(message, botReply);
+        }, 1000);
       })
     }
   }
@@ -200,6 +225,7 @@ module.exports = function (controller) {
     if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
       // make an unavailable message and return
       controller.hears(catName, "message, direct_message", async (bot, message) => {
+        await bot.reply(message, { type: "typing" });
         const quick_replies = extra_replies
 
         let replyText = `There are no listings for *${catName}* on my resume.  
@@ -208,7 +234,11 @@ module.exports = function (controller) {
           text: replyText,
           quick_replies
         }
-        await bot.reply(message, botReply)
+        setTimeout(async () => {
+          // will have to reset context because turn has now ended.
+          await bot.changeContext(message.reference);
+          await bot.reply(message, botReply);
+        }, 1000);
       })
       continue
     }
@@ -216,6 +246,7 @@ module.exports = function (controller) {
 
     // make responses for each category name
     controller.hears(catName, "message, direct_message", async(bot, message) => {
+      await bot.reply(message, { type: "typing" });
       const userStore = store.getUserStore(message.user)
       
       const quick_replies = resumeScan(resume[catName], title, userStore)
@@ -229,7 +260,11 @@ module.exports = function (controller) {
       }
 
       userStore.visit(botReply, '')
-      await bot.reply(message, botReply)
+      setTimeout(async () => {
+        // will have to reset context because turn has now ended.
+        await bot.changeContext(message.reference);
+        await bot.reply(message, botReply);
+      }, 1000);
     })
     
     // make responses for each listing in each category
@@ -238,6 +273,7 @@ module.exports = function (controller) {
       const nodeText = fr.formatEndNode(catName, entry)
 
       controller.hears(entry[title], "message, direct_message", async (bot, message) => {
+        await bot.reply(message, { type: "typing" });
         const userStore = store.getUserStore(message.user)
         // console.log(entry)
         const botReply = {
@@ -248,7 +284,11 @@ module.exports = function (controller) {
         // console.log(userStore.history)
         
         userStore.visit(botReply, entry[title])
-        await bot.reply(message, botReply)
+        setTimeout(async () => {
+          // will have to reset context because turn has now ended.
+          await bot.changeContext(message.reference);
+          await bot.reply(message, botReply);
+        }, 1000);
       })
     }
   }
@@ -256,6 +296,7 @@ module.exports = function (controller) {
 
 // // Catch All
   controller.on("message,direct_message", async (bot, message) => {
+    await bot.reply(message, { type: "typing" });
     const userStore = store.getUserStore(message.user)
     const autocorrections = autocorrect.getSuggestions(message.text)
     const suggestedReplies = []
@@ -276,7 +317,11 @@ module.exports = function (controller) {
         
     const botReply = { text: response, quick_replies: suggestedReplies.concat(extra_replies) }
     userStore.visit(botReply, '')
-    await bot.reply(message, botReply);
+    setTimeout(async () => {
+      // will have to reset context because turn has now ended.
+      await bot.changeContext(message.reference);
+      await bot.reply(message, botReply);
+    }, 1000);
   });
 };
 

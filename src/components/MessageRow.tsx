@@ -37,10 +37,11 @@ const Incoming = styled(MessageBody)`
     border-color: ${colors.shadow};
   }
 
-  & a, a:visited {
-    color: ${colors.persianGreen}
+  & a,
+  a:visited {
+    color: ${colors.persianGreen};
   }
-  
+
   & .smoller {
     font-size: 14px;
     font-style: italic;
@@ -139,9 +140,7 @@ const MessageRow = ({ message, sendEvent }: Props) => {
     >
       <Container incoming={message.direction === "incoming"}>
         {message.showAvatar && message.direction === "incoming" ? (
-          <>
-            <ProfilePhoto>DH</ProfilePhoto>
-          </>
+          <ProfilePhoto>DH</ProfilePhoto>
         ) : message.direction === "incoming" ? (
           <Empty />
         ) : null}

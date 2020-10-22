@@ -70,9 +70,18 @@ const VisitedButton = styled(Button)`
   opacity: 0.4;
 `;
 
-export const ProfilePhoto = styled.img`
+export const ProfilePhoto = styled.div`
   object-fit: cover;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.sandyBrown};
+  color: white;
+  font-family: "Oswald";
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 40px;
   width: 40px;
   height: 40px;
   margin-top: 16px;
@@ -119,13 +128,13 @@ const MessageRow = ({ message, sendEvent }: Props) => {
       transition={{ duration: 0.2 }}
     >
       <Container incoming={message.direction === "incoming"}>
-        {message.showAvatar ? (
+        {message.showAvatar && message.direction === 'incoming' ? (
           <>
-            <ProfilePhoto src={"https://via.placeholder.com/40"} />
+            <ProfilePhoto>DH</ProfilePhoto>
           </>
-        ) : (
+        ) : message.direction === 'incoming' ? (
           <Empty />
-        )}
+        ) : null }
         {message.direction === "incoming" ? (
           <FlexColumn incoming>
             {message.showAvatar && <Name>Danny</Name>}

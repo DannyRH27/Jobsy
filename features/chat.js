@@ -202,8 +202,8 @@ module.exports = function (controller) {
       controller.hears(catName, "message, direct_message", async (bot, message) => {
         const quick_replies = extra_replies
 
-        let replyText = `There are no listings for ${catName} on my resume.  
-        Why not ask me about it by emailing <${resume.basics.email}>?`
+        let replyText = `There are no listings for *${catName}* on my resume.  
+        Why not ask me about it by emailing *<${resume.basics.email}>*?`
         const botReply = {
           text: replyText,
           quick_replies

@@ -26,11 +26,25 @@ const MessageBody = styled.div`
 
 const Incoming = styled(MessageBody)`
   background-color: white;
+  line-height: 1.5em;
   position: relative;
 
+  & em {
+    font-weight: 700;
+  }
+
+  & > hr {
+    border-color: ${colors.shadow};
+  }
+  
+  & .smoller {
+    font-size: 14px;
+    font-style: italic;
+  }
+
   & > ul {
-    /* list-style: inside; */
-    margin-left: 10px;
+    list-style: inside;
+    margin-left: 20px;
   }
 `;
 

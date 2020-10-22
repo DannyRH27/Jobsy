@@ -168,7 +168,7 @@
       "gitUrl": "https://github.com/DannyRH27/DistanSing",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/DistanSing.png",
-        "linkPath": "https://www.yelp.com/biz/zen-modern-asian-san-diego?osq=zen+modern+asian",
+        "linkPath": "https://distansing.herokuapp.com/",
         "leftText": "DistanSing"
       },
       "technologies": ["HTML", "CSS","Node.js","Express.js","MongoDB","Socket.IO","Peer.js","React","Redux"]

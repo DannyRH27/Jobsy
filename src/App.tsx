@@ -72,6 +72,11 @@ const Overlay = styled.div`
   padding: 32px;
 `;
 
+const FlexedDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.h1`
   font-size: 3em;
   color: white;
@@ -84,6 +89,14 @@ const SubTitle = styled(Title)`
   margin-top: 8px;
   font-size: 2em;
   opacity: 0.6;
+`;
+
+const Email = styled.a`
+  font-size: 1.5em;
+  color: white;
+  font-family: "Oswald";
+  text-decoration: none;
+  margin-top: 20px;
 `;
 
 const Copyright = styled.div`
@@ -127,7 +140,11 @@ const trans = (x, y, s) =>
 
 const initialMessages: Message[] = [];
 
+const emailBody =
+  "Hi%20Danny,%0D%0A%0D%0AMy%20name%20is%20<Your%20Name>%20and%20I'm%20a%20recruiter/the%20hiring%20manager%20for%20<Your%20Company>.%0D%0A%0D%0AI%20would%20like%20to%20have%20a%20phone%20discussion%20about%20an%20Software%20Engineer/Product%20Manager%20role%20that%20we%20have%20available.%0D%0A%0D%0AI'd%20like%20to%20talk%20with%20you%20more%20about%20<Your%20Company>%20and%20your%20experience.%0D%0A%0D%0AWhat%20is%20your%20availability%20for%20a%20short%20introductory%20call?%0D%0A%0D%0ALooking%20forward%20to%20hearing%20from%20you.%0D%0A%0D%0AKind%20Regards,%0D%0A%0D%0A<Your%20Name>";
+
 const App = ({ options }: Props) => {
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const reconnectCount = useRef(0);
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
@@ -146,6 +163,7 @@ const App = ({ options }: Props) => {
 
 
   const sendEvent = (event: Event) => {
+    if (inputRef.current) inputRef.current.focus()
     if (options.useSockets && socket.current) {
       setTimeout(() => {
         socket.current &&
@@ -251,10 +269,15 @@ const App = ({ options }: Props) => {
     >
       <Panel>
         <Overlay>
-          <div>
-            <Title>Danny Huang</Title>
-            <SubTitle>Interactive Resume</SubTitle>
-          </div>
+          <FlexedDiv>
+            <div>
+              <Title>Danny Huang</Title>
+              <SubTitle>Interactive Resume</SubTitle>
+            </div>
+            <Email href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}>
+              Email me!
+            </Email>
+          </FlexedDiv>
           <Copyright>© 2020, Danny Huang, TJ McCabe and Wayne Su</Copyright>
         </Overlay>
         <Circle style={{ transform: props.xys.interpolate(trans) }}>
@@ -262,7 +285,7 @@ const App = ({ options }: Props) => {
         </Circle>
       </Panel>
       <Main>
-        <MessageHeader />
+        {/* <MessageHeader /> */}
         <MessageList>
           {messages.map((message, index) => (
             <MessageRow key={index} message={message} sendEvent={sendEvent} />
@@ -271,7 +294,7 @@ const App = ({ options }: Props) => {
           {typing && <TypingIndicator />}
           <div ref={bottomRef} className="list-bottom"></div>
         </MessageList>
-        <Input sendEvent={sendEvent} />
+        <Input ref={inputRef} sendEvent={sendEvent} />
       </Main>
     </View>
   );

@@ -23,7 +23,7 @@ const Form = styled.form`
 const SendButton = styled(FaTelegramPlane)`
   margin-left: 30px;
   padding: 8px 10px;
-  height: 28px;
+  height: 24px;
   width: 72px;
   color: white;
   border-radius: 20px;
@@ -32,7 +32,7 @@ const SendButton = styled(FaTelegramPlane)`
   user-select: none;
   cursor: pointer;
   transition: 0.2s;
-
+  box-sizing: initial;
   &:hover {
     /* background-color: ${colors.persianGreenLight}; */
     opacity: 0.8;

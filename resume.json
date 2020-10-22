@@ -2,11 +2,12 @@
   "basics": {
     "name": "Danny Huang",
     "label": "Programmer",
+    "openToOpps": true,
+    "yourself": "Hi, my name is Danny and I'm a software engineer...",
+    "idealCompany": "I'd love to work for a huge soulless corporation and become a cog in the machine",
     "picture": "",
     "email": "danny.r.huang@gmail.com",
     "phone": "(858) 314-0788",
-    "website": "http://dannyrhuang.com",
-    "summary": "A summary of John Doe...",
     "location": {
       "address": "1254 Rhode Island St",
       "postalCode": "CA 94107",
@@ -14,6 +15,7 @@
       "countryCode": "US",
       "region": "California"
     },
+    "website": "http://dannyrhuang.com",
     "profiles": [
       {
         "network": "LinkedIn",
@@ -39,7 +41,7 @@
       "website": "https://aecom.com/",
       "startDate": "2017-07-10",
       "endDate": "",
-      "summary": "Danny worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
+      "summary": "I worked on several aerospace projects at NASA Ames Research Center including construction of Google's Bayview Campus as well as renovation of Airplane Hangars 1 and 2.",
       "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/AECOM.jpg",
@@ -56,7 +58,7 @@
       "website": "https://www.quest-global.com/",
       "startDate": "2016-06-30",
       "endDate": "2017-06-30",
-      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
+      "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
       "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/QuEST.jpg",
@@ -74,7 +76,7 @@
       "website": "https://www.zenmodernasian.com/",
       "startDate": "2016-01-20",
       "endDate": "",
-      "summary": "Danny was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
+      "summary": "I was the senior analyst for a portfolio of next generation commercial aircrafts performing data and risk analysis.",
       "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Zen.png",
@@ -91,14 +93,13 @@
   "education": [
     {
       "institution": "San Diego State University",
-      "area": ["Finance", "Econometrics"],
-      "picture": "",
+      "area": "Finance and Econometrics",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/SDSU.png",
         "linkPath": "https://www.sdsu.edu/",
         "leftText": "San Diego State University"
       },
-      "studyType": "Bachelor",
+      "studyType": "Bachelors",
       "startDate": "2011-01-01",
       "endDate": "2013-01-01",
       "gpa": "4.0",
@@ -111,7 +112,6 @@
     {
       "institution": "App Academy",
       "area": "FullStack Development",
-      "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/AA.png",
         "linkPath": "https://www.appacademy.io/",
@@ -133,7 +133,6 @@
     {
       "institution": "Product School",
       "area": "Product Management",
-      "picture": "",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Product.png",
         "linkPath": "https://productschool.com/",
@@ -156,7 +155,7 @@
   "projects": [
     {
       "title": "DannyDash",
-      "summary":"DannyDash is a FullStack project inspired by DoorDash. The twist: All deliveries are estimated by Danny's walking speed. Hope you're not hungry!",
+      "summary":"A FullStack project inspired by DoorDash. The twist: All deliveries are estimated by Danny's walking speed. Hope you're not hungry!",
       "liveUrl": "https://dannydash.herokuapp.com/",
       "gitUrl": "https://github.com/DannyRH27/DannyDash",
       "metadata": {
@@ -168,13 +167,13 @@
     },
     {
       "title": "DistanSing",
-      "summary": "A Full-Stack virtual event hosting app developed during the COVID-19 pandemic as a solution for artists/bands to continue catering to their fans. We are all only 6 beats apart from our music community.",
+      "summary": "A FullStack virtual event hosting app developed during the COVID-19 pandemic as a solution for artists/bands to continue catering to their fans. We are all only 6 beats apart from our music community.",
       "liveUrl": "https://distansing.herokuapp.com/",
       "gitUrl": "https://github.com/DannyRH27/DistanSing",
       "metadata": {
         "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/DistanSing.png",
         "linkPath": "https://www.yelp.com/biz/zen-modern-asian-san-diego?osq=zen+modern+asian",
-        "leftText": "Zen Modern Asian"
+        "leftText": "DistanSing"
       },
       "technologies": ["HTML", "CSS","Node.js","Express.js","MongoDB","Socket.IO","Peer.js","React","Redux"]
     }
@@ -189,7 +188,7 @@
         "leftText": "AECOM & NASA Employee of the Month"
       },
       "awarder": "AECOM & NASA Ames Research Center",
-      "summary": "Won Employee of the Month award for improving client relations by revamping budget reporting systems."
+      "summary": "I won Employee of the Month award for improving client relations by revamping budget reporting systems."
     }
   ],
   "publications": [
@@ -225,7 +224,7 @@
     {
       "name": "Sports",
       "metadata": {
-        "picturePath": "www.centercode.com/image.jpg",
+        "picturePath": "https://dannydash-seeds.s3-us-west-1.amazonaws.com/ReadMe/Jobsy/Sports.jpg",
         "linkPath": "",
         "leftText": "Sports"
       },
@@ -253,15 +252,18 @@
   "references": [
     {
       "name": "Jonathan Yang",
-      "reference": "Cofounder at Zen Modern Asian Bistro."
+      "reference": "Cofounder at Zen Modern Asian Bistro",
+      "contact": ""
     },
     {
       "name": "Andrew Walker",
-      "reference": "Direct Supervisor at QuEST Global."
+      "reference": "Direct Supervisor at QuEST Global",
+      "contact": ""
     },
     {
       "name": "Syna Moshggou",
-      "reference": "Direct Supervisor at AECOM."
+      "reference": "Direct Supervisor at AECOM",
+      "contact": ""
     }
   ]
 }

@@ -36,6 +36,10 @@ const Incoming = styled(MessageBody)`
   & > hr {
     border-color: ${colors.shadow};
   }
+
+  & a, a:visited {
+    color: ${colors.persianGreen}
+  }
   
   & .smoller {
     font-size: 14px;

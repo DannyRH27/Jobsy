@@ -22,8 +22,8 @@ const timePeriod = (sd, ed, verb, place, work) => {
   ed = ed ? ed.split("-") : ''
   const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'
   return endTime === 'present' ? (
-    `I've been ${verb}ing ${work ? 'at ' : ''}${place} from ${months[sd[1]]}, ${sd[0]} until now`
-  ) : `I ${verb}ed ${work ? 'at ' : ''}${place} from ${months[sd[1]]}, ${sd[0]} until ${endTime}`
+    `I've been ${verb}ing ${work ? 'at ' : ''}*${place}* from *${months[sd[1]]}, ${sd[0]}* until *now*`
+  ) : `I ${verb}ed ${work ? 'at ' : ''}*${place}* from *${months[sd[1]]}, ${sd[0]}* until *${endTime}*`
 }
 
 const formatDate = (date, startStr) => {
@@ -37,12 +37,12 @@ const formatEndNode = (catName, entry) => {
   if (catName === "work" || catName === "volunteer") {
     const comp = entry.company ? entry.company : entry.organization ? entry.organization : ""
     const timeStr = timePeriod(entry.startDate, entry.endDate, catName, comp, true)
-    const roleStr = timeStr + ` in the role of ${entry.position}`
+    const roleStr = timeStr + ` in the role of *${entry.position}*`
     lines.push(roleStr + '.')
-    if (entry.summary) lines.push(entry.summary)
+    if (entry.summary) lines.push('---  \n' + entry.summary)
 
     if (entry.highlights && entry.highlights.length) {
-      lines.push(`Here are some highlights:`)
+      lines.push(`---  \nHere are some highlights:`)
       entry.highlights.forEach(hl => lines.push("- " + hl))
     }
   } else if (catName === "education") {
@@ -50,20 +50,20 @@ const formatEndNode = (catName, entry) => {
     if (timeStr) lines.push(timeStr)
 
     const degreeText = entry.endDate ? 'I earned a' : 'I will earn a'
-    if (entry.studyType) lines.push(`${degreeText} ${entry.studyType} in ${entry.area}.`)
+    if (entry.studyType) lines.push(`---  \n${degreeText} *${entry.studyType}* in *${entry.area}*.`)
     
     const gpaText = entry.endDate ? 'was' : 'is'
-    if (entry.gpa) lines.push(`My GPA ${gpaText} ${entry.gpa}.`)
+    if (entry.gpa) lines.push(`My GPA ${gpaText} *${entry.gpa}*.`)
     if (entry.courses && entry.courses.length) {
-      lines.push(`Here's a list of some of my courses:`)
+      lines.push(`---  \nHere's a list of some of my courses:`)
       entry.courses.forEach(course => lines.push("- " + course))
     }
   } else if (catName === "awards") {
-    const awarderText = entry.awarder ? ` from ${entry.awarder}` : ''
+    const awarderText = entry.awarder ? ` from *${entry.awarder}*` : ''
     const ds = entry.date ? entry.date.split('-') : ''
-    const dateStr = ds ? ` in ${months[ds[1]]}, ${ds[0]}` : ''
-    lines.push(`I earned the ${entry.title} award${awarderText}${dateStr}!`)
-    if (entry.summary) lines.push(`Here's a summary of the award:  \n${entry.summary}`)
+    const dateStr = ds ? ` in *${months[ds[1]]}, ${ds[0]}*` : ''
+    lines.push(`I earned the *${entry.title}* award${awarderText}${dateStr}!`)
+    if (entry.summary) lines.push(`---  \n${entry.summary}`)
   } else if (catName === "publications") {
     lines.push(`Here's a little about my ${entry.name} publication:`)
     const dateStr = formatDate(entry.releaseDate, "Date published:")
@@ -72,43 +72,44 @@ const formatEndNode = (catName, entry) => {
     if (entry.website) lines.push(`Published at ${entry.website}`)
     if (entry.summary) lines.push(`Summary: ${entry.summary}`)
   } else if (catName === "projects") {
-    lines.push(`${entry.title}: ${entry.summary}`)
-    if (entry.liveUrl) lines.push(`[Live Link](${entry.liveUrl})`)
-    if (entry.gitUrl) lines.push(`[GitHub Link](${entry.gitUrl})`)
+    lines.push(`*${entry.title}*: ${entry.summary}`)
+    if (entry.liveUrl || entry.gitUrl) lines.push('---')
+    if (entry.liveUrl) lines.push(`*[Live Link](${entry.liveUrl})*`)
+    if (entry.gitUrl) lines.push(`*[GitHub Link](${entry.gitUrl})*`)
     if (entry.technologies && entry.technologies.length) {
-      lines.push(`Here are some of the key technologies I used on ${entry.title}:  \n${entry.technologies.join(", ")}`)
+      lines.push(`---  \nHere are some of the key technologies I used on ${entry.title}:  \n&nbsp;&nbsp;&nbsp;&nbsp;${entry.technologies.join(", ")}`)
     }
   } else if (catName === "skills") {
-    lines.push(`I'm skilled at ${entry.name}!`)
-    if (entry.level) lines.push(`I would describe my level of familiarity as ${entry.level}.`)
+    lines.push(`I'm skilled at *${entry.name}*!`)
+    if (entry.level) lines.push(`I would describe my level of familiarity as *${entry.level}*.`)
     const yrText = (entry.years && entry.years != 1) ? "years" : "year"
-    if (entry.years) lines.push(`I have ${entry.years} ${yrText} of experience with ${entry.name}.`)
+    if (entry.years) lines.push(`I have *${entry.years} ${yrText}* of experience with ${entry.name}.`)
     const relevantProjects = resume.projects && resume.projects.length ? (
       resume.projects.filter(proj => proj.technologies.includes(entry.name))
     ) : []
-    if (relevantProjects.length) lines.push(`Check out my relevant project(s) that use ${entry.name}:  \n`)
+    if (relevantProjects.length) lines.push(`---  \nCheck out my relevant project(s) that use *${entry.name}*:  \n`)
     relevantProjects.forEach(proj => {
-      lines.push(`- [${proj.title}](${proj.liveUrl})  \n`)
+      lines.push(`- *[${proj.title}](${proj.liveUrl})*`)
     })
   } else if (catName === "languages") {
-    lines.push(`I speak ${entry.language} at the ${entry.fluency} level.`)
+    lines.push(`I speak *${entry.language}* at the *${entry.fluency}* level.`)
   } else if (catName === "interests") {
-    lines.push(`I'm interested in ${entry.name}!`)
+    lines.push(`I'm interested in *${entry.name}*!`)
     if (entry.keywords && entry.keywords.length) {
-      lines.push(`Here are some specifics/keywords:`)
+      lines.push(`Here are some specifics:`)
       entry.keywords.forEach(keyword => lines.push("- " + keyword))
     }
   } else if (catName === "references") {
-    lines.push(`${entry.name} was my ${entry.reference}.`)
+    lines.push(`*${entry.name}* was my ${entry.reference}.`)
     if (entry.contact) lines.push(`Contact info: ${entry.contact}`)
   } else if (catName === "profiles") {
-    lines.push(`[Click here](${entry.url}) to head over to my ${entry.network} profile!`)
+    lines.push(`*[Click here](${entry.url})* to head over to my ${entry.network} profile!`)
   }
   return lines.join("  \n")
 }
 
 const formatCategoryText = (title) => {
-  const choose = "  \nChoose one to find out more!"
+  const choose = '  \n<div class="smoller">Choose one to find out more!</div>'
   let response;
 
   switch (title) {
@@ -157,17 +158,14 @@ const formatBasicsText = (title) => {
 
   switch (title) {
     case "email":
-      response = `My email address is <${resume.basics.email}>.`
+      response = `My email address is *<${resume.basics.email}>*.`
       break;
     case "phone":
-      response = `My phone number is ${resume.basics.phone}.`
+      response = `My phone number is *${resume.basics.phone}*.`
       break;
     case "website":
-      response = `Check out my website at <${resume.basics.website}>!`
+      response = `Check out my website at *<${resume.basics.website}>*!`
       break;
-    // case "summary":
-    //   response = `Here's a little about me:  \n${resume.basics.summary}`
-    //   break;
     case "profiles":
       response = `Check out some of my online profiles:`
       break;
@@ -183,8 +181,8 @@ const formatBasicsText = (title) => {
       break;
     case "contact":
       response = ''
-      if (resume.basics.email) response += `My email address is <${resume.basics.email}>.  \n`
-      if (resume.basics.phone) response += `My phone number is ${resume.basics.phone}.  \n`
+      if (resume.basics.email) response += `My email address is *<${resume.basics.email}>*.  \n`
+      if (resume.basics.phone) response += `My phone number is *${resume.basics.phone}*.  \n`
       const loc2 = resume.basics.location
       if (loc2) {
         response += `Here's my location:  \n`

@@ -24,7 +24,7 @@ module.exports = function (controller) {
     quick_replies
   };
   onboarding.addMessage({ type: "typing" }, "typing");
-  onboarding.say(`Hi, I'm ${resume.basics.name}. Welcome to my interactive resume!`);
+  onboarding.say(`Hi, I'm *${resume.basics.name}*. Welcome to my interactive resume!`);
   if (resume.basics.openToOpps) onboarding.say(`I'm currently open to opportunities!`);
   onboarding.say(botReply)
 

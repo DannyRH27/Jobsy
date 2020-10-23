@@ -23,7 +23,7 @@ const Nodes = [
   "ideal company",
   "summary",
   "location",
-  "profile",
+  "profiles",
   "Github",
   "Angel List",
   "LinkedIn",

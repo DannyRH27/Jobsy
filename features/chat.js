@@ -66,7 +66,7 @@ module.exports = function (controller) {
 
   const basicsKeys = ['contact']
   Object.keys(resume.basics).forEach(key => {
-    const nots = new Set(['name', 'label', 'picture', 'openToOpps', 'yourself', 'idealCompany'])
+    const nots = new Set(['name', 'label', 'picturePath', 'openToOpps', 'yourself'])
     if (nots.has(key)) {
     } else if (key === "profiles") {
       if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
@@ -122,26 +122,6 @@ module.exports = function (controller) {
       }
   
       userStore.visit(botReply, "Tell me about yourself")
-      setTimeout(async () => {
-        // will have to reset context because turn has now ended.
-        await bot.changeContext(message.reference);
-        await bot.reply(message, botReply);
-      }, 1000);
-    })
-  }
-
-  if (resume.basics.idealCompany) {
-    controller.hears("ideal company", "message, direct_message", async (bot, message) => {
-      await bot.reply(message, { type: "typing" });
-      const userStore = store.getUserStore(message.user)
-      const quick_replies = extra_replies
-  
-      const botReply = {
-        text: resume.basics.idealCompany,
-        quick_replies
-      }
-  
-      userStore.visit(botReply, 'idealCompany')
       setTimeout(async () => {
         // will have to reset context because turn has now ended.
         await bot.changeContext(message.reference);

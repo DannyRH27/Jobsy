@@ -8,7 +8,6 @@ for (let key in resume) { nodes.push(titleize(key)) }
 
 const basicsKeyMap = {
   yourself: "Tell Me About Yourself",
-  idealCompany: "Ideal Company",
   email: "Email",
   phone: "Phone",
   location: "Location",

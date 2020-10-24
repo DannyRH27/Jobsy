@@ -27,7 +27,7 @@ Jobsy remembers users' history and gives them a "back" button at each step so th
   <img src="https://raw.githubusercontent.com/tjmccabe/Jobsy/main/public/history.png" alt="History"/>
 </p>
 
-Once a resume leaf node (a node with no children) has been visited, Jobsy will present that option in a slightly different color with a check mark to indicate that a user has already seen it during their session.
+Once a node has been visited, Jobsy will present that option in a slightly different color with a check mark to indicate that a user has already seen it during their session.
 
 ### Exploration-Based Graphics
 

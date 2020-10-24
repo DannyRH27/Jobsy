@@ -109,9 +109,11 @@ const Empty = styled.div`
 interface Props {
   message: Message;
   sendEvent: (event: Event) => void;
+  initials: string;
+  firstName: string;
 }
 
-const MessageRow = ({ message, sendEvent }: Props) => {
+const MessageRow = ({ message, sendEvent, initials, firstName }: Props) => {
   // const [userReplied, setUserReplied] = useState(false);
   const usedSeperator = useRef(false);
 
@@ -140,13 +142,13 @@ const MessageRow = ({ message, sendEvent }: Props) => {
     >
       <Container incoming={message.direction === "incoming"}>
         {message.showAvatar && message.direction === "incoming" ? (
-          <ProfilePhoto>DH</ProfilePhoto>
+          <ProfilePhoto>{initials}</ProfilePhoto>
         ) : message.direction === "incoming" ? (
           <Empty />
         ) : null}
         {message.direction === "incoming" ? (
           <FlexColumn incoming>
-            {message.showAvatar && <Name>Danny</Name>}
+            {message.showAvatar && <Name>{firstName}</Name>}
             <Incoming>
               <ReactMarkdown source={message.text} escapeHtml={false} />
             </Incoming>

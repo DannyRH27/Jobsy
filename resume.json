@@ -23,7 +23,7 @@
         "url": "https://www.linkedin.com/in/dannyrhuang/"
       },
       {
-        "network": "Angel List",
+        "network": "AngelList",
         "username": "Danny Huang",
         "url": "https://angel.co/u/danny-r-huang"
       },
@@ -85,8 +85,7 @@
       ]
     }
   ],
-  "volunteer": [
-  ],
+  "volunteer": [],
   "education": [
     {
       "institution": "San Diego State University",
@@ -188,9 +187,7 @@
       "summary": "I won Employee of the Month award for improving client relations by revamping budget reporting systems."
     }
   ],
-  "publications": [
-
-  ],
+  "publications": [],
   "skills": [
     { "name": "Ruby on Rails", "level": "Proficient", "years": 1 },
     { "name": "Express.js", "level": "Proficient", "years": 1 },

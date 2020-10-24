@@ -298,20 +298,16 @@ module.exports = function (controller) {
   controller.on("message,direct_message", async (bot, message) => {
     await bot.reply(message, { type: "typing" });
     const userStore = store.getUserStore(message.user)
-    const autocorrections = autocorrect.getSuggestions(message.text)
-    const suggestedReplies = []
-    if (autocorrections){
-      for (let i = 0; i < autocorrections.length; i++) {
-        suggestedReplies.push({
-          title: titleize(autocorrections[i][1]),
-          payload: titleize(autocorrections[i][1]),
-          visited: userStore.isVisited(autocorrections[i][1])
-        });
-      }
-    }
-    // console.log(autocorrections)
+
+    const autocorrections = autocorrect.getSuggestions(message.text) || []
+    const suggestedReplies = autocorrections.map(ac => ({
+      title: ac[1],
+      payload: ac[1],
+      visited: userStore.isVisited(ac[1])
+    }))
+
     const response =
-      autocorrections
+      autocorrections.length
         ? `Did you mean to check out my experience with one of these?`
         : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
         

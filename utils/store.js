@@ -17,7 +17,7 @@ class UserStore {
   
   visit(botReply, text) {
     this.history.push(botReply)
-    if (text) this.visited.add(text.toLowerCase())
+    if (text) this.visited.add(text.split(" ").join("").toLowerCase())
   }
   
   lastVisited() {
@@ -27,7 +27,7 @@ class UserStore {
   }
   
   isVisited(entry) {
-    return this.visited.has(entry.toLowerCase())
+    return this.visited.has(entry.split(" ").join("").toLowerCase())
   }
 }
 

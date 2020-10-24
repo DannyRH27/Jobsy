@@ -2,9 +2,9 @@
   "basics": {
     "name": "Danny Huang",
     "label": "Programmer",
+    "picturePath": "https://raw.githubusercontent.com/DannyRH27/Jobsy/main/dist/danny.jpg",
     "openToOpps": true,
     "yourself": "Hi, my name is Danny and I enjoy solving complex problems with a mixture of analytical and creative thinking, and I particularly enjoy collaborating in a team to find unique solutions to hard problems.",
-    "idealCompany": "My ideal company is one that values individual employees and encourages them to speak up and share ideas about the long term vision/direction of the company, but also has a commitment to the employee's career growth.",
     "email": "danny.r.huang@gmail.com",
     "phone": "(858) 314-0788",
     "location": {
@@ -22,7 +22,7 @@
         "url": "https://www.linkedin.com/in/dannyrhuang/"
       },
       {
-        "network": "Angel List",
+        "network": "AngelList",
         "username": "Danny Huang",
         "url": "https://angel.co/u/danny-r-huang"
       },
@@ -84,8 +84,7 @@
       ]
     }
   ],
-  "volunteer": [
-  ],
+  "volunteer": [],
   "education": [
     {
       "institution": "San Diego State University",
@@ -187,9 +186,7 @@
       "summary": "I won Employee of the Month award for improving client relations by revamping budget reporting systems."
     }
   ],
-  "publications": [
-
-  ],
+  "publications": [],
   "skills": [
     { "name": "Ruby on Rails", "level": "Proficient", "years": 1 },
     { "name": "Express.js", "level": "Proficient", "years": 1 },

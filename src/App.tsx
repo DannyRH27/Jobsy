@@ -14,8 +14,14 @@ import MessageHeader from "./components/MessageHeader";
 import { useSpring, animated } from "react-spring";
 import { FaChevronLeft, FaEnvelope, FaGithub } from "react-icons/fa";
 import Info from "./components/Info";
-
 import mp3 from "./chat.mp3";
+const resume = require("../resume.json")
+const fullName = resume.basics.name
+const splitName = fullName.split(" ")
+const [firstName, initials] = [splitName[0], splitName[0][0] + splitName[splitName.length - 1][0]]
+const userEmail = resume.basics.email
+const userPicPath = resume.basics.picturePath
+
 
 const PictureContainer = styled.div`
   display: flex;
@@ -71,7 +77,7 @@ const Circle = styled(animated.div)<{ landing: string }>`
   transition: box-shadow 0.5s;
   overflow: hidden;
   /* background-color: white; */
-  background-image: url("./danny.jpg");
+  /* background-image: url("./danny.jpg"); */
   background-repeat: no-repeat;
   background-size: cover;
   /* display: flex;
@@ -177,7 +183,7 @@ const Back = styled(FaChevronLeft)`
   }
 `;
 
-const Email = styled.a`
+const ContactLink = styled.a`
   width: 2em;
   height: 2em;
   font-size: 1.5em;
@@ -273,7 +279,7 @@ const trans = (x, y, s) =>
 const initialMessages: Message[] = [];
 
 const emailBody =
-  "Hi%20Danny,%0D%0A%0D%0AMy%20name%20is%20<Your%20Name>%20and%20I'm%20a%20recruiter/the%20hiring%20manager%20for%20<Your%20Company>.%0D%0A%0D%0AI%20would%20like%20to%20have%20a%20phone%20discussion%20about%20an%20Software%20Engineer/Product%20Manager%20role%20that%20we%20have%20available.%0D%0A%0D%0AI'd%20like%20to%20talk%20with%20you%20more%20about%20<Your%20Company>%20and%20your%20experience.%0D%0A%0D%0AWhat%20is%20your%20availability%20for%20a%20short%20introductory%20call?%0D%0A%0D%0ALooking%20forward%20to%20hearing%20from%20you.%0D%0A%0D%0AKind%20Regards,%0D%0A%0D%0A<Your%20Name>";
+  `Hi%20${firstName},%0D%0A%0D%0AMy%20name%20is%20<Your%20Name>%20and%20I'm%20a%20recruiter/hiring%20manager%20for%20<Your%20Company>.%0D%0A%0D%0AI%20would%20like%20to%20have%20a%20phone%20discussion%20about%20a%20role%20that%20we%20have%20available.%0D%0A%0D%0AI'd%20like%20to%20talk%20with%20you%20more%20about%20your%20experience.%0D%0A%0D%0AWhat%20is%20your%20availability%20for%20a%20short%20introductory%20call?%0D%0A%0D%0ALooking%20forward%20to%20hearing%20from%20you.%0D%0A%0D%0AKind%20Regards,%0D%0A%0D%0A<Your%20Name>`;
 
 const App = ({ options }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -290,7 +296,7 @@ const App = ({ options }: Props) => {
   const user = useMemo(generateGuid, []);
   const [typing, setTyping] = useState(false);
   const [landing, setLanding] = useState(true);
-  const [picture, setPicture] = useState("./danny.jpg");
+  const [picture, setPicture] = useState(userPicPath);
   const [caption, setCaption] = useState("");
   const [link, setLink] = useState("");
   const [mute, setMute] = useState(false);
@@ -380,7 +386,7 @@ const App = ({ options }: Props) => {
                 setCaption(message.entry.metadata.leftText);
                 setLink(message.entry.metadata.linkPath);
               } else {
-                setPicture("./danny.jpg");
+                setPicture(userPicPath);
                 setCaption("");
                 setLink("");
               }
@@ -421,7 +427,7 @@ const App = ({ options }: Props) => {
                     <Back
                       onClick={() => {
                         setLanding(true);
-                        setPicture("./danny.jpg");
+                        setPicture(userPicPath);
                         setCaption("");
                         setLink("");
                       }}
@@ -431,7 +437,7 @@ const App = ({ options }: Props) => {
               </AnimatePresence>
 
               <div>
-                <Title>Danny Huang</Title>
+                <Title>{fullName}</Title>
                 <SubTitle>Interactive Resume</SubTitle>
               </div>
             </Logo>
@@ -450,14 +456,14 @@ const App = ({ options }: Props) => {
                 )}
               </AnimatePresence>
 
-              <Email
-                href={`mailto:danny.r.huang@gmail.com?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
+              <ContactLink
+                href={`mailto:${userEmail}?subject=Interview%20Invitation%20From%20<Your%20Company>&body=${emailBody}`}
               >
                 <FaEnvelope />
-              </Email>
-              <Email href="https://github.com/DannyRH27/Jobsy">
+              </ContactLink>
+              <ContactLink href="https://github.com/DannyRH27/Jobsy">
                 <FaGithub />
-              </Email>
+              </ContactLink>
             </External>
           </FlexedDiv>
           <Copyright>
@@ -474,7 +480,7 @@ const App = ({ options }: Props) => {
             landing={landing ? "true" : "false"}
           >
             <AnimatePresence>
-              {picture !== "./danny.jpg" && (
+              {picture !== userPicPath && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -507,9 +513,11 @@ const App = ({ options }: Props) => {
                   key={index}
                   message={message}
                   sendEvent={sendEvent}
+                  initials={initials}
+                  firstName={firstName}
                 />
               ))}
-              {typing && <TypingIndicator />}
+              {typing && <TypingIndicator initials={initials} firstName={firstName}/>}
               <div ref={bottomRef} className="list-bottom"></div>
             </MessageList>
             <Input

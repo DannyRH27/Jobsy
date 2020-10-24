@@ -50,12 +50,17 @@ const Name = styled.div`
   color: ${colors.grey};
 `;
 
-const TypingIndicator = () => {
+interface Props {
+  initials: string;
+  firstName: string;
+}
+
+const TypingIndicator = ({initials, firstName}: Props) => {
   return (
     <TypingContainer incoming={true}>
-      <ProfilePhoto>DH</ProfilePhoto>
+      <ProfilePhoto>{initials}</ProfilePhoto>
       <FlexColumn incoming>
-        <Name>Danny</Name>
+        <Name>{firstName}</Name>
         <Typing>
           <span />
           <span />

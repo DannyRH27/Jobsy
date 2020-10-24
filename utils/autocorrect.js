@@ -7,7 +7,7 @@ const nodes = []
 for (let key in resume) { nodes.push(titleize(key)) }
 
 const basicsKeyMap = {
-  yourself: "Tell Me About Yourself",
+  yourself: "Tell me about yourself",
   email: "Email",
   phone: "Phone",
   location: "Location",

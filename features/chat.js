@@ -67,12 +67,15 @@ module.exports = function (controller) {
   const basicsKeys = ['contact']
   Object.keys(resume.basics).forEach(key => {
     const nots = new Set(['name', 'label', 'picturePath', 'openToOpps', 'yourself'])
-    if (nots.has(key)) {
-    } else if (key === "profiles") {
-      if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
-    } else if (key === "location") {
-      if (resume.basics.location && resume.basics.location.city) basicsKeys.push(key)
-    } else if (resume.basics[key]) basicsKeys.push(key)
+    if (!nots.has(key)) {
+      if (key === "profiles") {
+        if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
+      } else if (key === "location") {
+        if (resume.basics.location && resume.basics.location.city) basicsKeys.push(key)
+      } else if (resume.basics[key]) {
+        basicsKeys.push(key)
+      }
+    }
   })
 
   controller.hears("basics", "message, direct_message", async (bot, message) => {
@@ -200,10 +203,10 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
-  for (let i=0;i<Object.keys(resume).length-1;i++){
+  for (let i = 0 ; i < categories.length; i++) {
     const [catName, title] = categories[i]
     if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
-      // make an unavailable message and return
+      // make an unavailable message and continue
       controller.hears(catName, "message, direct_message", async (bot, message) => {
         await bot.reply(message, { type: "typing" });
         const quick_replies = extra_replies

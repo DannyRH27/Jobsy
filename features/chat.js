@@ -66,13 +66,16 @@ module.exports = function (controller) {
 
   const basicsKeys = ['contact']
   Object.keys(resume.basics).forEach(key => {
-    const nots = new Set(['name', 'label', 'picture', 'openToOpps', 'yourself', 'idealCompany'])
-    if (nots.has(key)) {
-    } else if (key === "profiles") {
-      if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
-    } else if (key === "location") {
-      if (resume.basics.location && resume.basics.location.city) basicsKeys.push(key)
-    } else if (resume.basics[key]) basicsKeys.push(key)
+    const nots = new Set(['name', 'label', 'picturePath', 'openToOpps', 'yourself'])
+    if (!nots.has(key)) {
+      if (key === "profiles") {
+        if (resume.basics.profiles && resume.basics.profiles.length) basicsKeys.push(key)
+      } else if (key === "location") {
+        if (resume.basics.location && resume.basics.location.city) basicsKeys.push(key)
+      } else if (resume.basics[key]) {
+        basicsKeys.push(key)
+      }
+    }
   })
 
   controller.hears("basics", "message, direct_message", async (bot, message) => {
@@ -122,26 +125,6 @@ module.exports = function (controller) {
       }
   
       userStore.visit(botReply, "Tell me about yourself")
-      setTimeout(async () => {
-        // will have to reset context because turn has now ended.
-        await bot.changeContext(message.reference);
-        await bot.reply(message, botReply);
-      }, 1000);
-    })
-  }
-
-  if (resume.basics.idealCompany) {
-    controller.hears("ideal company", "message, direct_message", async (bot, message) => {
-      await bot.reply(message, { type: "typing" });
-      const userStore = store.getUserStore(message.user)
-      const quick_replies = extra_replies
-  
-      const botReply = {
-        text: resume.basics.idealCompany,
-        quick_replies
-      }
-  
-      userStore.visit(botReply, 'idealCompany')
       setTimeout(async () => {
         // will have to reset context because turn has now ended.
         await bot.changeContext(message.reference);
@@ -220,10 +203,10 @@ module.exports = function (controller) {
     ["references", "name"]
   ];
 
-  for (let i=0;i<Object.keys(resume).length-1;i++){
+  for (let i = 0 ; i < categories.length; i++) {
     const [catName, title] = categories[i]
     if (!resume.hasOwnProperty(catName) || !resume[catName].length) {
-      // make an unavailable message and return
+      // make an unavailable message and continue
       controller.hears(catName, "message, direct_message", async (bot, message) => {
         await bot.reply(message, { type: "typing" });
         const quick_replies = extra_replies
@@ -298,20 +281,16 @@ module.exports = function (controller) {
   controller.on("message,direct_message", async (bot, message) => {
     await bot.reply(message, { type: "typing" });
     const userStore = store.getUserStore(message.user)
-    const autocorrections = autocorrect.getSuggestions(message.text)
-    const suggestedReplies = []
-    if (autocorrections){
-      for (let i = 0; i < autocorrections.length; i++) {
-        suggestedReplies.push({
-          title: titleize(autocorrections[i][1]),
-          payload: titleize(autocorrections[i][1]),
-          visited: userStore.isVisited(autocorrections[i][1])
-        });
-      }
-    }
-    // console.log(autocorrections)
+
+    const autocorrections = autocorrect.getSuggestions(message.text) || []
+    const suggestedReplies = autocorrections.map(ac => ({
+      title: ac[1],
+      payload: ac[1],
+      visited: userStore.isVisited(ac[1])
+    }))
+
     const response =
-      autocorrections
+      autocorrections.length
         ? `Did you mean to check out my experience with one of these?`
         : `Sorry, I didn't understand '${message.text}'. Could you repeat that one more time?`;
         

@@ -42,7 +42,7 @@
       "endDate": "2019-11-03",
       "summary": "I established and managed the continued success of over 30 individual Customer Validation programs for predominantly Fortune 500 companies, including on-site company onboarding, quarterly business reviews, and annual program audits.",
       "metadata": {
-        "picturePath": "https://imgur.com/QIGPSCm",
+        "picturePath": "https://i.imgur.com/QIGPSCm.png",
         "linkPath": "https://www.centercode.com/",
         "leftText": "Centercode"
       },
@@ -59,7 +59,7 @@
       "endDate": "2016-02-14",
       "summary": "I directed Nook sales, customer service, & inventory.",
       "metadata": {
-        "picturePath": "https://imgur.com/3abxu4w",
+        "picturePath": "https://i.imgur.com/3abxu4w.jpg",
         "linkPath": "https://www.barnesandnoble.com/",
         "leftText": "Barnes & Noble"
       },
@@ -76,9 +76,9 @@
       "website": "https://www.scouting.org/",
       "startDate": "",
       "endDate": "",
-      "summary": "I received the rank of Eagle Scout in the BSA in 2006",
+      "summary": "I achieved the rank of Eagle Scout in the BSA in 2006",
       "metadata": {
-        "picturePath": "https://imgur.com/Bpl5FIy",
+        "picturePath": "https://i.imgur.com/Bpl5FIy.jpg",
         "linkPath": "https://www.scouting.org/",
         "leftText": "Boy Scouts of America"
       },
@@ -101,7 +101,7 @@
       "institution": "University of California, Los Angeles",
       "area": "Economics",
       "metadata": {
-        "picturePath": "https://imgur.com/GnqiZjd",
+        "picturePath": "https://i.imgur.com/GnqiZjd.jpg",
         "linkPath": "https://www.ucla.edu/",
         "leftText": "UCLA"
       },
@@ -135,7 +135,7 @@
       "liveUrl": "https://meticulist.herokuapp.com/",
       "gitUrl": "https://github.com/tjmccabe/Meticulist",
       "metadata": {
-        "picturePath": "https://imgur.com/uddghMC",
+        "picturePath": "https://i.imgur.com/uddghMC.gif",
         "linkPath": "https://meticulist.herokuapp.com/",
         "leftText": "Meticulist"
       },
@@ -147,7 +147,7 @@
       "liveUrl": "https://baconizer.herokuapp.com/",
       "gitUrl": "https://github.com/tjmccabe/baconizer",
       "metadata": {
-        "picturePath": "https://imgur.com/sBmpIks",
+        "picturePath": "https://i.imgur.com/sBmpIks.gif",
         "linkPath": "https://baconizer.herokuapp.com/",
         "leftText": "Baconizer"
       },
@@ -159,7 +159,7 @@
       "liveUrl": "https://distansing.herokuapp.com/",
       "gitUrl": "https://github.com/tjmccabe/DistanSing",
       "metadata": {
-        "picturePath": "https://imgur.com/8DOAGX4",
+        "picturePath": "https://i.imgur.com/8DOAGX4.gif",
         "linkPath": "https://distansing.herokuapp.com/",
         "leftText": "DistanSing"
       },
@@ -171,7 +171,7 @@
       "liveUrl": "https://jobsy-app.herokuapp.com/",
       "gitUrl": "https://github.com/DannyRH27/Jobsy",
       "metadata": {
-        "picturePath": "https://imgur.com/ctAAlIQ",
+        "picturePath": "https://i.imgur.com/ctAAlIQ.png",
         "linkPath": "https://jobsy-app.herokuapp.com/",
         "leftText": "Jobsy"
       },
@@ -183,12 +183,23 @@
       "title": "Hack the Chatbot Hackathon Winner",
       "date": "2020-10-23",
       "metadata": {
-        "picturePath": "https://imgur.com/eiMjvSq",
+        "picturePath": "https://i.imgur.com/eiMjvSq.jpg",
         "linkPath": "https://www.mintbean.io/",
         "leftText": "Mintbean"
       },
       "awarder": "Mintbean",
       "summary": "Two friends and I won Mintbean's 'Hack the Chatbot' Hackathon by building Jobsy, an interactive resume chatbot which you're currently exploring."
+    },
+    {
+      "title": "Eagle Scout",
+      "date": "2006-10-19",
+      "metadata": {
+        "picturePath": "https://i.imgur.com/Bpl5FIy.jpg",
+        "linkPath": "https://www.scouting.org/",
+        "leftText": "Boy Scouts of America"
+      },
+      "awarder": "Boy Scouts of America",
+      "summary": "I achieved the rank of Eagle Scout in the BSA in 2006."
     }
   ],
   "publications": [],

@@ -86,14 +86,14 @@ const Info = () => (
                 <p>
                   Resumes come in all shapes and sizes while recruiters have to
                   read through hundreds of resumes every week. This can get
-                  pretty tedious…this is where Jobsy comes in.
+                  pretty tedious… this is where Jobsy comes in.
                 </p>
                 <p>
-                  Jobsy is an interactive resume that will walk you through my
-                  experience and help you understand why I’m the best candidate
-                  in the market!
+                  Jobsy is an interactive resume bot that walks you through 
+                  my experience and helps you understand why I’m the best
+                  candidate on the market!
                 </p>
-                <p>Check out some of my features! 👉</p>
+                <p>Check out some of Jobsy's features 👉</p>
               </Text>
             </Body>
           </CardWrapper>
@@ -110,7 +110,7 @@ const Info = () => (
               <Title>Suggestions</Title>
               <Text>
                 Jobsy finds the closest word you're looking for and gives out
-                suggestions as buttons!
+                suggestions as quick reply buttons
               </Text>
             </Body>
           </CardWrapper>
@@ -126,8 +126,7 @@ const Info = () => (
             <Body>
               <Title>History</Title>
               <Text>
-                Jobsy remembers your message history so you would never get
-                lost.
+                Jobsy remembers your message history so you never get lost
               </Text>
             </Body>
           </CardWrapper>
@@ -144,7 +143,7 @@ const Info = () => (
               <Title>Graphics</Title>
               <Text>
                 If the message refers to an image or link, Jobsy shows it on the
-                side panel!
+                side panel
               </Text>
             </Body>
           </CardWrapper>

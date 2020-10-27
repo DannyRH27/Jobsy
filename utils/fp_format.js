@@ -17,7 +17,7 @@ const months = {
 }
 
 const timePeriod = (sd, ed, verb, place, work) => {
-  if (!sd) return ''
+  if (!sd) return `I ${verb}ed ${work ? 'at ' : ''}*${place}*`
   sd = sd.split("-")
   ed = ed ? ed.split("-") : ''
   const endTime = ed ? `${months[ed[1]]}, ${ed[0]}` : 'present'

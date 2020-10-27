@@ -80,6 +80,7 @@ const Circle = styled(animated.div)<{ landing: string }>`
   /* background-image: url("./danny.jpg"); */
   background-repeat: no-repeat;
   background-size: cover;
+  box-sizing: content-box;
   /* display: flex;
   justify-content: center; */
 `;

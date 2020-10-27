@@ -168,11 +168,11 @@
     {
       "title": "Jobsy",
       "summary":"A single page interactive resume exploration application built around a chatbot. Jobsy took first place in MintBean's 'Hack the Chatbot' Hackathon. Hint: You're looking at it!",
-      "liveUrl": "https://jobsy-app.herokuapp.com/",
+      "liveUrl": "https://jobsy-tj.herokuapp.com/",
       "gitUrl": "https://github.com/DannyRH27/Jobsy",
       "metadata": {
-        "picturePath": "https://i.imgur.com/ctAAlIQ.png",
-        "linkPath": "https://jobsy-app.herokuapp.com/",
+        "picturePath": "https://i.imgur.com/oRhCrvC.png",
+        "linkPath": "https://jobsy-tj.herokuapp.com/",
         "leftText": "Jobsy"
       },
       "technologies": ["JavaScript","TypeScript","Node.js","React","AWS S3","Styled Components","Git"]

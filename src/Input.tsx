@@ -30,6 +30,7 @@ const Form = styled.form`
   align-items: center;
   padding: 32px;
   box-sizing: border-box;
+  background-color: white;
 `;
 // const InputContainer = styled.div`
 //   display: flex;
@@ -38,7 +39,6 @@ const Form = styled.form`
 //   margin: 0 auto;
 //   width: 100%;
 //   border-radius: 20px;
-//   background-color: #f1f6f9;
 //   /* background-color: black; */
 // `;
 const SendButton = styled(FaTelegramPlane)`

@@ -98,7 +98,7 @@
   ],
   "education": [
     {
-      "institution": "University of California, Los Angeles",
+      "institution": "The University of California, Los Angeles",
       "area": "Economics",
       "metadata": {
         "picturePath": "https://i.imgur.com/GnqiZjd.jpg",
@@ -107,7 +107,7 @@
       },
       "studyType": "Bachelors",
       "startDate": "",
-      "endDate": "",
+      "endDate": "2014-06-19",
       "gpa": "",
       "courses": [
       ]

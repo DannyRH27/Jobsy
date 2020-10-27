@@ -49,8 +49,8 @@ const formatEndNode = (catName, entry) => {
     const timeStr = timePeriod(entry.startDate, entry.endDate, "attend", entry.institution, false)
     if (timeStr) lines.push(timeStr)
 
-    const degreeText = entry.endDate ? 'I earned a' : 'I will earn a'
-    if (entry.studyType) lines.push(`---  \n${degreeText} *${entry.studyType}* in *${entry.area}*.`)
+    const degreeText = entry.endDate ? ['I earned a',` in ${entry.endDate.split("-")[0]}`] : ['I will earn a', '']
+    if (entry.studyType) lines.push(`---  \n${degreeText[0]} *${entry.studyType}* in *${entry.area}*${degreeText[1]}.`)
     
     const gpaText = entry.endDate ? 'was' : 'is'
     if (entry.gpa) lines.push(`My GPA ${gpaText} *${entry.gpa}*.`)

@@ -30,6 +30,7 @@ const Form = styled.form`
   align-items: center;
   padding: 32px;
   box-sizing: border-box;
+  background-color: white;
 `;
 // const InputContainer = styled.div`
 //   display: flex;

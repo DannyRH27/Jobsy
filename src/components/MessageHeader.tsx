@@ -38,7 +38,7 @@ const Email = styled.a`
   text-decoration: none;
 `;
 
-interface Props {}
+
 
 
 const body =

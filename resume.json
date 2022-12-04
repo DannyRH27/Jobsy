@@ -175,7 +175,7 @@
         "linkPath": "https://jobsy-tj.herokuapp.com/",
         "leftText": "Jobsy"
       },
-      "technologies": ["JavaScript","TypeScript","Node.js","React","Styled Components","Git"]
+      "technologies": ["JavaScript","TypeScript","Node.js","React","AWS S3","Styled Components","Git"]
     }
   ],
   "awards": [
